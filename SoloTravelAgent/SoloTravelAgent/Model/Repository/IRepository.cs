@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoloTravelAgent.Model.Entities
+namespace SoloTravelAgent.Model.Repository
 {
-    public class Agent
+    internal interface IRepository
     {
     }
 }
