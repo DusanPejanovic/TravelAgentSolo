@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SoloTravelAgent.Model.Data;
+using SoloTravelAgent.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,18 @@ namespace SoloTravelAgent.View
     /// </summary>
     public partial class RestaurantView : Window
     {
+
+        private readonly RestaurantViewModel _viewModel;
         public RestaurantView()
         {
             InitializeComponent();
+
+            // Create an instance of the TravelSystemDbContext and pass it to the ViewModel
+            var dbContext = new TravelSystemDbContext();
+            _viewModel = new RestaurantViewModel(dbContext);
+
+            // Set the DataContext to the ViewModel instance
+            DataContext = _viewModel;
         }
     }
 }
