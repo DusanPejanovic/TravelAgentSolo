@@ -13,7 +13,6 @@ namespace SoloTravelAgent.Model.Service
     public class TripService
     {
         private readonly IRepository<Trip> _tripRepository;
-
         public TripService(TravelSystemDbContext dbContext)
         {
             _tripRepository = new Repository<Trip>(dbContext);
