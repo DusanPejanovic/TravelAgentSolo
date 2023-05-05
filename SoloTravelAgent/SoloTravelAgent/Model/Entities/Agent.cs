@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoloTravelAgent.Model.Entities
 {
-    public class Agent
+    public class Agent : User
     {
     }
 }
