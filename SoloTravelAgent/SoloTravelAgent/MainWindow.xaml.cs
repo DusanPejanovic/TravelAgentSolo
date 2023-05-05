@@ -1,6 +1,7 @@
 ﻿using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
+using SoloTravelAgent.View;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -112,7 +113,8 @@ namespace SoloTravelAgent
 
             var foundBooking = bookingService.GetBooking(booking.Id);
             Debug.WriteLine("Booking found for client: " + foundBooking.Client.Name);
-
+            
+            /*
             // Cleanup - remove created records
             bookingService.RemoveBooking(foundBooking);
             attractionService.RemoveAttraction(foundAttraction);
@@ -123,6 +125,15 @@ namespace SoloTravelAgent
             clientService.RemoveClient(foundClient);
 
             Debug.WriteLine("All records removed.");
+
+            */
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+            var w = new RestaurantView();
+            w.Show();
         }
     }
 }
