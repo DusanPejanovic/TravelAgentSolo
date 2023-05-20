@@ -114,7 +114,7 @@ namespace SoloTravelAgent
             var foundBooking = bookingService.GetBooking(booking.Id);
             Debug.WriteLine("Booking found for client: " + foundBooking.Client.Name);
             
-            /*
+            
             // Cleanup - remove created records
             bookingService.RemoveBooking(foundBooking);
             attractionService.RemoveAttraction(foundAttraction);
@@ -124,9 +124,23 @@ namespace SoloTravelAgent
             agentService.RemoveAgent(foundAgent);
             clientService.RemoveClient(foundClient);
 
+            var res = restaurantService.GetAllRestaurants();
+
+            int x = 3;
+
+            Debug.WriteLine("pre");
+
+            foreach(var re in res)
+            {
+                restaurantService.RemoveRestaurant(re);
+                Debug.WriteLine("Desava se");
+
+            }
+            Debug.WriteLine("posle");
+
             Debug.WriteLine("All records removed.");
 
-            */
+           
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

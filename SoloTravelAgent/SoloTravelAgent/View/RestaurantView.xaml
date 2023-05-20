@@ -19,6 +19,7 @@
                 <DataGridTextColumn Header="Website" Binding="{Binding Website}" />
                 <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumber}" />
             </DataGrid.Columns>
+
         </DataGrid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
