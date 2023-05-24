@@ -11,8 +11,8 @@ namespace SoloTravelAgent.Model.Entities
     {
         [Key]
         public int Id { get; set; }
-        public Client Client { get; set; }
-        public Trip Trip { get; set; }
+        public virtual Client Client { get; set; }
+        public virtual Trip Trip { get; set; }
         public DateTime BookingDate { get; set; }
         public bool IsPaid { get; set; }
     }

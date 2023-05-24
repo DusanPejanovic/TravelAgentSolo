@@ -43,5 +43,9 @@ namespace SoloTravelAgent.Model.Service
         {
             _restaurantRepository.Remove(restaurant);
         }
+        //public IEnumerable<Restaurant> GetRestaurantsByTrip(int tripId)
+        //{
+        //    return _restaurantRepository.GetAll().Where(r => r.TripId == tripId);
+        //}
     }
 }

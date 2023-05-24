@@ -8,7 +8,7 @@ namespace SoloTravelAgent.Model.Entities
 {
     public class Client : User
     {
-        public List<Booking> Bookings { get; set; } = new List<Booking>();
+        public virtual List<Booking> Bookings { get; set; } = new List<Booking>();
     }
    
 }
