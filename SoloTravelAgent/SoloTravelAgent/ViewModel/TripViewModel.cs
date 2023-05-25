@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ using SoloTravelAgent.Model.Service;
 
 namespace SoloTravelAgent.ViewModel
 {
-    public class TripViewModel
+    public class TripViewModel : INotifyPropertyChanged
     {
         private readonly TripService _tripService;
 
@@ -54,6 +55,7 @@ namespace SoloTravelAgent.ViewModel
             {
                 Trips.Add(trip);
             }
+            OnPropertyChanged(nameof(TripCount)); 
         }
 
         private void AddTrip()
@@ -62,12 +64,12 @@ namespace SoloTravelAgent.ViewModel
             // Similar to AddRestaurant(), you may need to collect multiple pieces of data
         }
 
-        private void UpdateTrip()
+        public void UpdateTrip()
         {
             if (SelectedTrip != null)
             {
-                // Implement the details for updating a trip
-                // Similar to UpdateRestaurant(), you may need to collect multiple pieces of data
+                _tripService.UpdateTrip(SelectedTrip);
+                LoadTrips();
             }
         }
 
@@ -75,8 +77,10 @@ namespace SoloTravelAgent.ViewModel
         {
             if (SelectedTrip != null)
             {
-                _tripService.RemoveTrip(SelectedTrip);
+                _tripService.RemoveTrip(_tripService.GetTrip(SelectedTrip.Id));
                 LoadTrips();
+                OnPropertyChanged(nameof(TripCount));
+                
             }
         }
 
@@ -91,6 +95,14 @@ namespace SoloTravelAgent.ViewModel
             // Add your logic to determine if the Delete button should be enabled
             return SelectedTrip != null;
         }
+
+     
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
     }
 
 }

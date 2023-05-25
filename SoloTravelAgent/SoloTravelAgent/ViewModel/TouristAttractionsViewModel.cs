@@ -76,8 +76,6 @@ namespace SoloTravelAgent.ViewModel
             {
                 
                 TouristAttractions.Clear();
-                Debug.WriteLine(_selectedTrip.Name + "ovdjeeee si");
-                Debug.WriteLine(_selectedTrip.TouristAttractions.Count());
                 foreach (var attraction in _selectedTrip.TouristAttractions)
                 {
                     TouristAttractions.Add(attraction);

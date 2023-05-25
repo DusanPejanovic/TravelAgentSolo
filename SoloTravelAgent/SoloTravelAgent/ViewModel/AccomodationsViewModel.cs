@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 using Microsoft.VisualBasic;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
@@ -17,13 +18,15 @@ namespace SoloTravelAgent.ViewModel
     public class AccommodationsViewModel : INotifyPropertyChanged
     {
         private readonly AccommodationService _accommodationService;
+        private readonly TripService _tripService;
         private Trip _selectedTrip;
         public AccommodationsViewModel(TravelSystemDbContext dbContext, Trip selectedTrip)
         {
             _accommodationService = new AccommodationService(dbContext);
+            _tripService = new TripService(dbContext);
             _selectedTrip = selectedTrip;
             LoadAccommodations();
-            AddAccommodationCommand = new RelayCommand(_ => AddAccommodation(), _ => CanAddOrUpdateAccommodation());
+            AddAccommodationCommand = new RelayCommand<Accommodation>(accommodation => AddAccommodation(accommodation), _ => CanAddOrUpdateAccommodation());
             UpdateAccommodationCommand = new RelayCommand(_ => UpdateAccommodation(), _ => CanAddOrUpdateAccommodation());
             DeleteAccommodationCommand = new RelayCommand(_ => DeleteAccommodation(), _ => CanDeleteAccommodation());
         }
@@ -32,7 +35,7 @@ namespace SoloTravelAgent.ViewModel
 
         public Accommodation SelectedAccommodation { get; set; }
 
-        public ICommand AddAccommodationCommand { get; set; }
+        public RelayCommand<Accommodation> AddAccommodationCommand { get; set; }
 
         public ICommand UpdateAccommodationCommand { get; set; }
 
@@ -42,8 +45,9 @@ namespace SoloTravelAgent.ViewModel
         {
             if (_selectedTrip != null)
             {
+                var trip = _tripService.GetTrip(_selectedTrip.Id);
                 Accommodations.Clear();
-                foreach (var accommodation in _selectedTrip.Accommodations)
+                foreach (var accommodation in trip.Accommodations)
                 {
                     Accommodations.Add(accommodation);
                 }
@@ -82,15 +86,17 @@ namespace SoloTravelAgent.ViewModel
 
 
 
-        private void AddAccommodation()
+        public void AddAccommodation(Accommodation accommodation)
         {
-            string name = Interaction.InputBox("Enter accommodation name:", "Add Accommodation");
-            if (!string.IsNullOrEmpty(name))
-            {
-                Accommodation newAccommodation = new Accommodation { Name = name };
-                _accommodationService.AddAccommodation(newAccommodation);
-                LoadAccommodations();
-            }
+            var trip = _tripService.GetTrip(SelectedTrip.Id);
+
+            trip.Accommodations?.Add(accommodation);
+            _accommodationService.AddAccommodation(accommodation);
+            _tripService.UpdateTrip(trip);
+            SelectedTrip = trip;
+            LoadAccommodations();
+            OnPropertyChanged(nameof(AccommodationCount));
+   
         }
 
         public void UpdateAccommodation()

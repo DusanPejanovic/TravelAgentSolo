@@ -12,7 +12,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <Border Grid.Row="1" x:Name="MenuContent" Background="#623ED0" CornerRadius="0 50 0 30"
+        <Border Grid.Row="1" x:Name="MenuContent" Background="#185FAD" CornerRadius="0 50 0 30"
                 Visibility="{Binding IsMenuVisible, ElementName=MenuControl, Converter={StaticResource BoolToVis}}">
             <Border.RenderTransform>
                 <TranslateTransform X="0" />
@@ -43,21 +43,14 @@
                 </Style>
             </Border.Style>
             <DockPanel>
-                <!--Menu Logo-->
-                <!--<Border Width="80" Height="80" Padding="3" Background="White" CornerRadius="100" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="20 -30 0 0">
-                    --><!--<Ellipse>
-                                <Ellipse.Fill>
-                                    <ImageBrush ImageSource="/Images/p1.jpg"/>
-                                </Ellipse.Fill>
-                            </Ellipse>--><!--
-                </Border>-->
+          
 
                 <!--Menu Titles-->
                 <TextBlock Text="Vanja Savic" Foreground="White" FontSize="22" FontWeight="SemiBold" DockPanel.Dock="Top" Margin="5 25 0 10" TextAlignment="Center"/>
-                <TextBlock Text="ADMIN" Foreground="#D0BFFF" FontSize="14" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center"/>
+                <TextBlock Text="ADMIN" Foreground="AliceBlue" FontSize="14" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center"/>
 
                 <!--Menu Seprator-->
-                <Separator Margin="25" Background="#7E5FDC" DockPanel.Dock="Top" Height="0.8"/>
+                <Separator Margin="25" Background="#A5BFD0" DockPanel.Dock="Top" Height="0.8"/>
 
                 <!--Menu Buttons-->
                 <StackPanel DockPanel.Dock="Top" >
@@ -86,8 +79,8 @@
 
                     <RadioButton Style="{StaticResource menuButton}">
                         <StackPanel Orientation="Horizontal">
-                            <Icon:PackIconMaterial Kind="ForumOutline" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Messages"/>
+                            <Icon:PackIconMaterial Kind="Cog" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Settings"/>
                         </StackPanel>
                     </RadioButton>
 

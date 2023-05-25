@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
+using SoloTravelAgent.View.DialogView;
 using SoloTravelAgent.ViewModel;
 
 namespace SoloTravelAgent.View
@@ -64,6 +65,28 @@ namespace SoloTravelAgent.View
             }
         }
 
+        private async void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            var trip = (sender as Button).DataContext as Trip;
+            if (trip == null) return;
+            var dialog = new EditTripView(trip, _viewModel);
+            dialog.Owner = this; // ovo mi je roditelj prozor
+            dialog.ShowDialog();
+
+        }
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var trip = (sender as Button).DataContext as Trip;
+            if (trip == null) return;
+
+            var msg = $"Are you sure you want to delete the tourist attraction: {trip.Name}?";
+            var result = MessageBox.Show(msg, "Confirm Delete", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                _viewModel.DeleteTripCommand.Execute(trip);
+            }
+        }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

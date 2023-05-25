@@ -17,6 +17,7 @@ namespace SoloTravelAgent.Model.Entities
         public string Website { get; set; }
         public string PhoneNumber { get; set; }
 
+     
 
      
     }

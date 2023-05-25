@@ -17,7 +17,7 @@
             <controls:MenuContentControl x:Name="MenuContentHolder">
                 <controls:MenuContentControl.MainSectionContent>
                     <!--Main Section-->
-                    <Grid Grid.Column="1" Margin="30 -40 20 20">
+                    <Grid Grid.Column="1" Margin="30 -20 20 20">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
@@ -28,12 +28,7 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <Button Style="{StaticResource topButton}" Margin="0 0 20 0" Background="#dcdcdc">
-                            <Icon:PackIconMaterial Kind="Cog"/>
-                        </Button>
-
-
-
+                
                         <Button Style="{StaticResource topButton}" Click="BackButtonClicked" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 30 0 0" Grid.Row="1" Background="#dcdcdc">
                             <Icon:PackIconMaterial Kind="ChevronLeft"/>
                         </Button>
@@ -43,7 +38,7 @@
 
 
                         <!--Add Button-->
-                        <Button Style="{StaticResource addButton}">
+                        <Button Style="{StaticResource addButton}" Click="AddButton_Click">
                             <StackPanel Orientation="Horizontal">
                                 <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Margin="0 1 8 0" Width="11" Height="11"/>
                                 <TextBlock Text="Add New Restaurant"/>

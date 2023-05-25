@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using GalaSoft.MvvmLight.Command;
+using Microsoft.VisualBasic;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
@@ -18,15 +19,17 @@ namespace SoloTravelAgent.ViewModel
     public class RestaurantViewModel : INotifyPropertyChanged
     {
         private readonly RestaurantService _restaurantService;
+        private readonly TripService _tripService;  
         private Trip _selectedTrip;
         private int _numberOfRestaurants;
   
             public RestaurantViewModel(TravelSystemDbContext dbContext, Trip selectedTrip)
         {
             _restaurantService = new RestaurantService(dbContext);
+            _tripService = new TripService(dbContext);
             _selectedTrip = selectedTrip;   
             LoadRestaurants();
-            AddRestaurantCommand = new RelayCommand(_ => AddRestaurant(), _ => CanAddOrUpdateRestaurant());
+            AddRestaurantCommand = new RelayCommand<Restaurant>(restaurant => AddRestaurant(restaurant), _ => CanAddOrUpdateRestaurant());
             UpdateRestaurantCommand = new RelayCommand(_ => UpdateRestaurant(), _ => CanAddOrUpdateRestaurant());
             DeleteRestaurantCommand = new RelayCommand(_ => DeleteRestaurant(), _ => CanDeleteRestaurant());
         }
@@ -35,7 +38,8 @@ namespace SoloTravelAgent.ViewModel
 
         public Restaurant SelectedRestaurant { get; set; }
 
-        public ICommand AddRestaurantCommand { get; set; }
+        public RelayCommand<Restaurant> AddRestaurantCommand { get; set; }
+
 
         public ICommand UpdateRestaurantCommand { get; set; }
 
@@ -45,9 +49,9 @@ namespace SoloTravelAgent.ViewModel
         {   
             if (_selectedTrip != null)
             {
-                Debug.WriteLine("sad sam ovdje");
+                var trip = _tripService.GetTrip(_selectedTrip.Id);
                 Restaurants.Clear();
-                foreach (var restaurant in _selectedTrip.Restaurants) 
+                foreach (var restaurant in trip.Restaurants) 
                 {
                     Restaurants.Add(restaurant);
                 }
@@ -72,7 +76,7 @@ namespace SoloTravelAgent.ViewModel
         {
             get
             {
-                return _selectedTrip?.Restaurants.Count ?? 0;
+                return SelectedTrip?.Restaurants.Count ?? 0;
             }
         }
 
@@ -86,16 +90,18 @@ namespace SoloTravelAgent.ViewModel
 
 
 
-        private void AddRestaurant()
+        public void AddRestaurant(Restaurant restaurant)
         {
-            string name = Interaction.InputBox("Enter restaurant name:", "Add Restaurant");
-            if (!string.IsNullOrEmpty(name))
-            {
-                Restaurant newRestaurant = new Restaurant { Name = name };
-                _restaurantService.AddRestaurant(newRestaurant);
-                LoadRestaurants();
-            }
+            var trip = _tripService.GetTrip(SelectedTrip.Id);
+            
+            trip.Restaurants?.Add(restaurant);
+            _restaurantService.AddRestaurant(restaurant);
+            _tripService.UpdateTrip(trip);
+            SelectedTrip = trip;
+            LoadRestaurants();
+            OnPropertyChanged(nameof(RestaurantCount));
         }
+
 
         public void UpdateRestaurant()
         {
@@ -108,11 +114,12 @@ namespace SoloTravelAgent.ViewModel
 
         private void DeleteRestaurant()
         {
-           
-            SelectedTrip.Restaurants.Remove(SelectedRestaurant);
+            var trip = _tripService.GetTrip(SelectedTrip.Id);
+            trip.Restaurants.Remove(SelectedRestaurant);
+            SelectedTrip = trip;
+            _tripService.UpdateTrip(trip);
             _restaurantService.RemoveRestaurant(SelectedRestaurant);
             LoadRestaurants();
-
             OnPropertyChanged(nameof(RestaurantCount));
             
         }
@@ -120,7 +127,6 @@ namespace SoloTravelAgent.ViewModel
 
         private bool CanAddOrUpdateRestaurant()
         {
-            // Add your logic to determine if Add or Update buttons should be enabled
             return true;
         }
 

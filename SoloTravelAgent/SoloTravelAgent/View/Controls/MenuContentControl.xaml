@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
 
         <!--Menu Button-->
-        <Button Style="{StaticResource topButton}" HorizontalAlignment="Left" Margin="20 28 0 35" Click="MenuButton_Click" Grid.Row="0">
+        <Button Style="{StaticResource topButton}" HorizontalAlignment="Left" Margin="20 28 0 15" Click="MenuButton_Click" Grid.Row="0">
             <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15" />
         </Button>
 
