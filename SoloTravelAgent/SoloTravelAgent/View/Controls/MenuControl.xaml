@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="SoloTravelAgent.View.Controls.MenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:SoloTravelAgent.View.Controls"
+             >
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Grid.Row="1" x:Name="MenuContent" Background="#185FAD" CornerRadius="0 50 0 30"
+                Visibility="{Binding IsMenuVisible, ElementName=MenuControl, Converter={StaticResource BoolToVis}}">
+            <Border.RenderTransform>
+                <TranslateTransform X="0" />
+            </Border.RenderTransform>
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Opacity" Value="1" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMenuVisible, ElementName=MenuControl}" Value="False">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation From="0" To="-200" Duration="0:0:0.3" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)" />
+                                        <DoubleAnimation From="1" To="0" Duration="0:0:0.3" Storyboard.TargetProperty="Opacity" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation From="-200" To="0" Duration="0:0:0.3" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)" />
+                                        <DoubleAnimation From="0" To="1" Duration="0:0:0.3" Storyboard.TargetProperty="Opacity" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <DockPanel>
+          
+
+                <!--Menu Titles-->
+                <TextBlock Text="Vanja Savic" Foreground="White" FontSize="22" FontWeight="SemiBold" DockPanel.Dock="Top" Margin="5 25 0 10" TextAlignment="Center"/>
+                <TextBlock Text="ADMIN" Foreground="AliceBlue" FontSize="14" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center"/>
+
+                <!--Menu Seprator-->
+                <Separator Margin="25" Background="#A5BFD0" DockPanel.Dock="Top" Height="0.8"/>
+
+                <!--Menu Buttons-->
+                <StackPanel DockPanel.Dock="Top" >
+                    
+
+                    <RadioButton Style="{StaticResource menuButton}" IsChecked="True">
+                        <StackPanel Orientation="Horizontal">
+                            <Icon:PackIconMaterial Kind="WalletTravel" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Travel Management"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <Icon:PackIconMaterial Kind="Timetable" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Bookings"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <Icon:PackIconMaterial Kind="FileDocument" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Reports"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <Icon:PackIconMaterial Kind="Cog" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Settings"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                </StackPanel>
+
+                <RadioButton Style="{StaticResource menuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0 15 20">
+                    <StackPanel Orientation="Horizontal">
+                        <Icon:PackIconMaterial Kind="Logout" Style="{StaticResource menuButtonIcon}"/>
+                        <TextBlock Text="Logout"/>
+                    </StackPanel>
+                </RadioButton>
+
+            </DockPanel>
+        </Border>
+
+    </Grid>
+</UserControl>

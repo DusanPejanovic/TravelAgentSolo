@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SoloTravelAgent.Model.Data;
+using SoloTravelAgent.Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,15 +45,26 @@ namespace SoloTravelAgent.Model.Repository.Implements
 
         public void Update(T entity)
         {
-            _dbSet.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
         public void Remove(T entity)
         {
+            var trip = entity as Trip;
+
+            if (trip != null)
+            {
+                trip.Restaurants.Clear();
+                trip.Accommodations.Clear();
+                trip.TouristAttractions.Clear();
+                _context.SaveChanges();
+            }
+
             _dbSet.Remove(entity);
             _context.SaveChanges();
         }
+
+
     }
 }

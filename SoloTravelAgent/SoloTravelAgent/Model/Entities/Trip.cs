@@ -17,8 +17,8 @@ namespace SoloTravelAgent.Model.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public decimal Price { get; set; }
-        public List<Accommodation> Accommodations { get; set; } = new List<Accommodation>();
-        public List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
-        public List<TouristAttraction> TouristAttractions { get; set; } = new List<TouristAttraction>();
+        public virtual List<Accommodation> Accommodations { get; set; } = new List<Accommodation>();
+        public virtual List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
+        public virtual List<TouristAttraction> TouristAttractions { get; set; } = new List<TouristAttraction>();
     }
 }

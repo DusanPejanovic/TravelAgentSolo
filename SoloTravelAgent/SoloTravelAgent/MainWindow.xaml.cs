@@ -130,23 +130,77 @@ namespace SoloTravelAgent
 
             Debug.WriteLine("pre");
 
-            foreach(var re in res)
-            {
-                restaurantService.RemoveRestaurant(re);
-                Debug.WriteLine("Desava se");
+            //foreach(var re in res)
+            //{
+            //    restaurantService.RemoveRestaurant(re);
+            //    Debug.WriteLine("Desava se");
 
-            }
-            Debug.WriteLine("posle");
+            //}
+            //Debug.WriteLine("posle");
 
-            Debug.WriteLine("All records removed.");
+            //Debug.WriteLine("All records removed.");
+
+            //List<Restaurant> rests = new List<Restaurant>();
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    var resr = new Restaurant { Name = "French Bistro" + i.ToString(), Address = "456 Paris Avenue", Cuisine = "French", Website = "https://french-bistro.com", PhoneNumber = "555-3690" };
+            //    rests.Add(resr);
+            //}
+
+            //List<TouristAttraction> attracti = new List<TouristAttraction>();
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    var ata = new TouristAttraction { Name = "Eiffel Tower" + i.ToString(), Address = "Eiffel Tower Address", Description = "Historic landmark in Paris", EntryFee = 25m, Website = "https://eiffel-tower.com" };
+            //    attracti.Add(ata);
+            //}
+
+            //List<Accommodation> acomm = new List<Accommodation>();
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    var accommod= new Accommodation { Name = "Paris Hotel" + i.ToString(), Address = "123 Paris Street", Stars = 4, Website = "https://paris-hotel.com", PhoneNumber = "555-2468" };
+            //    acomm.Add(accommod);
+            //}
+
+
+
+            ////for (int i = 0; i < 20; i++)
+            ////{
+            ////    var acc = new Accommodation { Name = "Paris Hotel" + i.ToString(), Address = "123 Paris Street", Stars = 4, Website = "https://paris-hotel.com", PhoneNumber = "555-2468" };
+            ////    accommodationService.AddAccommodation(acc);
+            ////}
+
+
+
+
+            //var tr = new Trip { Name = "Parisss Trip finale", Description = "A week in Paris", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(7), Price = 1000m };
+            //tr.Restaurants = rests;
+            //tr.TouristAttractions = attracti;
+            //tr.Accommodations = acomm;
+            //tripService.AddTrip(tr);
+
+            //foreach (Restaurant r in tr.Restaurants)
+            //{
+
+            //    Debug.WriteLine(r.Name +  " " + tr.Name);
+            //}
+
+            //var acc = new Accommodation { Name = "fff", Address = "123 Paris Street", Stars = 4, Website = "https://paris-hotel.com", PhoneNumber = "555-2468" };
+            //accommodationService.AddAccommodation(acc);
+            //var tr = new Trip { Name = "FFFF", Description = "A week in Paris", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(7), Price = 1000m };
+            //var tr2 = new Trip { Name = "FFFF TRIP", Description = "A week in Paris", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(7), Price = 1000m };
+            //tr.Accommodations.Add(acc);
+            //tr2.Accommodations.Add(acc);
+            //tripService.AddTrip(tr);
+            //tripService.AddTrip(tr2);
 
            
         }
 
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
 
-            var w = new RestaurantView();
+            var w = new TripView();
             w.Show();
         }
     }
