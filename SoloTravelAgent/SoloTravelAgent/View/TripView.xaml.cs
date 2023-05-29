@@ -65,6 +65,15 @@ namespace SoloTravelAgent.View
             }
         }
 
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new AddTripDialogView(_viewModel);
+            dialog.Owner = this;
+            dialog.ShowDialog();
+
+        }
+
+
         private async void EditButton_Click(object sender, RoutedEventArgs e)
         {
             var trip = (sender as Button).DataContext as Trip;

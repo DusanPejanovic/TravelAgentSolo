@@ -33,7 +33,7 @@
 
 
                         <!--Add Button-->
-                        <Button Style="{StaticResource addButton}">
+                        <Button Style="{StaticResource addButton}" Click="AddButton_Click">
                             <StackPanel Orientation="Horizontal">
                                 <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Margin="0 1 8 0" Width="11" Height="11"/>
                                 <TextBlock Text="Add New Trip"/>
