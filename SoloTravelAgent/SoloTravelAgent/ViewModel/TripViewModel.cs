@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
@@ -21,7 +22,7 @@ namespace SoloTravelAgent.ViewModel
         {
             _tripService = new TripService(dbContext);
             LoadTrips();
-            AddTripCommand = new RelayCommand(_ => AddTrip(), _ => CanAddOrUpdateTrip());
+            AddTripCommand = new RelayCommand<Trip>(trip => AddTrip(trip), _ => CanAddOrUpdateTrip());
             UpdateTripCommand = new RelayCommand(_ => UpdateTrip(), _ => CanAddOrUpdateTrip());
             DeleteTripCommand = new RelayCommand(_ => DeleteTrip(), _ => CanDeleteTrip());
         }
@@ -58,10 +59,12 @@ namespace SoloTravelAgent.ViewModel
             OnPropertyChanged(nameof(TripCount)); 
         }
 
-        private void AddTrip()
+
+        public void AddTrip(Trip trip)
         {
-            // Implement the details for adding a new trip
-            // Similar to AddRestaurant(), you may need to collect multiple pieces of data
+            _tripService.AddTrip(trip);
+            LoadTrips();
+            OnPropertyChanged(nameof(TripCount));
         }
 
         public void UpdateTrip()

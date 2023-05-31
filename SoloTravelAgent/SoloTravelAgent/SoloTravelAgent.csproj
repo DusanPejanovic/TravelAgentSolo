@@ -22,6 +22,10 @@
     </PackageReference>
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+    <PackageReference Include="Syncfusion.SfProgressBar.WPF" Version="21.2.6" />
+    <PackageReference Include="Syncfusion.SfSkinManager.WPF" Version="21.2.6" />
+    <PackageReference Include="Syncfusion.Themes.MaterialLight.WPF" Version="21.2.6" />
+    <PackageReference Include="Syncfusion.Tools.WPF" Version="21.2.6" />
   </ItemGroup>
 
 </Project>

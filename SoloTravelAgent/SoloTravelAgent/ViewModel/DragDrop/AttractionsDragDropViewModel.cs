@@ -95,5 +95,9 @@ namespace SoloTravelAgent.ViewModel.DragDrop
             set { Set(ref _selectedAttractionToAdd, value); }
         }
 
+        internal void SaveData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

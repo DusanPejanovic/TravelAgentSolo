@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="SoloTravelAgent.View.DialogView.StepperView.RestaurantListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SoloTravelAgent.View.DialogView.StepperView"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             Height="380" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="240" />
+            <RowDefinition Height="60" />
+          
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          
+            <ColumnDefinition Width="300"/>
+         
+
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0"> 
+         <ListBox x:Name="restaurantListBox" Margin="0 50 0 0" SelectedItem="{Binding SelectedRestaurant}" ItemsSource="{Binding Restaurants}"
+         VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+         ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <ListBox.ItemTemplate>
+             <DataTemplate>
+               <WrapPanel>
+                            <TextBlock Text="{Binding Name}" Margin="7 5 0 5" FontSize="14"/>
+                            <TextBlock Text=" - "  TextWrapping="Wrap"  Margin="0 5 0 5" FontSize="14"/>
+                            <TextBlock Text="{Binding Cuisine}"  TextWrapping="Wrap"  Margin="0 5 0 5" FontSize="14"/>
+                            <TextBlock Text=" Cuisine"  TextWrapping="Wrap" Margin="0 5 0 5" FontSize="14"/>
+                </WrapPanel>
+             </DataTemplate>
+        </ListBox.ItemTemplate>
+        </ListBox>
+
+        </Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2" Margin="0,5,0,0">
+            <Button Command="{Binding AddRestaurantCommand}" Style="{StaticResource gridEditButton}" Margin="0,0,0,0">
+                <Icon:PackIconMaterial Kind="Plus" Style="{StaticResource gridButtonIcon}" />
+            </Button>
+            <Button Command="{Binding EditRestaurantCommand}" Style="{StaticResource gridEditButton}" Margin="6,0,0,0">
+                <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}" />
+            </Button>
+            <Button Command="{Binding RemoveRestaurantCommand}" Style="{StaticResource gridRemoveButton}" Margin="6,0,0,0">
+                <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}" />
+            </Button>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

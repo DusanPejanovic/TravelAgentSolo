@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.View.DialogView;
+using SoloTravelAgent.View.DialogView.StepperView;
 using SoloTravelAgent.ViewModel;
 
 namespace SoloTravelAgent.View
@@ -24,10 +25,11 @@ namespace SoloTravelAgent.View
     public partial class TripView : Window
     {
         private readonly TripViewModel _viewModel;
+        private readonly TravelSystemDbContext dbContext;
         public TripView()
         {
             InitializeComponent();
-            var dbContext = new TravelSystemDbContext();
+            dbContext = new TravelSystemDbContext();
             _viewModel = new TripViewModel(dbContext);
 
             // Set the DataContext to the ViewModel instance
@@ -67,7 +69,7 @@ namespace SoloTravelAgent.View
 
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new AddTripDialogView(_viewModel);
+            var dialog = new SoloTravelAgent.View.DialogView.StepperView.AddTripDialogView(_viewModel, dbContext);
             dialog.Owner = this;
             dialog.ShowDialog();
 
