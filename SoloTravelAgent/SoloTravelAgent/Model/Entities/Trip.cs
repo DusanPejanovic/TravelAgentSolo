@@ -19,6 +19,6 @@ namespace SoloTravelAgent.Model.Entities
         public decimal Price { get; set; }
         public virtual List<Accommodation> Accommodations { get; set; } = new List<Accommodation>();
         public virtual List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
-        public virtual List<TouristAttraction> TouristAttractions { get; set; } = new List<TouristAttraction>();
+        public virtual List<TripTouristAttraction> TripTouristAttractions { get; set; } = new List<TripTouristAttraction>();
     }
 }

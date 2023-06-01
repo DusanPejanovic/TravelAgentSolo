@@ -55,16 +55,13 @@ namespace SoloTravelAgent.ViewModel.DragDrop
             var allAttractions = _attractionService.GetAllAttractions();
 
          
-            var attractionsNotInTrips = allAttractions.Where(attraction => !_tripService.GetAllTrips().Any(trip => trip.TouristAttractions.Contains(attraction)));
+          
 
       
-            foreach (var attraction in attractionsNotInTrips)
+            foreach (var attraction in allAttractions)
             {
                 Attractions.Add(attraction);
             }
-
-           //SaveCommand = new RelayCommand(() => AddTripDialogViewModelInstance.SaveAttractionsCommand.Execute(null));
-
 
 
         }
@@ -95,5 +92,9 @@ namespace SoloTravelAgent.ViewModel.DragDrop
             set { Set(ref _selectedAttractionToAdd, value); }
         }
 
+        internal void SaveData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

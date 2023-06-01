@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 using Microsoft.VisualBasic;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
@@ -17,14 +18,16 @@ namespace SoloTravelAgent.ViewModel
     public class TouristAttractionsViewModel : INotifyPropertyChanged
     {
         private readonly TouristAttractionService _touristAttractionService;
+        private readonly TripService _tripService;
         private Trip _selectedTrip;
 
         public TouristAttractionsViewModel(TravelSystemDbContext dbContext, Trip selectedTrip)
         {
             _selectedTrip = selectedTrip;
+            _tripService = new TripService(dbContext);
             _touristAttractionService = new TouristAttractionService(dbContext);
             LoadTouristAttractions();
-            AddTouristAttractionCommand = new RelayCommand(_ => AddTouristAttraction(), _ => CanAddOrUpdateTouristAttraction());
+            AddTouristAttractionCommand = new RelayCommand<TouristAttraction>(attraction => AddTouristAttraction(attraction), _ => CanAddOrUpdateTouristAttraction());
             UpdateTouristAttractionCommand = new RelayCommand(_ => UpdateTouristAttraction(), _ => CanAddOrUpdateTouristAttraction());
             DeleteTouristAttractionCommand = new RelayCommand(_ => DeleteTouristAttraction(), _ => CanDeleteTouristAttraction());
         }
@@ -39,7 +42,6 @@ namespace SoloTravelAgent.ViewModel
 
         public ICommand DeleteTouristAttractionCommand { get; set; }
 
-
         public Trip SelectedTrip
         {
             get => _selectedTrip;
@@ -49,6 +51,7 @@ namespace SoloTravelAgent.ViewModel
                 {
                     _selectedTrip = value;
                     OnPropertyChanged(nameof(SelectedTrip));
+                    LoadTouristAttractions();
                 }
             }
         }
@@ -57,7 +60,7 @@ namespace SoloTravelAgent.ViewModel
         {
             get
             {
-                return _selectedTrip?.TouristAttractions.Count ?? 0;
+                return _selectedTrip?.TripTouristAttractions.Count ?? 0;
             }
         }
 
@@ -68,29 +71,44 @@ namespace SoloTravelAgent.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
         private void LoadTouristAttractions()
         {
-        
             if (_selectedTrip != null)
             {
-                
                 TouristAttractions.Clear();
-                foreach (var attraction in _selectedTrip.TouristAttractions)
+
+                foreach (var tripTouristAttraction in _selectedTrip.TripTouristAttractions)
                 {
+                    var attraction = tripTouristAttraction.TouristAttraction;
                     TouristAttractions.Add(attraction);
                 }
             }
         }
 
-        private void AddTouristAttraction()
+        public void AddTouristAttraction(TouristAttraction touristAttraction)
         {
-            string name = Interaction.InputBox("Enter tourist attraction name:", "Add Tourist Attraction");
-            if (!string.IsNullOrEmpty(name))
+            if (touristAttraction != null && _selectedTrip != null)
             {
-                TouristAttraction newAttraction = new TouristAttraction { Name = name };
-                _touristAttractionService.AddAttraction(newAttraction);
+                var trip = _tripService.GetTrip(_selectedTrip.Id);
+                var existingAttraction = trip.TripTouristAttractions.FirstOrDefault(tta => tta.TouristAttraction == touristAttraction);
+                if (existingAttraction != null)
+                {
+                    Debug.WriteLine("Attraction is already associated with the trip.");
+                    return;
+                }
+
+                var tripTouristAttraction = new TripTouristAttraction
+                {
+                    Trip = trip,
+                    TouristAttraction = touristAttraction
+                };
+
+                trip.TripTouristAttractions.Add(tripTouristAttraction);
+                
+                _tripService.UpdateTrip(trip);
+                SelectedTrip = trip;
                 LoadTouristAttractions();
+                OnPropertyChanged(nameof(AttractionCount));
             }
         }
 
@@ -107,7 +125,15 @@ namespace SoloTravelAgent.ViewModel
         {
             if (SelectedTouristAttraction != null)
             {
-                SelectedTrip.TouristAttractions.Remove(SelectedTouristAttraction);
+                foreach (var tripTouristAttraction in _selectedTrip.TripTouristAttractions)
+                {
+                    if (tripTouristAttraction.TouristAttraction == SelectedTouristAttraction)
+                    {
+                        _selectedTrip.TripTouristAttractions.Remove(tripTouristAttraction);
+                        break;
+                    }
+                }
+
                 _touristAttractionService.RemoveAttraction(SelectedTouristAttraction);
                 LoadTouristAttractions();
                 OnPropertyChanged(nameof(AttractionCount));
@@ -115,14 +141,12 @@ namespace SoloTravelAgent.ViewModel
         }
 
         private bool CanAddOrUpdateTouristAttraction()
-        {
-            // Add your logic to determine if Add or Update buttons should be enabled
+        { 
             return true;
         }
 
         private bool CanDeleteTouristAttraction()
         {
-            // Add your logic to determine if the Delete button should be enabled
             return SelectedTouristAttraction != null;
         }
     }

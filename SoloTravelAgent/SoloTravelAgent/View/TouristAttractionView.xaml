@@ -34,7 +34,7 @@
                         </Button>
 
                         <!--Add Button-->
-                        <Button Style="{StaticResource addButton}"  Grid.Row="1" Width="200">
+                        <Button Style="{StaticResource addButton}"  Grid.Row="1" Width="200" Click="AddButton_Click">
                             <StackPanel Orientation="Horizontal">
                                 <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Margin="0 1 8 0" Width="11" Height="11"/>
                                 <TextBlock Text="Add New Tourist Attraction"/>

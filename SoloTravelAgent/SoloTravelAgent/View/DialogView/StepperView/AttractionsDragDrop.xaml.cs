@@ -10,26 +10,31 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.ViewModel.DragDrop;
-using SoloTravelAgent.ViewModels.DialogViewModels;
+using SoloTravelAgent.ViewModel.StepperViewModel;
 
-namespace SoloTravelAgent.View.DragDrop
+namespace SoloTravelAgent.View.DialogView.StepperView
 {
-    public partial class AttractionsDragDrop : Window
+    /// <summary>
+    /// Interaction logic for AttractionsDragDrop.xaml
+    /// </summary>
+    public partial class AttractionsDragDrop : UserControl
     {
         private readonly AttractionsDragDropViewModel _viewModel;
         Point startPoint = new Point();
 
-        public AttractionsDragDrop(AddTripDialogViewModel avm)
+        public AttractionsDragDrop(StepViewModel stepViewModel)
         {
             InitializeComponent();
             var dbContext = new TravelSystemDbContext();
             _viewModel = new AttractionsDragDropViewModel(dbContext);
 
             DataContext = _viewModel;
+            stepViewModel.AttractionsDragDropViewModel = _viewModel;
         }
         private void ListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
