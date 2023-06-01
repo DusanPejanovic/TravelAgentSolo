@@ -46,11 +46,21 @@ namespace SoloTravelAgent.View.DialogView.StepperView
                     EndDate = _viewModel.EndDate,
                     Restaurants = _viewModel.Restaurants.ToList(),
                     Accommodations = _viewModel.Accommodations.ToList(),
-                    TouristAttractions = existingAttractions.ToList(),
                 };
 
+                foreach (var attraction in existingAttractions)
+                {
+                    newTrip.TripTouristAttractions.Add(new TripTouristAttraction
+                    {
+                        Trip = newTrip,
+                        TouristAttraction = attraction
+                    });
+                }
+
                 rvm.AddTrip(newTrip);
+                _dbContext.SaveChanges();
             };
+
 
             _viewModel.RequestClose += () => this.Close();
             DataContext = _viewModel;
@@ -86,8 +96,11 @@ namespace SoloTravelAgent.View.DialogView.StepperView
             _viewModel.PreviousStep();
         }
 
-       
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
-   
+
     }
 }

@@ -100,6 +100,14 @@ namespace SoloTravelAgent.View
 
         }
 
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new AddAttractionDialogView(_viewModel);
+            dialog.Owner = this;
+            dialog.ShowDialog();
+
+        }
+
 
         private void RestaurantRadioButton_Checked(object sender, RoutedEventArgs e)
         {

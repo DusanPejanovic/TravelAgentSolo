@@ -57,7 +57,7 @@ namespace SoloTravelAgent.Model.Repository.Implements
             {
                 trip.Restaurants.Clear();
                 trip.Accommodations.Clear();
-                trip.TouristAttractions.Clear();
+                trip.TripTouristAttractions.Clear();
                 _context.SaveChanges();
             }
 

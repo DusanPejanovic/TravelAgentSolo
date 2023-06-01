@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SoloTravelAgent.View.DialogView.StepperView"
         xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local1="clr-namespace:SoloTravelAgent.ViewModel.StepperViewModel"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -34,6 +35,9 @@
                 Margin="70,15,100,0"
                 Height="63" />
 
+            <Button Style="{StaticResource topButton}" Click="CloseButton_Click" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 25 35 0" Grid.Row="1" Background="#dcdcdc">
+                <Icon:PackIconMaterial Kind="CloseCircle"/>
+            </Button>
             <!-- Container for step content -->
             <ContentControl
                 Content="{Binding CurrentView}"

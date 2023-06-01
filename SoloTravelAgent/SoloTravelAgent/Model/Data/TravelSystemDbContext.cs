@@ -18,6 +18,7 @@ namespace SoloTravelAgent.Model.Data
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<TouristAttraction> TouristAttractions { get; set; }
 
+        public DbSet<TripTouristAttraction> TripTouristAttractions { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=C:\\Users\\Anastasija\\Desktop\\HCI-TravelAgent\\TravelAgentSolo\\SoloTravelAgent\\SoloTravelAgent\\travel_system.db").UseLazyLoadingProxies(); ;
