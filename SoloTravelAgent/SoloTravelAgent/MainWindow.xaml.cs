@@ -33,7 +33,8 @@ namespace SoloTravelAgent
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        private void TestDatabase()
         {
 
             using var dbContext = new TravelSystemDbContext();
@@ -115,8 +116,8 @@ namespace SoloTravelAgent
 
             var foundBooking = bookingService.GetBooking(booking.Id);
             Debug.WriteLine("Booking found for client: " + foundBooking.Client.Name);
-            
-            
+
+
             // Cleanup - remove created records
             bookingService.RemoveBooking(foundBooking);
             attractionService.RemoveAttraction(foundAttraction);
@@ -194,7 +195,13 @@ namespace SoloTravelAgent
             //tr2.Accommodations.Add(acc);
             //tripService.AddTrip(tr);
             //tripService.AddTrip(tr2);
+        }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            var w = new TripMarketView();
+            w.Show();
            
         }
 
@@ -204,6 +211,7 @@ namespace SoloTravelAgent
 
             var w = new TripView();
             w.Show();
+
         }
     }
 }
