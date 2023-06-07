@@ -1,0 +1,28 @@
+﻿<Window x:Class="SoloTravelAgent.View.ViewTripWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="400" Width="500" WindowStartupLocation="CenterScreen" >
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Content="Name:" Grid.Row="0"/>
+        <TextBlock Text="{Binding Trip.Name}" Grid.Row="0" Margin="5,0,0,0"/>
+
+        <Label Content="Description:" Grid.Row="1"/>
+        <TextBlock Text="{Binding Trip.Description}" Grid.Row="1" Margin="5,0,0,0"/>
+
+        <Label Content="Start Date:" Grid.Row="2"/>
+        <TextBlock Text="{Binding Trip.StartDate}" Grid.Row="2" Margin="5,0,0,0"/>
+
+        <Label Content="End Date:" Grid.Row="3"/>
+        <TextBlock Text="{Binding Trip.EndDate}" Grid.Row="3" Margin="5,0,0,0"/>
+
+        <Label Content="Price:" Grid.Row="4"/>
+        <TextBlock Text="{Binding Trip.Price}" Grid.Row="4" Margin="5,0,0,0"/>
+    </Grid>
+</Window>

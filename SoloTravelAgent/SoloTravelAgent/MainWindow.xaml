@@ -3,12 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SoloTravelAgent"
+        xmlns:local="clr-namespace:SoloTravelAgent" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Button Content="Button" HorizontalAlignment="Left" Margin="315,153,0,0" VerticalAlignment="Top" Height="118" Width="213" Click="Button_Click"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="627,175,0,0" VerticalAlignment="Top" Height="75" Width="120" Click="Button_Click_1"/>
+        <materialDesign:Card 
+            Width="300" 
+            Height="200" 
+            Margin="10,112,490,122"
+            Padding="20"
+            Background="{DynamicResource MaterialDesignPaper}"
+            Foreground="{DynamicResource MaterialDesignBody}">
+
+            <TextBlock 
+                Text="Your content here" 
+                FontSize="16" 
+                FontWeight="Bold" />
+        </materialDesign:Card>
 
     </Grid>
 </Window>
