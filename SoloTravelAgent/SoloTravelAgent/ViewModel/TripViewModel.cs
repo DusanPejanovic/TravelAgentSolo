@@ -17,6 +17,8 @@ namespace SoloTravelAgent.ViewModel
     public class TripViewModel : INotifyPropertyChanged
     {
         private readonly TripService _tripService;
+        private string _searchText;
+        private bool _isSearchEmpty = true;
 
         public TripViewModel(TravelSystemDbContext dbContext)
         {
@@ -37,6 +39,26 @@ namespace SoloTravelAgent.ViewModel
 
         public ICommand DeleteTripCommand { get; set; }
 
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                IsSearchEmpty = string.IsNullOrEmpty(value);
+            }
+        }
+
+        public bool IsSearchEmpty
+        {
+            get { return _isSearchEmpty; }
+            set
+            {
+                _isSearchEmpty = value;
+                OnPropertyChanged(nameof(IsSearchEmpty));
+            }
+        }
 
         public int TripCount
         {
@@ -46,8 +68,6 @@ namespace SoloTravelAgent.ViewModel
             }
         }
 
-
-
         private void LoadTrips()
         {
             var trips = _tripService.GetAllTrips();
@@ -56,9 +76,8 @@ namespace SoloTravelAgent.ViewModel
             {
                 Trips.Add(trip);
             }
-            OnPropertyChanged(nameof(TripCount)); 
+            OnPropertyChanged(nameof(TripCount));
         }
-
 
         public void AddTrip(Trip trip)
         {
@@ -83,7 +102,7 @@ namespace SoloTravelAgent.ViewModel
                 _tripService.RemoveTrip(_tripService.GetTrip(SelectedTrip.Id));
                 LoadTrips();
                 OnPropertyChanged(nameof(TripCount));
-                
+
             }
         }
 
@@ -99,13 +118,9 @@ namespace SoloTravelAgent.ViewModel
             return SelectedTrip != null;
         }
 
-     
-
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
-
 }

@@ -21,18 +21,26 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Travel Management" Grid.Row="0" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0" Foreground="#121518" HorizontalAlignment="Left"/>
-                        <Button Style="{StaticResource addButton}" Click="AddButton_Click" Grid.Row="1">
-                            <StackPanel Orientation="Horizontal">
-                                <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Margin="0 1 8 0" Width="11" Height="11"/>
-                                <TextBlock Text="Add New Trip"/>
-                            </StackPanel>
-                        </Button>
+                        <!--Separator-->
+                        <Separator Height="1" Grid.Row="1" Background="#DAE2EA" Margin="0 5 0 5"/>
+                        <!--Counter Title-->
                         <TextBlock Text="{Binding Path=TripCount, StringFormat={}{0} Trips}" Grid.Row="2" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Grid Width="280" HorizontalAlignment="Center" Grid.Row="2" Margin="0 0 150 0">
+                            <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+    Panel.ZIndex="1" Text="Search here ..."
+    Visibility="{Binding IsSearchEmpty, Converter={StaticResource BoolToVis}}" />
 
+                            <TextBox   Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
+                            <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
+                        </Grid>
+                        <TextBlock Text="{Binding Path=TripCount, StringFormat={}{0} Trips}" Grid.Row="2" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <!-- Trips Card -->
                         <ScrollViewer Grid.Row="3">
                             <ItemsControl ItemsSource="{Binding Trips}">
