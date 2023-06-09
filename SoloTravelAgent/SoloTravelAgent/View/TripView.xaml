@@ -72,13 +72,12 @@
 
 
 
-                        <Grid Width="280" HorizontalAlignment="Center" Grid.Row="4" Margin="0 0 150 0">
+                        <Grid Width="280" HorizontalAlignment="Center" Grid.Row="2" Margin="0 0 150 0">
                             <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
-                                Panel.ZIndex="1" Text="Search here ..."
-                                Visibility="{Binding ElementName=textBoxSearch, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
+    Panel.ZIndex="1" Text="Search here ..."
+    Visibility="{Binding IsSearchEmpty, Converter={StaticResource BoolToVis}}" />
 
-                            <TextBox Style="{StaticResource searchTextbox}"/>
-
+                            <TextBox   Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
                             <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
                         </Grid>
 
