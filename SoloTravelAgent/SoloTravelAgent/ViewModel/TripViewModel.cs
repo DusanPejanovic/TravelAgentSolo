@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using SoloTravelAgent.Model.Data;
@@ -19,6 +20,7 @@ namespace SoloTravelAgent.ViewModel
         private readonly TripService _tripService;
         private string _searchText;
         private bool _isSearchEmpty = true;
+        private ICollectionView _filteredTrips;
 
         public ObservableCollection<Trip> FilteredTrips { get; private set; } = new ObservableCollection<Trip>();
 
@@ -30,7 +32,9 @@ namespace SoloTravelAgent.ViewModel
             AddTripCommand = new RelayCommand<Trip>(trip => AddTrip(trip), _ => CanAddOrUpdateTrip());
             UpdateTripCommand = new RelayCommand(_ => UpdateTrip(), _ => CanAddOrUpdateTrip());
             DeleteTripCommand = new RelayCommand(_ => DeleteTrip(), _ => CanDeleteTrip());
+            SearchText = string.Empty;
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<Trip> Trips { get; set; } = new ObservableCollection<Trip>();
 
@@ -60,6 +64,7 @@ namespace SoloTravelAgent.ViewModel
                 _searchText = value;
                 OnPropertyChanged(nameof(SearchText));
                 IsSearchEmpty = string.IsNullOrEmpty(value);
+                FilterCollection();
             }
         }
 
@@ -81,7 +86,8 @@ namespace SoloTravelAgent.ViewModel
             }       
         }
 
-        public void LoadTrips()
+
+        private void LoadTrips()
         {
             var trips = _tripService.GetAllTrips();
             Trips.Clear();
@@ -117,7 +123,6 @@ namespace SoloTravelAgent.ViewModel
                 _tripService.RemoveTrip(_tripService.GetTrip(SelectedTrip.Id));
                 LoadTrips();
                 OnPropertyChanged(nameof(TripCount));
-
             }
         }
 
@@ -131,6 +136,20 @@ namespace SoloTravelAgent.ViewModel
         {
            
             return SelectedTrip != null;
+        }
+
+        private bool FilterTrips(object obj)
+        {
+            var trip = obj as Trip;
+            if (trip == null) return false;
+
+            // Return trips where Name starts with SearchText
+            return trip.Name.StartsWith(SearchText, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private void FilterCollection()
+        {
+            FilteredTrips.Refresh();
         }
 
         protected virtual void OnPropertyChanged(string propertyName)

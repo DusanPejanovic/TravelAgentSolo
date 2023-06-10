@@ -42,7 +42,7 @@
                         </Grid>
                         <TextBlock Text="{Binding Path=TripCount, StringFormat={}{0} Trips}" Grid.Row="2" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <!-- Trips Card -->
-                        <ScrollViewer Grid.Row="3">
+                        <ScrollViewer Grid.Row="5">
                             <ItemsControl ItemsSource="{Binding Trips}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
