@@ -56,29 +56,22 @@
 
                
                  <!--Filter Textbox-->                <!--Filter ComboBox-->
-                        <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
+                        <Grid Width="130" HorizontalAlignment="Right" Grid.Row="4" Margin="0 0 -12 0">
                             <ComboBox SelectedIndex="0" Height="35" Style="{StaticResource filterCombobox}">
-                                <ComboBoxItem>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="" FontFamily="Segoe MDL2 Assets" Foreground="White" VerticalAlignment="Center" Margin="7 -2 0 0" Width="11" Height="11"/>
-                                        <TextBlock Text="Filter By" Padding="6 6 10 10" Foreground="Black" IsHitTestVisible="False" />
-                                    </StackPanel>
-                                </ComboBoxItem>
-                                <ComboBoxItem Content="Price > 1500" />
-                                <ComboBoxItem Content="Next Week" />
-                                <ComboBoxItem Content="Option 3" />
+
+                                <ComboBoxItem MinHeight="35" Width="100" Foreground="#185FAD" Background="White" Content="Price > 1500" />
+                                <ComboBoxItem MinHeight="35"  Width="100" Foreground="#185FAD" Background="White" Content="Next Week" />
+                                <ComboBoxItem MinHeight="35"  Width="100" Foreground="#185FAD" Background="White" Content="Option 3" />
                             </ComboBox>
                         </Grid>
 
 
-
                         <Grid Width="280" HorizontalAlignment="Center" Grid.Row="4" Margin="0 0 150 0">
                             <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
-                                Panel.ZIndex="1" Text="Search here ..."
-                                Visibility="{Binding ElementName=textBoxSearch, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
+    Panel.ZIndex="1" Text="Search here ..."
+    Visibility="{Binding IsSearchEmpty, Converter={StaticResource BoolToVis}}" />
 
-                            <TextBox Style="{StaticResource searchTextbox}"/>
-
+                            <TextBox   Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
                             <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
                         </Grid>
 
