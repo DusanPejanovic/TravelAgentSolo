@@ -42,6 +42,12 @@ namespace SoloTravelAgent.Model.Service
         {
             _tripRepository.Remove(trip);
         }
+
+        public IEnumerable<Trip> GetFilteredTrips(Func<Trip, bool> filterCondition)
+        {
+            var allTrips = GetAllTrips();
+            return allTrips.Where(filterCondition);
+        }
     }
 
 }

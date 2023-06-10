@@ -22,8 +22,11 @@ namespace SoloTravelAgent.ViewModel
         private bool _isSearchEmpty = true;
         private ICollectionView _filteredTrips;
 
+        public ObservableCollection<Trip> FilteredTrips { get; private set; } = new ObservableCollection<Trip>();
+
         public TripViewModel(TravelSystemDbContext dbContext)
         {
+            Trips = new ObservableCollection<Trip>();
             _tripService = new TripService(dbContext);
             LoadTrips();
             AddTripCommand = new RelayCommand<Trip>(trip => AddTrip(trip), _ => CanAddOrUpdateTrip());
@@ -42,6 +45,16 @@ namespace SoloTravelAgent.ViewModel
         public ICommand UpdateTripCommand { get; set; }
 
         public ICommand DeleteTripCommand { get; set; }
+
+        public void ApplyFilter(Func<Trip, bool> filterCondition)
+        {
+            var filteredTrips = _tripService.GetFilteredTrips(filterCondition);
+            FilteredTrips.Clear();
+            foreach (var trip in filteredTrips)
+            {
+                FilteredTrips.Add(trip);
+            }
+        }
 
         public string SearchText
         {
@@ -70,21 +83,9 @@ namespace SoloTravelAgent.ViewModel
             get
             {
                 return Trips?.Count ?? 0;
-            }
+            }       
         }
 
-        public ICollectionView FilteredTrips
-        {
-            get
-            {
-                if (_filteredTrips == null)
-                {
-                    _filteredTrips = CollectionViewSource.GetDefaultView(Trips);
-                    _filteredTrips.Filter = FilterTrips;
-                }
-                return _filteredTrips;
-            }
-        }
 
         private void LoadTrips()
         {
@@ -94,7 +95,9 @@ namespace SoloTravelAgent.ViewModel
             {
                 Trips.Add(trip);
             }
+           
             OnPropertyChanged(nameof(TripCount));
+        
         }
 
         public void AddTrip(Trip trip)
@@ -125,13 +128,13 @@ namespace SoloTravelAgent.ViewModel
 
         private bool CanAddOrUpdateTrip()
         {
-            // Add your logic to determine if Add or Update buttons should be enabled
+          
             return true;
         }
 
         private bool CanDeleteTrip()
         {
-            // Add your logic to determine if the Delete button should be enabled
+           
             return SelectedTrip != null;
         }
 

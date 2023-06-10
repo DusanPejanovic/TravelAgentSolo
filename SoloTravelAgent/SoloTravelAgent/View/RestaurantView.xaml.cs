@@ -123,6 +123,24 @@ namespace SoloTravelAgent.View
                 this.DragMove();
             }
         }
-}
+
+        private void ComboBox_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            comboBox.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C88EA7"));
+
+        }
+
+        private void ComboBox_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            comboBox.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#917FB3"));
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        { }
+
+        }
 
 }
