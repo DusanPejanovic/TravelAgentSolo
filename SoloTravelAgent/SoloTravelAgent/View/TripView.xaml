@@ -56,12 +56,17 @@
 
                
                  <!--Filter Textbox-->                <!--Filter ComboBox-->
-                        <Grid Width="130" HorizontalAlignment="Right" Grid.Row="4" Margin="0 0 -12 0">
-                            <ComboBox SelectedIndex="0" Height="35" Style="{StaticResource filterCombobox}">
-
-                                <ComboBoxItem MinHeight="35" Width="100" Foreground="#185FAD" Background="White" Content="Price > 1500" />
-                                <ComboBoxItem MinHeight="35"  Width="100" Foreground="#185FAD" Background="White" Content="Next Week" />
-                                <ComboBoxItem MinHeight="35"  Width="100" Foreground="#185FAD" Background="White" Content="Option 3" />
+                        <Grid Width="150" HorizontalAlignment="Right" Grid.Row="4" Margin="0 0 -12 0">
+                            <ComboBox SelectedIndex="0" Height="35" Style="{StaticResource filterCombobox}" SelectionChanged="ComboBox_SelectionChanged"
+              MouseEnter="ComboBox_MouseEnter"
+              MouseLeave="ComboBox_MouseLeave">
+                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="No Filter" />
+                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Price >= 1500" />
+                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Price &lt; 1500" />
+                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="This Month" />
+                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Next Month" />
+                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Next Week" />
+                              
                             </ComboBox>
                         </Grid>
 

@@ -20,8 +20,11 @@ namespace SoloTravelAgent.ViewModel
         private string _searchText;
         private bool _isSearchEmpty = true;
 
+        public ObservableCollection<Trip> FilteredTrips { get; private set; } = new ObservableCollection<Trip>();
+
         public TripViewModel(TravelSystemDbContext dbContext)
         {
+            Trips = new ObservableCollection<Trip>();
             _tripService = new TripService(dbContext);
             LoadTrips();
             AddTripCommand = new RelayCommand<Trip>(trip => AddTrip(trip), _ => CanAddOrUpdateTrip());
@@ -38,6 +41,16 @@ namespace SoloTravelAgent.ViewModel
         public ICommand UpdateTripCommand { get; set; }
 
         public ICommand DeleteTripCommand { get; set; }
+
+        public void ApplyFilter(Func<Trip, bool> filterCondition)
+        {
+            var filteredTrips = _tripService.GetFilteredTrips(filterCondition);
+            FilteredTrips.Clear();
+            foreach (var trip in filteredTrips)
+            {
+                FilteredTrips.Add(trip);
+            }
+        }
 
         public string SearchText
         {
@@ -65,10 +78,10 @@ namespace SoloTravelAgent.ViewModel
             get
             {
                 return Trips?.Count ?? 0;
-            }
+            }       
         }
 
-        private void LoadTrips()
+        public void LoadTrips()
         {
             var trips = _tripService.GetAllTrips();
             Trips.Clear();
@@ -76,7 +89,9 @@ namespace SoloTravelAgent.ViewModel
             {
                 Trips.Add(trip);
             }
+           
             OnPropertyChanged(nameof(TripCount));
+        
         }
 
         public void AddTrip(Trip trip)
@@ -108,13 +123,13 @@ namespace SoloTravelAgent.ViewModel
 
         private bool CanAddOrUpdateTrip()
         {
-            // Add your logic to determine if Add or Update buttons should be enabled
+          
             return true;
         }
 
         private bool CanDeleteTrip()
         {
-            // Add your logic to determine if the Delete button should be enabled
+           
             return SelectedTrip != null;
         }
 
