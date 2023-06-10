@@ -45,9 +45,10 @@ namespace SoloTravelAgent.View
                 var trip = button.DataContext as Trip; // Assuming your trip model class is called Trip
                 if (trip != null)
                 {
-                    // Assuming the ViewTripWindow is the window you want to navigate to
-                    var viewTripWindow = new ViewTripWindow(trip);
-                    viewTripWindow.Show();
+
+                    var restaurantView = new RestaurantMarketView(trip);
+                    restaurantView.Show();
+                    this.Close();
                 }
             }
         }
