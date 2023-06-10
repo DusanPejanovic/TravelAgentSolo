@@ -22,7 +22,7 @@ namespace SoloTravelAgent.ViewModel
         private bool _isSearchEmpty = true;
         private ICollectionView _filteredTrips;
 
-        public ObservableCollection<Trip> FilteredTrips { get; private set; } = new ObservableCollection<Trip>();
+  
 
         public TripViewModel(TravelSystemDbContext dbContext)
         {
@@ -46,15 +46,7 @@ namespace SoloTravelAgent.ViewModel
 
         public ICommand DeleteTripCommand { get; set; }
 
-        public void ApplyFilter(Func<Trip, bool> filterCondition)
-        {
-            var filteredTrips = _tripService.GetFilteredTrips(filterCondition);
-            FilteredTrips.Clear();
-            foreach (var trip in filteredTrips)
-            {
-                FilteredTrips.Add(trip);
-            }
-        }
+     
 
         public string SearchText
         {
@@ -87,7 +79,7 @@ namespace SoloTravelAgent.ViewModel
         }
 
 
-        private void LoadTrips()
+        public void LoadTrips()
         {
             var trips = _tripService.GetAllTrips();
             Trips.Clear();
@@ -137,7 +129,18 @@ namespace SoloTravelAgent.ViewModel
            
             return SelectedTrip != null;
         }
-
+        public ICollectionView FilteredTrips
+        {
+            get
+            {
+                if (_filteredTrips == null)
+                {
+                    _filteredTrips = CollectionViewSource.GetDefaultView(Trips);
+                    _filteredTrips.Filter = FilterTrips;
+                }
+                return _filteredTrips;
+            }
+        }
         private bool FilterTrips(object obj)
         {
             var trip = obj as Trip;
