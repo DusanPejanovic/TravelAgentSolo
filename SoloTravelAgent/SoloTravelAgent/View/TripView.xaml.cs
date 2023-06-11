@@ -221,7 +221,7 @@ namespace SoloTravelAgent.View
         private List<Trip> FilterPriceLowerThan1500()
         {
             _viewModel.LoadTrips();
-            var trips = _viewModel.Trips; // Assuming you have a collection of trips in your ViewModel
+            var trips = _viewModel.Trips; 
             return trips.Where(trip => trip.Price < 1500).ToList();
         }
 

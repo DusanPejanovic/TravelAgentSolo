@@ -137,7 +137,58 @@ namespace SoloTravelAgent.View
             comboBox.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#917FB3"));
 
         }
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) { }
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            ComboBoxItem selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+
+            if (selectedItem != null && _viewModel != null)
+            {
+                string selectedContent = selectedItem.Content.ToString();
+
+                if (selectedContent == "Fee >= 1500")
+                {
+                    List<TouristAttraction> filteredAttractons = FilterPriceGreaterThanOrEqualTo1500();
+                    UpdateTouristCollection(filteredAttractons);
+                }
+                else if (selectedContent == "Fee < 1500")
+                {
+                    List<TouristAttraction> filteredAttr = FilterPriceLowerThan1500();
+                    UpdateTouristCollection(filteredAttr);
+                }
+                else if (selectedContent == "No Filter")
+                {
+                    _viewModel.LoadTouristAttractions();
+                }
+
+            }
+        }
+
+        private List<TouristAttraction> FilterPriceGreaterThanOrEqualTo1500()
+        {
+            _viewModel.LoadTouristAttractions();
+            var attractions = _viewModel.TouristAttractions;
+            return attractions.Where(attraction => attraction.EntryFee >= 1500).ToList();
+        }
+
+        private List<TouristAttraction> FilterPriceLowerThan1500()
+        {
+            _viewModel.LoadTouristAttractions();
+            var attractions = _viewModel.TouristAttractions;
+            return attractions.Where(attraction => attraction.EntryFee < 1500).ToList();
+        }
+
+        private void UpdateTouristCollection(List<TouristAttraction> newAttractions)
+        {
+            _viewModel.TouristAttractions.Clear();
+            foreach (var attraction in newAttractions)
+            {
+                _viewModel.TouristAttractions.Add(attraction);
+            }
+        }
+
+
+       
     }
 
 

@@ -45,7 +45,7 @@ namespace SoloTravelAgent.ViewModel
 
         public ICommand DeleteRestaurantCommand { get; set; }
 
-        private void LoadRestaurants()
+        public void LoadRestaurants()
         {   
             if (_selectedTrip != null)
             {

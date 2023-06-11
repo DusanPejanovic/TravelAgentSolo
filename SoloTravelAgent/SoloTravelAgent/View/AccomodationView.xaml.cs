@@ -143,6 +143,56 @@ namespace SoloTravelAgent.View
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        { }
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            ComboBoxItem selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+
+            if (selectedItem != null && _viewModel != null)
+            {
+                string selectedContent = selectedItem.Content.ToString();
+
+                if (selectedContent == "Stars == 5")
+                {
+                    List<Accommodation> filteredAcc = FilterBestAccommodation();
+                    UpdateCollection(filteredAcc);
+                }
+                else if (selectedContent == "Stars >= 3")
+                {
+                    List<Accommodation> filteredAcc = FilteBetterThan3();
+                    UpdateCollection(filteredAcc);
+                }
+                else if (selectedContent == "No Filter")
+                {
+                    _viewModel.LoadAccommodations();
+                }
+
+
+            }
+        }
+
+        private List<Accommodation> FilterBestAccommodation()
+        {
+            _viewModel.LoadAccommodations();
+            var Accommodations = _viewModel.Accommodations;
+            return Accommodations.Where(Accommodation => Accommodation.Stars == 5).ToList();
+        }
+
+        private List<Accommodation> FilteBetterThan3()
+        {
+            _viewModel.LoadAccommodations();
+            var  Accommodations = _viewModel.Accommodations;
+            return Accommodations.Where(Accommodation => Accommodation.Stars >= 3).ToList();
+        }
+
+
+
+        private void UpdateCollection(List<Accommodation> newAttractions)
+        {
+            _viewModel.Accommodations.Clear();
+            foreach (var attraction in newAttractions)
+            {
+                _viewModel.Accommodations.Add(attraction);
+            }
+        }
     }
 }
