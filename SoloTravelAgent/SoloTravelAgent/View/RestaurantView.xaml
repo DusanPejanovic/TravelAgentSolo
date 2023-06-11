@@ -67,11 +67,10 @@
               MouseEnter="ComboBox_MouseEnter"
               MouseLeave="ComboBox_MouseLeave">
                                 <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="No Filter" />
-                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Price >= 1500" />
-                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Price &lt; 1500" />
-                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="This Month" />
-                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Next Month" />
-                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Next Week" />
+                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Italian Cuisine" />
+                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Chinese Cuisine" />
+                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Mexican Cuisine" />
+                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Serbian Cuisine" />
 
                             </ComboBox>
                         </Grid>

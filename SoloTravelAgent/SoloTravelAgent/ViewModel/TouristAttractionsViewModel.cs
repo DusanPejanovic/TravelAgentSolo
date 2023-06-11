@@ -71,7 +71,7 @@ namespace SoloTravelAgent.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void LoadTouristAttractions()
+        public void LoadTouristAttractions()
         {
             if (_selectedTrip != null)
             {

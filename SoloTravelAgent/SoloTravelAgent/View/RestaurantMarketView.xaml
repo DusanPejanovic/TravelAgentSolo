@@ -36,6 +36,7 @@
 
                         <TextBlock Text="{Binding SelectedTrip.Name, TargetNullValue='No Trip Selected'}" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="40 20 0 0" Foreground="#121518" HorizontalAlignment="Left"/>
 
+                      
 
 
                         <!--Add Button-->
