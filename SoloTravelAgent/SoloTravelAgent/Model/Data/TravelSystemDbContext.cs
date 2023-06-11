@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SoloTravelAgent.Model.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SoloTravelAgent.Model.Data
 {
@@ -17,11 +12,11 @@ namespace SoloTravelAgent.Model.Data
         public DbSet<Accommodation> Accommodations { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<TouristAttraction> TouristAttractions { get; set; }
-
         public DbSet<TripTouristAttraction> TripTouristAttractions { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=C:\\Users\\Anastasija\\Desktop\\HCI-TravelAgent\\TravelAgentSolo\\SoloTravelAgent\\SoloTravelAgent\\travel_system.db").UseLazyLoadingProxies();
+            optionsBuilder.UseSqlite("Data Source=C:\\Users\\jovanserbedzija\\Desktop\\TravelAgentSolo\\SoloTravelAgent\\SoloTravelAgent\\travel_system.db").UseLazyLoadingProxies();
         }
     }
 }

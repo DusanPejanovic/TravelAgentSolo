@@ -8,6 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\close.png" />
+    <None Remove="Resources\Images\Email.png" />
+    <None Remove="Resources\Images\facebook.png" />
+    <None Remove="Resources\Images\google.png" />
+    <None Remove="Resources\Images\linkedin.png" />
+    <None Remove="Resources\Images\Lock.png" />
+    <None Remove="Resources\Images\PhoneNumber.png" />
+    <None Remove="Resources\Images\UserIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome5" Version="2.1.11" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
     <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
     <PackageReference Include="MaterialDesignThemes.Wpf" Version="1.0.1" />
@@ -27,6 +39,33 @@
     <PackageReference Include="Syncfusion.SfSkinManager.WPF" Version="21.2.6" />
     <PackageReference Include="Syncfusion.Themes.MaterialLight.WPF" Version="21.2.6" />
     <PackageReference Include="Syncfusion.Tools.WPF" Version="21.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\close.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Email.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\facebook.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\google.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\linkedin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Lock.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\PhoneNumber.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\UserIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

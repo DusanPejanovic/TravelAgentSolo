@@ -2,11 +2,7 @@
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Repository.Implements;
 using SoloTravelAgent.Model.Repository;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SoloTravelAgent.Model.Service
 {
@@ -43,6 +39,7 @@ namespace SoloTravelAgent.Model.Service
         {
             _restaurantRepository.Remove(restaurant);
         }
+
         //public IEnumerable<Restaurant> GetRestaurantsByTrip(int tripId)
         //{
         //    return _restaurantRepository.GetAll().Where(r => r.TripId == tripId);
