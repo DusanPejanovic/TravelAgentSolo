@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SoloTravelAgent.Model.Data;
+using SoloTravelAgent.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -38,7 +40,6 @@ namespace SoloTravelAgent.View.Controls
                 }
             }
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

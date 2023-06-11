@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SoloTravelAgent.Model.Service
 {
@@ -42,6 +43,16 @@ namespace SoloTravelAgent.Model.Service
         public void RemoveAgent(Agent agent)
         {
             _agentRepository.Remove(agent);
+        }
+
+        public Agent Login(string email, string password)
+        {
+            return _agentRepository.GetAll().SingleOrDefault(c => c.Email == email && c.Password == password);
+        }
+
+        public bool IsEmailTaken(string email)
+        {
+            return _agentRepository.GetAll().Any(client => client.Email == email);
         }
     }
 }
