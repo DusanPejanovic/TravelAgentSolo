@@ -139,8 +139,84 @@ namespace SoloTravelAgent.View
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        { }
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            ComboBoxItem selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+
+            if (selectedItem != null && _viewModel != null)
+            {
+                string selectedContent = selectedItem.Content.ToString();
+                if (selectedContent == "Italian Cuisine")
+                {
+                    List<Restaurant> filteredRes = FilterItalianCuisine();
+                    UpdateCollection(filteredRes);
+                }
+                else if (selectedContent == "Mexican Cuisine")
+                {
+                    List<Restaurant> filteredRes = FilterMexicanCuisine();
+                    UpdateCollection(filteredRes);
+                }
+                else if (selectedContent == "Serbian Cuisine")
+                {
+                    List<Restaurant> filteredRes = FilterSerbianCuisine();
+                    UpdateCollection(filteredRes);
+                }
+                else if (selectedContent == "Chinese Cuisine")
+                {
+                    List<Restaurant> filteredRes = FilterChineseCuisine();
+                    UpdateCollection(filteredRes);
+                }
+                else if (selectedContent == "No Filter")
+                {
+                    _viewModel.LoadRestaurants();
+                }
+            }
+
 
         }
+        private void UpdateCollection(List<Restaurant> newRestaurants)
+        {
+            _viewModel.Restaurants.Clear();
+            foreach (var Restaurant in newRestaurants)
+            {
+                _viewModel.Restaurants.Add(Restaurant);
+            }
+        }
+
+        private List<Restaurant> FilterItalianCuisine()
+        {
+            _viewModel.LoadRestaurants();
+            var Restaurants = _viewModel.Restaurants;
+            return Restaurants.Where(Restaurant => Restaurant.Cuisine == "Italian").ToList();
+        }
+
+        private List<Restaurant> FilterChineseCuisine()
+        {
+            _viewModel.LoadRestaurants();
+            var Restaurants = _viewModel.Restaurants;
+            return Restaurants.Where(Restaurant => Restaurant.Cuisine == "Chinese").ToList();
+        }
+
+        private List<Restaurant> FilterSerbianCuisine()
+        {
+            _viewModel.LoadRestaurants();
+            var Restaurants = _viewModel.Restaurants;
+            return Restaurants.Where(Restaurant => Restaurant.Cuisine == "Serbian").ToList();
+        }
+
+
+        private List<Restaurant> FilterMexicanCuisine()
+        {
+            _viewModel.LoadRestaurants();
+            var Restaurants = _viewModel.Restaurants;
+            return Restaurants.Where(Restaurant => Restaurant.Cuisine == "Mexican").ToList();
+        }
+
+
+
+    }
+
+
+
 
 }
