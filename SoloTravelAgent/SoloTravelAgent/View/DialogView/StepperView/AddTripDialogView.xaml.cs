@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,9 @@ namespace SoloTravelAgent.View.DialogView.StepperView
             _dbContext = dbContext;
             InitializeComponent();
 
+            Debug.WriteLine("DOLE JE");
+            Debug.WriteLine(_dbContext);
+
             _viewModel.AddTripAction += () =>
             {
                 var existingAttractions = GetExistingAttractions(_viewModel.Attractions);
@@ -44,6 +48,8 @@ namespace SoloTravelAgent.View.DialogView.StepperView
                     Price = _viewModel.Price,
                     StartDate = _viewModel.StartDate,
                     EndDate = _viewModel.EndDate,
+                    Longitude = _viewModel.Longitude,
+                    Latitude = _viewModel.Latitude,
                     Restaurants = _viewModel.Restaurants.ToList(),
                     Accommodations = _viewModel.Accommodations.ToList(),
                 };

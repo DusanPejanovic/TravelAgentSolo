@@ -24,7 +24,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Button Style="{StaticResource topButton}"  Click="BackButtonClicked" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 30 0 0" Grid.Row="1" Background="#dcdcdc">
+        <Button Style="{StaticResource topButton}"  Click="BackButtonClicked" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 30 0 0" Grid.Row="1" ToolTip="Go Back" Background="#dcdcdc">
             <Icon:PackIconMaterial Kind="ChevronLeft"/>
         </Button>
 

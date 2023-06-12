@@ -82,11 +82,11 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Style="{StaticResource gridEditButton}" Click="EditButton_Click">
-                                        <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                    <Button Style="{StaticResource gridEditButton}" Click="EditButton_Click" ToolTip="Edit">
+                                        <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"  ToolTip="Edit"/>
                                     </Button>
-                                    <Button Margin="5 0 5 0" Style="{StaticResource gridRemoveButton}" Click="DeleteButton_Click">
-                                        <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
+                                    <Button Margin="5 0 5 0" Style="{StaticResource gridRemoveButton}" Click="DeleteButton_Click"  ToolTip="Delete">
+                                        <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"  ToolTip="Delete"/>
                                     </Button>
                                     <Button Style="{StaticResource gridMapButton}">
                                         <StackPanel Orientation="Horizontal">

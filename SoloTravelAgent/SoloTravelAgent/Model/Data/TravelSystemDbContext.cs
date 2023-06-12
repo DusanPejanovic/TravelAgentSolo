@@ -16,7 +16,8 @@ namespace SoloTravelAgent.Model.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=C:\\Users\\jovanserbedzija\\Desktop\\TravelAgentSolo\\SoloTravelAgent\\SoloTravelAgent\\travel_system.db").UseLazyLoadingProxies();
+            optionsBuilder.UseSqlite("Data Source=C:\\Users\\Anastasija\\Desktop\\HCI-TravelAgent\\TravelAgentSolo\\SoloTravelAgent\\SoloTravelAgent\\travel_system.db").UseLazyLoadingProxies();
+
         }
     }
 }
