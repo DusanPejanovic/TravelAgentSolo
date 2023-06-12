@@ -397,3 +397,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 SoloTravelAgent/SoloTravelAgent/Model/Data/TravelSystemDbContext.cs
+SoloTravelAgent/SoloTravelAgent/Model/Data/TravelSystemDbContext.cs
