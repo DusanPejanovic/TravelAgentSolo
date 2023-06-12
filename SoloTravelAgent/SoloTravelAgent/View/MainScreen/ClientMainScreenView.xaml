@@ -9,6 +9,8 @@
         xmlns:v="clr-namespace:SoloTravelAgent.View"
         xmlns:ms="clr-namespace:SoloTravelAgent.View.MainScreen"
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        Height="700"
+        Width="1100"
         Title="ClientMainScreenView">
     
     <Window.Resources>
