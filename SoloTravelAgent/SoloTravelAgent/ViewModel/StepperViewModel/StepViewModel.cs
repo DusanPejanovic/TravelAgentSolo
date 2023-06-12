@@ -45,6 +45,8 @@ namespace SoloTravelAgent.ViewModel.StepperViewModel
         private string name;
         private string description;
         private decimal price;
+        private double longitude;
+        private double latitude;
         private DateTime startDate;
         private DateTime endDate;
         public ICommand SaveCommand { get; }
@@ -214,6 +216,30 @@ namespace SoloTravelAgent.ViewModel.StepperViewModel
                 price = value;
                 OnPropertyChanged(nameof(Price));
                 MarkAsDirty(nameof(Price));
+                RaisePropertyChanged();
+            }
+        }
+
+        public double Longitude
+        {
+            get { return longitude; }
+            set
+            {
+                longitude = value;
+                OnPropertyChanged(nameof(Longitude));
+                MarkAsDirty(nameof(Longitude));
+                RaisePropertyChanged();
+            }
+        }
+
+        public double Latitude
+        {
+            get { return latitude; }
+            set
+            {
+                latitude = value;
+                OnPropertyChanged(nameof(Latitude));
+                MarkAsDirty(nameof(Latitude));
                 RaisePropertyChanged();
             }
         }
@@ -419,6 +445,10 @@ namespace SoloTravelAgent.ViewModel.StepperViewModel
                         return ValidateDescription();
                     case nameof(Price):
                         return ValidatePrice();
+                    //case nameof(Latitude):
+                    //    return ValidatePrice();
+                    //case nameof(Longitude):
+                    //    return ValidatePrice();
 
                     default:
                         return null;
@@ -457,6 +487,17 @@ namespace SoloTravelAgent.ViewModel.StepperViewModel
 
             return null;
         }
+
+        //private string ValidatePrice()
+        //{
+
+        //    if (decimal.Longitude.)
+        //    {
+        //        return "Wrong value";
+        //    }
+
+        //    return null;
+        //}
         private void UpdateButtonVisibility()
         {
             ShowPreviousButton = CanGoToPreviousStep();

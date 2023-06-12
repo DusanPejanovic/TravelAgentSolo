@@ -7,29 +7,32 @@
              xmlns:local1="clr-namespace:SoloTravelAgent.ViewModel.StepperViewModel"
              Background="Transparent"
              Height="380" Width="270">
- 
-  
-        <Grid Margin="20,20,9,9">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+
+
+    <Grid Margin="20,15,9,9">
+        <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="240"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
           
-            </Grid.ColumnDefinitions>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+
+        </Grid.ColumnDefinitions>
         <Label Content="Name" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0"/>
-        <TextBox x:Name="Name"  Grid.Row="1" Grid.Column="0" Margin="0,0,0,6" Style="{StaticResource inputTextBox}">
+        <TextBox x:Name="Name"  Grid.Row="1" Grid.Column="0" Margin="0,0,0,4" Style="{StaticResource inputTextBox}">
             <TextBox.Text>
                 <Binding Path="Name" 
                                          UpdateSourceTrigger="PropertyChanged"
@@ -41,7 +44,7 @@
         </TextBox>
 
         <Label Content="Description" Grid.Row="2" Grid.Column="0" Margin="0,0,0,0"/>
-        <TextBox x:Name="Description"  Grid.Row="3" Grid.Column="0" Margin="0,0,0,6"  Style="{StaticResource inputTextBox}">
+        <TextBox x:Name="Description"  Grid.Row="3" Grid.Column="0" Margin="0,0,0,4"  Style="{StaticResource inputTextBox}">
             <TextBox.Text>
                 <Binding Path="Description" 
                                          UpdateSourceTrigger="PropertyChanged"
@@ -53,7 +56,7 @@
         </TextBox>
 
         <Label Content="Price" Grid.Row="4" Grid.Column="0"  Margin="0,0,0,0"/>
-        <TextBox x:Name="Price"  Grid.Row="5" Grid.Column="0" Style="{StaticResource inputTextBox}" Margin="0,0,0,6">
+        <TextBox x:Name="Price"  Grid.Row="5" Grid.Column="0" Style="{StaticResource inputTextBox}" Margin="0,0,0,4">
             <TextBox.Text>
                 <Binding Path="Price" 
                                          UpdateSourceTrigger="PropertyChanged"
@@ -64,13 +67,35 @@
             </TextBox.Text>
         </TextBox>
 
+        <Label Content="Latitude" Grid.Row="6" Grid.Column="0"  Margin="0,0,0,0"/>
+        <TextBox x:Name="Latitude"   Grid.Row="7" Grid.Column="0" Style="{StaticResource inputTextBox}" Margin="0,0,133,0" VerticalAlignment="Top">
+            <TextBox.Text>
+                <Binding Path="Latitude" 
+                                         UpdateSourceTrigger="LostFocus"
+                                         Mode="TwoWay"
+                                         ValidatesOnDataErrors="True"
+                                         >
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
 
-        <Label Content="Start Date" Grid.Row="6" Grid.Column="0" Margin="0,0,0,0"/>
-            <DatePicker x:Name="StartDate" SelectedDate="{Binding StartDate}"  Grid.Row="7" Grid.Column="1" Margin="0,0,0,6"/>
+        <Label Content="Longitude" Grid.Row="6" Grid.Column="0"  Margin="120,0,-120,28" Grid.RowSpan="2"/>
+        <TextBox x:Name="Longitude"  Grid.Row="7" Grid.Column="0" Style="{StaticResource inputTextBox}" Margin="124,0,0,0">
+            <TextBox.Text>
+                <Binding Path="Longitude" 
+                                         UpdateSourceTrigger="LostFocus"
+                                         Mode="TwoWay"
+                                         ValidatesOnDataErrors="True"
+                                         >
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Label Content="Start Date" Grid.Row="10" Grid.Column="0" Margin="0,0,0,0"/>
+        <DatePicker x:Name="StartDate" SelectedDate="{Binding StartDate}"  Grid.Row="11" Grid.Column="1" Margin="0,0,0,6"/>
 
-            <Label Content="End Date" Grid.Row="8" Grid.Column="8" Margin="0,0,0,0"/>
-            <DatePicker x:Name="EndDate" SelectedDate="{Binding EndDate}" Grid.Row="9" Grid.Column="9" Margin="0,0,0,6" />
+        <Label Content="End Date" Grid.Row="12" Grid.Column="8" Margin="0,0,0,0"/>
+        <DatePicker x:Name="EndDate" SelectedDate="{Binding EndDate}" Grid.Row="13" Grid.Column="9" Margin="0,0,0,9" />
 
-        </Grid>
+    </Grid>
 
 </UserControl>

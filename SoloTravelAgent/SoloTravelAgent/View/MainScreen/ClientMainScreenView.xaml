@@ -8,14 +8,17 @@
         xmlns:vm="clr-namespace:SoloTravelAgent.ViewModel"
         xmlns:v="clr-namespace:SoloTravelAgent.View"
         xmlns:ms="clr-namespace:SoloTravelAgent.View.MainScreen"
-        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        WindowStartupLocation="CenterScreen"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks" AllowsTransparency="True" Background="Transparent"
+        WindowStyle="None"
         Height="700"
+     
         Width="1100"
-        Title="ClientMainScreenView">
+      >
     
     <Window.Resources>
         <local:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
-
+        
         <DataTemplate DataType="{x:Type vm:TripMarketViewModel}">
             <v:TripMarketView/>
         </DataTemplate>
@@ -33,32 +36,34 @@
         </DataTemplate>
     </Window.Resources>
 
-    <Grid Background="#EFF2F7">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Border CornerRadius="30" Background="#EFF2F7" Margin="10">
+        <Grid Background="#EFF2F7"  >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <!--Menu Button-->
-        <Button Style="{StaticResource topButton}" HorizontalAlignment="Left" Margin="20 28 0 15" Click="MenuButton_Click" Grid.Row="0">
-            <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15" />
-        </Button>
+            <!--Menu Button-->
+            <Button Style="{StaticResource topButton}" HorizontalAlignment="Left" Margin="20 28 0 15" Click="MenuButton_Click" Grid.Row="0" ToolTip="Menu">
+                <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15" />
+            </Button>
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="MenuColumn" Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="MenuColumn" Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <!--Menu Control-->
-            <ms:ClientMenuView x:Name="MenuControl" 
+                <!--Menu Control-->
+                <ms:ClientMenuView x:Name="MenuControl" 
                                Grid.Column="0" 
                                IsMenuVisible="{Binding IsMenuVisible, Mode=TwoWay}"
                                DataContext="{Binding MenuControlVM}"
                                Margin="0,0,0,0" />
 
-            <!--Main Section Content-->
-            <ContentPresenter Content="{Binding CurrentViewModel}" Grid.Column="1"/>
+                <!--Main Section Content-->
+                <ContentPresenter Content="{Binding CurrentViewModel}" Grid.Column="1"/>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

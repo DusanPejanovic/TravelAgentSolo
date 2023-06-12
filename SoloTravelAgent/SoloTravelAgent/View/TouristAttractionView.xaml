@@ -25,7 +25,7 @@
 
         <TextBlock Text="{Binding SelectedTrip.Name, TargetNullValue='No Trip Selected'}" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="40 20 0 0" Foreground="#121518" HorizontalAlignment="Left"/>
 
-        <Button Style="{StaticResource topButton}" Click="BackButtonClicked" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 30 0 0" Grid.Row="1" Background="#dcdcdc">
+        <Button Style="{StaticResource topButton}" Click="BackButtonClicked" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 30 0 0" Grid.Row="1" Background="#dcdcdc" ToolTip="Go Back">
             <Icon:PackIconMaterial Kind="ChevronLeft"/>
         </Button>
 
@@ -84,11 +84,11 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}" Click="EditButton_Click">
-                                    <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                <Button Style="{StaticResource gridEditButton}" Click="EditButton_Click" ToolTip="Edit">
+                                    <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}" ToolTip="Edit"/>
                                 </Button>
-                                <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}"  Click="DeleteButton_Click">
-                                    <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
+                                <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}"  Click="DeleteButton_Click" ToolTip="Delete">
+                                    <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}" ToolTip="Delete"/>
                                 </Button>
                             </StackPanel>
                         </DataTemplate>

@@ -8,11 +8,14 @@
              xmlns:vm="clr-namespace:SoloTravelAgent.ViewModel"
              xmlns:v="clr-namespace:SoloTravelAgent.View"
              xmlns:reportV="clr-namespace:SoloTravelAgent.View.Report"
+             WindowStartupLocation="CenterScreen"
              xmlns:reportVm="clr-namespace:SoloTravelAgent.ViewModel.Report"
              xmlns:bookingV="clr-namespace:SoloTravelAgent.View.BookingManagement"
              xmlns:bookingVm="clr-namespace:SoloTravelAgent.ViewModel.BookingManagement"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="750">
+              Height="700"
+     
+        Width="1100">
 
     <Window.Resources>
         <local:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
@@ -47,7 +50,7 @@
         </Grid.RowDefinitions>
 
         <!--Menu Button-->
-        <Button Style="{StaticResource topButton}" HorizontalAlignment="Left" Margin="20 28 0 15" Click="MenuButton_Click" Grid.Row="0">
+        <Button Style="{StaticResource topButton}" HorizontalAlignment="Left" Margin="20 28 0 15" ToolTip="" Click="MenuButton_Click" Grid.Row="0">
             <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15" />
         </Button>
 
