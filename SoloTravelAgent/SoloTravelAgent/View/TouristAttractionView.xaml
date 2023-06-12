@@ -18,7 +18,9 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>c:\users\jovanserbedzija\desktop\travelagentsolo\solotravelagent\solotravelagent\view\touristattractionview.xaml
+c:\users\jovanserbedzija\desktop\travelagentsolo\solotravelagent\solotravelagent\view\touristattractionview.xaml.cs
+
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
