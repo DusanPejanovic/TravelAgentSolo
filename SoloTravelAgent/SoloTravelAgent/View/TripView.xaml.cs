@@ -27,6 +27,8 @@ namespace SoloTravelAgent.View
             InitializeComponent();
             _viewModel = new TripViewModel();
             DataContext = _viewModel;
+            _dbContext = new TravelSystemDbContext();
+            
         }
 
         private void ComboBox_MouseEnter(object sender, MouseEventArgs e)
