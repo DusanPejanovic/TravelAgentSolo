@@ -7,6 +7,8 @@
              xmlns:local="clr-namespace:SoloTravelAgent.View.Controls"
              xmlns:vm="clr-namespace:SoloTravelAgent.ViewModel"
              xmlns:v="clr-namespace:SoloTravelAgent.View"
+             xmlns:reportV="clr-namespace:SoloTravelAgent.View.Report"
+             xmlns:reportVm="clr-namespace:SoloTravelAgent.ViewModel.Report"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="750">
 
@@ -27,6 +29,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:TouristAttractionsViewModel}">
             <v:TouristAttractionView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type reportVm:TripSellReportViewModel}">
+            <reportV:TripSellReportView/>
         </DataTemplate>
     </Window.Resources>
 
