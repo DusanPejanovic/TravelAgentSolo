@@ -28,16 +28,44 @@
                 <ColumnDefinition Width="240"/>
           
             </Grid.ColumnDefinitions>
-            <Label Content="Name" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0"/>
-        <TextBox x:Name="Name"  Text="{Binding Name, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" Margin="0,0,0,6" Style="{StaticResource inputTextBox}"/>
+        <Label Content="Name" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0"/>
+        <TextBox x:Name="Name"  Grid.Row="1" Grid.Column="0" Margin="0,0,0,6" Style="{StaticResource inputTextBox}">
+            <TextBox.Text>
+                <Binding Path="Name" 
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Mode="TwoWay"
+                                         ValidatesOnDataErrors="True"
+                                         >
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
 
-            <Label Content="Description" Grid.Row="2" Grid.Column="0" Margin="0,0,0,0"/>
-            <TextBox x:Name="Description" Text="{Binding Description}" Grid.Row="3" Grid.Column="0" Margin="0,0,0,6"  Style="{StaticResource inputTextBox}"/>
+        <Label Content="Description" Grid.Row="2" Grid.Column="0" Margin="0,0,0,0"/>
+        <TextBox x:Name="Description"  Grid.Row="3" Grid.Column="0" Margin="0,0,0,6"  Style="{StaticResource inputTextBox}">
+            <TextBox.Text>
+                <Binding Path="Description" 
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Mode="TwoWay"
+                                         ValidatesOnDataErrors="True"
+                                         >
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
 
-            <Label Content="Price" Grid.Row="4" Grid.Column="0" Margin="0,0,0,0"/>
-            <TextBox x:Name="Price" Text="{Binding Price}" Grid.Row="5" Grid.Column="0" Style="{StaticResource inputTextBox}" Margin="0,0,0,6"/>
+        <Label Content="Price" Grid.Row="4" Grid.Column="0"  Margin="0,0,0,0"/>
+        <TextBox x:Name="Price"  Grid.Row="5" Grid.Column="0" Style="{StaticResource inputTextBox}" Margin="0,0,0,6">
+            <TextBox.Text>
+                <Binding Path="Price" 
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Mode="TwoWay"
+                                         ValidatesOnDataErrors="True"
+                                         >
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
 
-            <Label Content="Start Date" Grid.Row="6" Grid.Column="0" Margin="0,0,0,0"/>
+
+        <Label Content="Start Date" Grid.Row="6" Grid.Column="0" Margin="0,0,0,0"/>
             <DatePicker x:Name="StartDate" SelectedDate="{Binding StartDate}"  Grid.Row="7" Grid.Column="1" Margin="0,0,0,6"/>
 
             <Label Content="End Date" Grid.Row="8" Grid.Column="8" Margin="0,0,0,0"/>

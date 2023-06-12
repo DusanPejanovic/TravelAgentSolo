@@ -7,10 +7,11 @@ using System.Windows.Input;
 using System.Runtime.CompilerServices;
 using SoloTravelAgent.Model.Entities;
 using System.ComponentModel;
+using GalaSoft.MvvmLight;
 
 namespace SoloTravelAgent.ViewModel.DialogViewModel
 {
-    internal class EditAccommodationViewModel : INotifyPropertyChanged
+    internal class EditAccommodationViewModel : ViewModelBase, INotifyPropertyChanged, IDataErrorInfo
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -29,6 +30,100 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
         public String originalWebsite;
         public String originalPhoneNumber;
 
+        private Dictionary<string, bool> _dirtyProperties = new Dictionary<string, bool>();
+
+
+        public string Error { get; set; }
+        private void MarkAsDirty(string propertyName)
+        {
+            _dirtyProperties[propertyName] = true;
+        }
+
+        private bool IsPropertyDirty(string propertyName)
+        {
+            return _dirtyProperties.ContainsKey(propertyName) && _dirtyProperties[propertyName];
+        }
+        public string this[string columnName]
+        {
+            get
+            {
+                if (!IsPropertyDirty(columnName))
+                {
+                    return null;
+                }
+
+                switch (columnName)
+                {
+                    case nameof(Name):
+                        return ValidateName();
+                    case nameof(Address):
+                        return ValidateAddress();
+                    case nameof(PhoneNumber):
+                        return ValidateContact();
+                    case nameof(Stars):
+                        return ValidateStars();
+                    case nameof(Website):
+                        return ValidateWebSite();
+
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        private string ValidateName()
+        {
+
+            if (string.IsNullOrWhiteSpace(Name))
+            {
+                return "Name cannot be empty";
+            }
+
+            return null;
+        }
+        private string ValidateAddress()
+        {
+
+            if (string.IsNullOrWhiteSpace(Address))
+            {
+                return "Address cannot be empty";
+            }
+
+            return null;
+        }
+
+        private string ValidateWebSite()
+        {
+
+            if (string.IsNullOrWhiteSpace(Website))
+            {
+                return "Website cannot be empty";
+            }
+
+            return null;
+        }
+
+        private string ValidateStars()
+        {
+
+            if (Stars < 0 || Stars > 5)
+            {
+                return "Wrong value";
+            }
+
+            return null;
+        }
+
+        private string ValidateContact()
+        {
+
+            if (string.IsNullOrWhiteSpace(PhoneNumber))
+            {
+                return "Contact cannot be empty";
+            }
+
+            return null;
+        }
         public EditAccommodationViewModel(Accommodation accommodationToEdit, Action updateAccommodationAction)
         {
             originalName = accommodationToEdit.Name;
@@ -64,6 +159,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     AccommodationToEdit.Name = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Name));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -77,6 +174,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     AccommodationToEdit.Address = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Address));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -90,6 +189,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     AccommodationToEdit.Stars = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Stars));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -103,6 +204,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     AccommodationToEdit.Website = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Website));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -116,6 +219,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     AccommodationToEdit.PhoneNumber = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(PhoneNumber));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -128,7 +233,11 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
 
         private bool CanSave()
         {
-            // Add your logic to determine if the Save button should be enabled
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Address) || Stars <= 0 || Stars > 5 || string.IsNullOrEmpty(Website) || string.IsNullOrEmpty(PhoneNumber))
+            {
+
+                return false;
+            }
             return true;
         }
 

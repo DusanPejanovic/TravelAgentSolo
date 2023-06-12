@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Runtime.CompilerServices;
 using SoloTravelAgent.Model.Entities;
+using GalaSoft.MvvmLight;
 
 namespace SoloTravelAgent.ViewModel.DialogViewModel
 {
-    internal class EditAttractionViewModel : INotifyPropertyChanged
-    {
+    internal class EditAttractionViewModel : ViewModelBase, INotifyPropertyChanged, IDataErrorInfo { 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public TouristAttraction AttractionToEdit { get; private set; }
@@ -28,7 +28,7 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
         public String originalDescription;
         public decimal originalEntryFee;
         public String originalWebsite;
-
+        private Dictionary<string, bool> _dirtyProperties = new Dictionary<string, bool>();
         public EditAttractionViewModel(TouristAttraction attractionToEdit, Action updateAttractionAction)
         {
             originalName = attractionToEdit.Name;
@@ -42,6 +42,100 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
             SaveCommand = new RelayCommand(_ => Save(), _ => CanSave());
             CancelCommand = new RelayCommand(_ => Cancel());
             _updateAttractionAction = updateAttractionAction;
+        }
+
+
+        public string Error { get; set; }
+        private void MarkAsDirty(string propertyName)
+        {
+            _dirtyProperties[propertyName] = true;
+        }
+
+        private bool IsPropertyDirty(string propertyName)
+        {
+            return _dirtyProperties.ContainsKey(propertyName) && _dirtyProperties[propertyName];
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (!IsPropertyDirty(columnName))
+                {
+                    return null;
+                }
+
+                switch (columnName)
+                {
+                    case nameof(Name):
+                        return ValidateName();
+                    case nameof(Address):
+                        return ValidateAddress();
+                    case nameof(Description):
+                        return ValidateDescription();
+                    case nameof(EntryFee):
+                        return ValidateEntryFee();
+                    case nameof(Website):
+                        return ValidateWebSite();
+
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        private string ValidateName()
+        {
+
+            if (string.IsNullOrWhiteSpace(Name))
+            {
+                return "Name cannot be empty";
+            }
+
+            return null;
+        }
+        private string ValidateAddress()
+        {
+
+            if (string.IsNullOrWhiteSpace(Address))
+            {
+                return "Address cannot be empty";
+            }
+
+            return null;
+        }
+
+        private string ValidateWebSite()
+        {
+
+            if (string.IsNullOrWhiteSpace(Website))
+            {
+                return "Website cannot be empty";
+            }
+
+            return null;
+        }
+
+        private string ValidateEntryFee()
+        {
+
+            if (EntryFee < 0)
+            {
+                return "Wrong value";
+            }
+
+            return null;
+        }
+
+        private string ValidateDescription()
+        {
+
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                return "Description cannot be empty";
+            }
+
+            return null;
         }
 
         public bool HasUnsavedChanges()
@@ -64,6 +158,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     AttractionToEdit.Name = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Name));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -77,6 +173,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     AttractionToEdit.Address = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Address));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -90,6 +188,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     AttractionToEdit.Description = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Description));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -103,6 +203,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     AttractionToEdit.EntryFee = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(EntryFee));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -116,6 +218,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     AttractionToEdit.Website = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Website));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -128,7 +232,11 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
 
         private bool CanSave()
         {
-            // Add your logic to determine if the Save button should be enabled
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Address) || EntryFee < 0 || string.IsNullOrEmpty(Website) || string.IsNullOrEmpty(Description))
+            {
+
+                return false;
+            }
             return true;
         }
 

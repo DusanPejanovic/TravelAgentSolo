@@ -4,6 +4,11 @@ using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SoloTravelAgent.ViewModel
@@ -85,7 +90,6 @@ namespace SoloTravelAgent.ViewModel
         public void AddRestaurant(Restaurant restaurant)
         {
             var trip = _tripService.GetTrip(SelectedTrip.Id);
-            
             trip.Restaurants?.Add(restaurant);
             _restaurantService.AddRestaurant(restaurant);
             _tripService.UpdateTrip(trip);

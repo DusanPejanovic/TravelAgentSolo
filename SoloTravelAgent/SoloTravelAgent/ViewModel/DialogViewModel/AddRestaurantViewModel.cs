@@ -8,10 +8,11 @@ using System.Windows.Input;
 using SoloTravelAgent.Model.Entities;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using GalaSoft.MvvmLight;
 
 namespace SoloTravelAgent.ViewModel.DialogViewModel
 {
-    internal class AddRestaurantViewModel : INotifyPropertyChanged
+    internal class AddRestaurantViewModel : ViewModelBase, INotifyPropertyChanged, IDataErrorInfo
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -23,6 +24,7 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
 
         private Action _addRestaurantAction;
         public event Action RequestClose = delegate { };
+        private Dictionary<string, bool> _dirtyProperties = new Dictionary<string, bool>();
 
         public AddRestaurantViewModel()
         {
@@ -31,6 +33,100 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
             CancelCommand = new RelayCommand(_ => Cancel());
          
         }
+
+        public string Error { get; set; }
+        private void MarkAsDirty(string propertyName)
+        {
+            _dirtyProperties[propertyName] = true;
+        }
+
+        private bool IsPropertyDirty(string propertyName)
+        {
+            return _dirtyProperties.ContainsKey(propertyName) && _dirtyProperties[propertyName];
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (!IsPropertyDirty(columnName))
+                {
+                    return null;
+                }
+
+                switch (columnName)
+                {
+                    case nameof(Name):
+                        return ValidateName();
+                    case nameof(Address):
+                        return ValidateAddress();
+                    case nameof(Cuisine):
+                        return ValidateCuisine();
+                    case nameof(PhoneNumber):
+                        return ValidatePhoneNumber();
+                    case nameof(Website):
+                        return ValidateWebSite();
+
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        private string ValidateName()
+        {
+
+            if (string.IsNullOrWhiteSpace(Name))
+            {
+                return "Name cannot be empty";
+            }
+
+            return null;
+        }
+        private string ValidateAddress()
+        {
+
+            if (string.IsNullOrWhiteSpace(Address))
+            {
+                return "Address cannot be empty";
+            }
+
+            return null;
+        }
+
+        private string ValidateWebSite()
+        {
+
+            if (string.IsNullOrWhiteSpace(Website))
+            {
+                return "Website cannot be empty";
+            }
+
+            return null;
+        }
+
+        private string ValidatePhoneNumber()
+        {
+
+            if (string.IsNullOrWhiteSpace(PhoneNumber))
+            {
+                return "Wrong value";
+            }
+
+            return null;
+        }
+
+        private string ValidateCuisine()
+        {
+
+            if (string.IsNullOrWhiteSpace(Cuisine))
+            {
+                return "Cuisine cannot be empty";
+            }
+
+            return null;
+        }
+
 
         public string Name
         {
@@ -41,6 +137,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     NewRestaurant.Name = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Name));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -54,6 +152,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     NewRestaurant.Address = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Address));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -67,6 +167,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     NewRestaurant.Cuisine = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Cuisine));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -80,6 +182,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     NewRestaurant.Website = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Website));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -93,6 +197,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     NewRestaurant.PhoneNumber = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(PhoneNumber));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -105,7 +211,11 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
 
         public bool CanSave()
         {
-            // Add your logic to determine if the Save button should be enabled
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Address) || string.IsNullOrEmpty(Cuisine) || string.IsNullOrEmpty(Website) || string.IsNullOrEmpty(PhoneNumber))
+            {
+
+                return false;
+            }
             return true;
         }
 

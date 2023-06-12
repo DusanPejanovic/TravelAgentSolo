@@ -33,19 +33,64 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Name" Grid.Row="0" Grid.Column="0" Margin="40,0,0,0"/>
-            <TextBox x:Name="Name"  Text="{Binding Name}"  Grid.Row="1" Grid.Column="0" Margin="40,0,0,6" Style="{StaticResource inputTextBox}"/>
+            <TextBox x:Name="Name"   Grid.Row="1" Grid.Column="0" Margin="40,0,0,6" Style="{StaticResource inputTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Name" 
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Mode="TwoWay"
+                                         ValidatesOnDataErrors="True"
+                                         >
+                    </Binding>
+                </TextBox.Text>
 
+            </TextBox>
             <Label Content="Address" Grid.Row="2" Grid.Column="0" Margin="40,0,0,0"/>
-            <TextBox x:Name="Address" Text="{Binding Address}" Grid.Row="3" Grid.Column="0" Margin="40,0,0,6"  Style="{StaticResource inputTextBox}"/>
+            <TextBox x:Name="Address"  Grid.Row="3" Grid.Column="0" Margin="40,0,0,6"  Style="{StaticResource inputTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Address" 
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Mode="TwoWay"
+                                         ValidatesOnDataErrors="True"
+                                         >
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
             <Label Content="Description" Grid.Row="4" Grid.Column="0" Margin="40,0,0,0"/>
-            <TextBox x:Name="Description" Text="{Binding Description}" Grid.Row="5" Grid.Column="0" Margin="40,0,0,6"  Style="{StaticResource inputTextBox}"/>
+            <TextBox x:Name="Description"  Grid.Row="5" Grid.Column="0" Margin="40,0,0,6"  Style="{StaticResource inputTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Description" 
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Mode="TwoWay"
+                                         ValidatesOnDataErrors="True"
+                                         >
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-            <Label Content="Entry Fee" Grid.Row="6" Grid.Column="0" Margin="40,0,0,0"/>
-            <TextBox x:Name="EntryFee" Text="{Binding EntryFee}" Grid.Row="7" Grid.Column="0" Margin="40,0,0,6"  Style="{StaticResource inputTextBox}"/>
+            <Label Content="Website" Grid.Row="6" Grid.Column="0" Margin="40,0,0,0"/>
+            <TextBox x:Name="Website"  Grid.Row="7" Grid.Column="0" Margin="40,0,0,6"  Style="{StaticResource inputTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Website" 
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Mode="TwoWay"
+                                         ValidatesOnDataErrors="True"
+                                         >
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-            <Label Content="Website" Grid.Row="8" Grid.Column="0" Margin="40,0,0,0"/>
-            <TextBox x:Name="Website" Text="{Binding Website}" Grid.Row="9" Grid.Column="0" Style="{StaticResource inputTextBox}" Margin="40,0,0,6"/>
+            <Label Content="Entry Fee" Grid.Row="8" Grid.Column="0" Margin="40,0,0,0"/>
+            <TextBox x:Name="EntryFee"  Grid.Row="9" Grid.Column="0" Style="{StaticResource inputTextBox}" Margin="40,0,0,6">
+                <TextBox.Text>
+                    <Binding Path="EntryFee" 
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Mode="TwoWay"
+                                         ValidatesOnDataErrors="True"
+                                         >
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
             <Button Content="Save Changes" Command="{Binding SaveCommand}" Grid.Row="10" Grid.Column="0" Margin="10 15 50 10" Grid.ColumnSpan="2"  Height="30"  Style="{StaticResource addButton}"/>
             <Button Content="Cancel" Grid.Row="10" Click="CloseButton_Click" HorizontalAlignment="Left" Grid.Column="0" Width="50" Margin="60 15 0 10"   Height="30" Style="{StaticResource gridMapButton}"/>

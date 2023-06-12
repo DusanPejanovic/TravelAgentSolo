@@ -20,10 +20,11 @@ using SoloTravelAgent.Model.Entities;
 using System.Diagnostics;
 using SoloTravelAgent.ViewModel.DragDrop;
 using SoloTravelAgent.Model.Data;
+using System.Windows;
 
 namespace SoloTravelAgent.ViewModel.StepperViewModel
 {
-    public class StepViewModel : INotifyPropertyChanged
+    public class StepViewModel : ViewModelBase, INotifyPropertyChanged, IDataErrorInfo
     {
         private ObservableCollection<string> stepViewItems;
         private int selectedIndex;
@@ -53,7 +54,7 @@ namespace SoloTravelAgent.ViewModel.StepperViewModel
         private Action _addTripAction;
         public event Action RequestClose = delegate { };
 
-
+        private Dictionary<string, bool> _dirtyProperties = new Dictionary<string, bool>();
 
 
         public StepViewModel()
@@ -90,13 +91,22 @@ namespace SoloTravelAgent.ViewModel.StepperViewModel
             remove => _addTripAction -= value;
         }
 
-   
 
         private void Save()
         {
+            if (!decimal.TryParse(Price.ToString(), out decimal parsedPrice))
+            {
+                MessageBox.Show("Price has to be decimal. ", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (string.IsNullOrEmpty(Name) || Price == 0 || StartDate == null || EndDate == null || string.IsNullOrEmpty(Description))
+            {
+                MessageBox.Show("Please fill in all the required fields in the Basic Info Step.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             _addTripAction?.Invoke();
             RequestClose.Invoke();
-            
         }
 
 
@@ -179,6 +189,8 @@ namespace SoloTravelAgent.ViewModel.StepperViewModel
             {
                 name = value;
                 OnPropertyChanged(nameof(Name));
+                MarkAsDirty(nameof(Name));
+                RaisePropertyChanged();
             }
         }
 
@@ -189,6 +201,8 @@ namespace SoloTravelAgent.ViewModel.StepperViewModel
             {
                 description = value;
                 OnPropertyChanged(nameof(Description));
+                MarkAsDirty(nameof(Description));
+                RaisePropertyChanged();
             }
         }
 
@@ -199,6 +213,8 @@ namespace SoloTravelAgent.ViewModel.StepperViewModel
             {
                 price = value;
                 OnPropertyChanged(nameof(Price));
+                MarkAsDirty(nameof(Price));
+                RaisePropertyChanged();
             }
         }
 
@@ -373,6 +389,74 @@ namespace SoloTravelAgent.ViewModel.StepperViewModel
             }
         }
 
+
+
+        public string Error { get; set; }
+        private void MarkAsDirty(string propertyName)
+        {
+            _dirtyProperties[propertyName] = true;
+        }
+
+        private bool IsPropertyDirty(string propertyName)
+        {
+            return _dirtyProperties.ContainsKey(propertyName) && _dirtyProperties[propertyName];
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (!IsPropertyDirty(columnName))
+                {
+                    return null;
+                }
+
+                switch (columnName)
+                {
+                    case nameof(Name):
+                        return ValidateName();
+                    case nameof(Description):
+                        return ValidateDescription();
+                    case nameof(Price):
+                        return ValidatePrice();
+
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        private string ValidateName()
+        {
+
+            if (string.IsNullOrWhiteSpace(Name))
+            {
+                return "Name cannot be empty";
+            }
+
+            return null;
+        }
+        private string ValidateDescription()
+        {
+
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                return "Description cannot be empty";
+            }
+
+            return null;
+        }
+
+        private string ValidatePrice()
+        {
+
+            if (Price < 0)
+            {
+                return "Wrong value";
+            }
+
+            return null;
+        }
         private void UpdateButtonVisibility()
         {
             ShowPreviousButton = CanGoToPreviousStep();

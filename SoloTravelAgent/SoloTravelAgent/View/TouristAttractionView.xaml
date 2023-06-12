@@ -18,9 +18,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>c:\users\jovanserbedzija\desktop\travelagentsolo\solotravelagent\solotravelagent\view\touristattractionview.xaml
-c:\users\jovanserbedzija\desktop\travelagentsolo\solotravelagent\solotravelagent\view\touristattractionview.xaml.cs
-
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
@@ -73,7 +71,6 @@ c:\users\jovanserbedzija\desktop\travelagentsolo\solotravelagent\solotravelagent
 
             <TextBox   Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
             <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
-        </Grid>
 
         <!--Attractions Datagrid-->
         <DataGrid Margin="-20 30 0 0" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" SelectedItem="{Binding SelectedTouristAttraction}" CellStyle="{DynamicResource DataGridCellStyle1}" ItemsSource="{Binding TouristAttractions}" Style="{DynamicResource DataGridStyle1}">
