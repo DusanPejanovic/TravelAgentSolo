@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="FontAwesome5" Version="2.1.11" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
     <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
@@ -66,6 +67,10 @@
     <Resource Include="Resources\Images\UserIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModel\Controls\" />
   </ItemGroup>
 
 </Project>

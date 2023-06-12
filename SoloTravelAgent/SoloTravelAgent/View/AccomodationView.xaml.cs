@@ -38,9 +38,9 @@ namespace SoloTravelAgent.View
         }
         private void BackButtonClicked(Object sender, RoutedEventArgs e)
         {
-            var w = new TripView();
-            w.Show();
-            this.Close();
+            //var w = new TripView();
+            //w.Show();
+            //this.Close();
         }
 
         public int RestaurantCount

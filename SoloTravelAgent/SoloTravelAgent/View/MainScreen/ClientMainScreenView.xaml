@@ -1,0 +1,53 @@
+﻿<Window x:Class="SoloTravelAgent.View.MainScreen.ClientMainScreenView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SoloTravelAgent.View.Controls"
+        mc:Ignorable="d"
+        xmlns:vm="clr-namespace:SoloTravelAgent.ViewModel"
+        xmlns:v="clr-namespace:SoloTravelAgent.View"
+        xmlns:ms="clr-namespace:SoloTravelAgent.View.MainScreen"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        Title="ClientMainScreenView">
+    
+    <Window.Resources>
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+
+        <DataTemplate DataType="{x:Type vm:TripMarketViewModel}">
+            <v:TripMarketView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AgentBookingsViewModel}">
+            <v:AgentBookingsView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid Background="#EFF2F7">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--Menu Button-->
+        <Button Style="{StaticResource topButton}" HorizontalAlignment="Left" Margin="20 28 0 15" Click="MenuButton_Click" Grid.Row="0">
+            <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15" />
+        </Button>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="MenuColumn" Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Menu Control-->
+            <ms:ClientMenuView x:Name="MenuControl" 
+                               Grid.Column="0" 
+                               IsMenuVisible="{Binding IsMenuVisible, Mode=TwoWay}"
+                               DataContext="{Binding MenuControlVM}"
+                               Margin="0,0,0,0" />
+
+            <!--Main Section Content-->
+            <ContentPresenter Content="{Binding CurrentViewModel}" Grid.Column="1"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -188,23 +188,5 @@ namespace SoloTravelAgent
             //tripService.AddTrip(tr);
             //tripService.AddTrip(tr2);
         }
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            var w = new TripMarketView();
-            w.Show();
-           
-        }
-
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-            var w = new TripView();
-            w.Show();
-
-        }
     }
 }

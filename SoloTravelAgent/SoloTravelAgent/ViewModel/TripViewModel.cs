@@ -22,8 +22,6 @@ namespace SoloTravelAgent.ViewModel
         private bool _isSearchEmpty = true;
         private ICollectionView _filteredTrips;
 
-  
-
         public TripViewModel(TravelSystemDbContext dbContext)
         {
             Trips = new ObservableCollection<Trip>();
@@ -45,8 +43,6 @@ namespace SoloTravelAgent.ViewModel
         public ICommand UpdateTripCommand { get; set; }
 
         public ICommand DeleteTripCommand { get; set; }
-
-     
 
         public string SearchText
         {

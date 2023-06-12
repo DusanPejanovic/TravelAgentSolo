@@ -43,9 +43,9 @@ namespace SoloTravelAgent.View
 
         private void BackButtonClicked(Object sender, RoutedEventArgs e)
         {
-            var w = new TripMarketView();
-            w.Show();
-            this.Close();
+            //var w = new TripMarketView();
+            //w.Show();
+            //this.Close();
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)

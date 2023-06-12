@@ -3,6 +3,8 @@ using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
 using SoloTravelAgent.View;
+using SoloTravelAgent.View.Controls;
+using SoloTravelAgent.View.MainScreen;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
@@ -139,14 +141,15 @@ namespace SoloTravelAgent.ViewModel.Authentication
             {
                 if (user is Client)
                 {
-                    var w = new TripMarketView();
+                    var w = new ClientMainScreenView();
                     w.Show();
                 } 
                 else if (user is Agent)
                 {
-                    var w = new TripView();
+                    var w = new AgentMainScreenView();
                     w.Show();
                 }
+                Application.Current.Windows[0].Close();
             } 
             else
             {
