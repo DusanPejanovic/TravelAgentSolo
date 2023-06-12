@@ -45,88 +45,23 @@ namespace SoloTravelAgent.Model.Service
             _bookingRepository.Remove(booking);
         }
 
-        public IEnumerable<TripStatistics> GetTripStatisticsForMonth(int year, int month)
+        public IEnumerable<Booking> GetBookingsByTripId(int tripId)
         {
-            return _bookingRepository
-                .GetAll()
-                .Where(b => b.BookingDate.Year == year && b.BookingDate.Month == month && b.IsPaid == true)
-                .GroupBy(b => new { b.Trip.Id, b.Trip.Name })
-                .Select(g => new TripStatistics
-                {
-                    TripId = g.Key.Id,
-                    TripName = g.Key.Name,
-                    NumberOfBookings = g.Count(),
-                    TotalMoneyEarned = g.Sum(b => b.Trip.Price)
-                })
-                .ToList();
+            return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId);
         }
 
-        public IEnumerable<TripStatistics> GetTripStatisticsForLastMonths(int months)
+        public IEnumerable<Booking> GetCurrentMonthBookingsForTrip(int tripId)
+        {
+            var now = DateTime.Now;
+            return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId && b.BookingDate.Month == now.Month && b.BookingDate.Year == now.Year);
+        }
+
+        public IEnumerable<Booking> GetBookingsForPreviousMonthsAndTrip(int months, int tripId)
         {
             var cutOffDate = DateTime.Now.AddMonths(-months);
-
             return _bookingRepository
                 .GetAll()
-                .Where(b => b.BookingDate >= cutOffDate && b.IsPaid == true)
-                .GroupBy(b => new { b.Trip.Id, b.Trip.Name })
-                .Select(g => new TripStatistics
-                {
-                    TripId = g.Key.Id,
-                    TripName = g.Key.Name,
-                    NumberOfBookings = g.Count(),
-                    TotalMoneyEarned = g.Sum(b => b.Trip.Price)
-                })
-                .ToList();
-        }
-
-        public IEnumerable<TripStatistics> GetTripStatisticsForAllTime()
-        {
-            return _bookingRepository
-                .GetAll()
-                .Where(b => b.IsPaid == true)
-                .GroupBy(b => new { b.Trip.Id, b.Trip.Name })
-                .Select(g => new TripStatistics
-                {
-                    TripId = g.Key.Id,
-                    TripName = g.Key.Name,
-                    NumberOfBookings = g.Count(),
-                    TotalMoneyEarned = g.Sum(b => b.Trip.Price)
-                })
-                .ToList();
-        }
-
-        public IEnumerable<TripStatistics> GetPopularTrips()
-        {
-            return _bookingRepository
-                .GetAll()
-                .Where(b => b.IsPaid == true)
-                .GroupBy(b => new { b.Trip.Id, b.Trip.Name })
-                .Select(g => new TripStatistics
-                {
-                    TripId = g.Key.Id,
-                    TripName = g.Key.Name,
-                    NumberOfBookings = g.Count(),
-                    TotalMoneyEarned = g.Sum(b => b.Trip.Price)
-                })
-                .Where(ts => ts.NumberOfBookings >= 5)
-                .ToList();
-        }
-
-        public IEnumerable<TripStatistics> GetProfitableTrips()
-        {
-            return _bookingRepository
-                .GetAll()
-                .Where(b => b.IsPaid == true)
-                .GroupBy(b => new { b.Trip.Id, b.Trip.Name })
-                .Select(g => new TripStatistics
-                {
-                    TripId = g.Key.Id,
-                    TripName = g.Key.Name,
-                    NumberOfBookings = g.Count(),
-                    TotalMoneyEarned = g.Sum(b => b.Trip.Price)
-                })
-                .Where(ts => ts.TotalMoneyEarned >= 2000)
-                .ToList();
+                .Where(b => b.Trip.Id == tripId &&  b.BookingDate >= cutOffDate && b.IsPaid == true);
         }
     }
 }

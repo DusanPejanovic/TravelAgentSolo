@@ -19,9 +19,6 @@
         <DataTemplate DataType="{x:Type vm:TripMarketViewModel}">
             <v:TripMarketView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:AgentBookingsViewModel}">
-            <v:AgentBookingsView/>
-        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:RestaurantViewModel}">
             <v:RestaurantMarketView/>
         </DataTemplate>

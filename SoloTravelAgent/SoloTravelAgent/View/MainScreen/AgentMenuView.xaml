@@ -81,7 +81,7 @@
                                  IsChecked="{Binding SelectedOption, Converter={StaticResource OptionToIsCheckedConverter}, ConverterParameter=2, Mode=TwoWay}">
                         <StackPanel Orientation="Horizontal">
                             <Icon:PackIconMaterial Kind="Timetable" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Bookings"/>
+                            <TextBlock Text="Trip Sales"/>
                         </StackPanel>
 
                         <i:Interaction.Triggers>
