@@ -2,6 +2,7 @@
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
+using SoloTravelAgent.Navigation;
 using SoloTravelAgent.View;
 using SoloTravelAgent.View.Controls;
 using SoloTravelAgent.View.MainScreen;
@@ -139,6 +140,7 @@ namespace SoloTravelAgent.ViewModel.Authentication
             User user = _userService.Login(Email, Password);
             if (user != null)
             {
+                AuthenticationManager.CurrentUser = user;
                 if (user is Client)
                 {
                     var w = new ClientMainScreenView();

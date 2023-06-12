@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Service;
+using SoloTravelAgent.Navigation;
 using SoloTravelAgent.View;
 using SoloTravelAgent.View.MainScreen;
 using System.Collections.Generic;
@@ -237,9 +238,11 @@ namespace SoloTravelAgent.ViewModel.Authentication
             }
             else
             {
-                _authService.Register(_name, _email, _phoneNumber, _password);
+                var user = _authService.Register(_name, _email, _phoneNumber, _password);
+                AuthenticationManager.CurrentUser = user;
                 var w = new ClientMainScreenView();
                 w.Show();
+                Application.Current.Windows[0].Close();
             }
         }
 
