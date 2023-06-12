@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using SoloTravelAgent.Model.Entities;
 using System.Runtime.CompilerServices;
+using GalaSoft.MvvmLight;
 
 namespace SoloTravelAgent.ViewModel.DialogViewModel
 {
-    internal class EditTripViewModel : INotifyPropertyChanged
+    internal class EditTripViewModel : ViewModelBase, INotifyPropertyChanged, IDataErrorInfo
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -28,7 +29,74 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
         public DateTime originalStartDate;
         public DateTime originalEndDate;
         public decimal originalPrice;
+        private Dictionary<string, bool> _dirtyProperties = new Dictionary<string, bool>();
 
+        public string Error { get; set; }
+        private void MarkAsDirty(string propertyName)
+        {
+            _dirtyProperties[propertyName] = true;
+        }
+
+        private bool IsPropertyDirty(string propertyName)
+        {
+            return _dirtyProperties.ContainsKey(propertyName) && _dirtyProperties[propertyName];
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (!IsPropertyDirty(columnName))
+                {
+                    return null;
+                }
+
+                switch (columnName)
+                {
+                    case nameof(Name):
+                        return ValidateName();
+                    case nameof(Description):
+                        return ValidateDescription();
+                    case nameof(Price):
+                        return ValidatePrice();
+
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        private string ValidateName()
+        {
+
+            if (string.IsNullOrWhiteSpace(Name))
+            {
+                return "Name cannot be empty";
+            }
+
+            return null;
+        }
+        private string ValidateDescription()
+        {
+
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                return "Description cannot be empty";
+            }
+
+            return null;
+        }
+
+        private string ValidatePrice()
+        {
+
+            if (Price < 0)
+            {
+                return "Wrong value";
+            }
+
+            return null;
+        }
         public EditTripViewModel(Trip tripToEdit, Action updateTripAction)
         {
             originalName = tripToEdit.Name;
@@ -64,6 +132,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     TripToEdit.Name = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Name));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -77,6 +147,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     TripToEdit.Description = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Description));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -116,6 +188,8 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
                 {
                     TripToEdit.Price = value;
                     OnPropertyChanged();
+                    MarkAsDirty(nameof(Price));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -128,7 +202,11 @@ namespace SoloTravelAgent.ViewModel.DialogViewModel
 
         private bool CanSave()
         {
-            // Add your logic to determine if the Save button should be enabled
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Description) || Price < 0)
+            {
+
+                return false;
+            }
             return true;
         }
 

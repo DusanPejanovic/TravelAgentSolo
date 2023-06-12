@@ -8,8 +8,8 @@
              xmlns:helpers="clr-namespace:SoloTravelAgent.Helpers"
              xmlns:fa5="http://schemas.fontawesome.com/icons/"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="800">
-    
+             Height="720" Width="900">
+
     <UserControl.Resources>
         <converters:TextAndFocusToVisibilityConverter x:Key="TextAndFocusToVisibilityConverter"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -21,7 +21,7 @@
             <ColumnDefinition Width="1.5*" />
         </Grid.ColumnDefinitions>
 
-        <Border>
+        <Border CornerRadius="10 0 0 10">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                     <GradientStop Color="#185FAD" Offset="0" />
@@ -48,168 +48,207 @@
             </Grid>
         </Border>
 
-        <Border Background="#ffffff" Grid.Column="1" CornerRadius="0">
+        <Border Background="#ffffff" Grid.Column="1" CornerRadius="0 10 10 0">
             <StackPanel VerticalAlignment="Center" MaxWidth="600">
                 <TextBlock Text="Sign Up" 
                            Style="{StaticResource titleText}" 
                            Foreground="#185FAD"
-                           Margin="0 20"/>
+                           Margin="0 10"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="70,0,31,22" FontSize="15" Text="Name"></TextBlock>
+                    <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 22" CornerRadius="5">
+                        <Grid Margin="7 9">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 15" CornerRadius="5">
-                    <Grid Margin="7 9">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <fa5:ImageAwesome Icon="Regular_User" Foreground="#acb0af" Height="20" Width="20" />
-                        <TextBlock x:Name="textName"
-                                   Text="Name"
+                            <fa5:ImageAwesome Icon="Regular_User" Foreground="#acb0af" Height="20" Width="20" />
+                            <TextBlock x:Name="textName"
+                                   
                                    Style="{StaticResource textHint}"
                                    IsHitTestVisible="False">
-                            <TextBlock.Visibility>
-                                <MultiBinding Converter="{StaticResource TextAndFocusToVisibilityConverter}">
-                                    <Binding ElementName="txtName" Path="Text"/>
-                                    <Binding ElementName="txtName" Path="IsFocused"/>
-                                </MultiBinding>
-                            </TextBlock.Visibility>
-                        </TextBlock>
+                                <TextBlock.Visibility>
+                                    <MultiBinding Converter="{StaticResource TextAndFocusToVisibilityConverter}">
+                                        <Binding ElementName="txtName" Path="Text"/>
+                                        <Binding ElementName="txtName" Path="IsFocused"/>
+                                    </MultiBinding>
+                                </TextBlock.Visibility>
+                            </TextBlock>
 
-                        <TextBox x:Name="txtName"
+                            <TextBox x:Name="txtName"
                                  Style="{StaticResource textBox}" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0,0,0">
-                            <TextBox.Text>
-                                <Binding Path="Name" 
+                                <TextBox.Text>
+                                    <Binding Path="Name" 
                                          UpdateSourceTrigger="PropertyChanged"
                                          Mode="TwoWay"
                                          ValidatesOnDataErrors="True"
                                          >
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                    </Grid>
-                </Border>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </Border>
+                </Grid>
 
-                <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 15" CornerRadius="5">
-                    <Grid Margin="7 9">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="289*"/>
+                        <ColumnDefinition Width="111*"/>
+                        <ColumnDefinition Width="80*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="70,0,0,0" FontSize="15" Text="Email" Grid.ColumnSpan="3"></TextBlock>
+                    <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70,20,70,22" CornerRadius="5" Grid.ColumnSpan="3">
+                        <Grid Margin="7 9">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <fa5:ImageAwesome Icon="Regular_Envelope" Foreground="#acb0af" Height="20" Width="20" />
-                        <TextBlock x:Name="textEmail"
-                                   Text="Email"
+                            <fa5:ImageAwesome Icon="Regular_Envelope" Foreground="#acb0af" Height="20" Width="20" />
+                            <TextBlock x:Name="textEmail"
+                                   Text="email@address.com"
                                    Style="{StaticResource textHint}"
                                    IsHitTestVisible="False">
-                            <TextBlock.Visibility>
-                                <MultiBinding Converter="{StaticResource TextAndFocusToVisibilityConverter}">
-                                    <Binding ElementName="txtEmail" Path="Text"/>
-                                    <Binding ElementName="txtEmail" Path="IsFocused"/>
-                                </MultiBinding>
-                            </TextBlock.Visibility>
-                        </TextBlock>
+                                <TextBlock.Visibility>
+                                    <MultiBinding Converter="{StaticResource TextAndFocusToVisibilityConverter}">
+                                        <Binding ElementName="txtEmail" Path="Text"/>
+                                        <Binding ElementName="txtEmail" Path="IsFocused"/>
+                                    </MultiBinding>
+                                </TextBlock.Visibility>
+                            </TextBlock>
 
-                        <TextBox x:Name="txtEmail"
+                            <TextBox x:Name="txtEmail"
                                  Style="{StaticResource textBox}" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0,0,0">
-                            <TextBox.Text>
-                                <Binding Path="Email" 
+                                <TextBox.Text>
+                                    <Binding Path="Email" 
                                          UpdateSourceTrigger="PropertyChanged"
                                          Mode="TwoWay"
                                          ValidatesOnDataErrors="True"
                                          >
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                    </Grid>
-                </Border>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="70 0 0 0 " FontSize="15" Text="Phone Number"></TextBlock>
+                    <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 22" CornerRadius="5">
+                        <Grid Margin="7 9">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="23*" />
+                                <ColumnDefinition Width="159*"/>
+                            </Grid.ColumnDefinitions>
 
-                <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 15" CornerRadius="5">
-                    <Grid Margin="7 9">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <fa5:ImageAwesome Icon="Regular_AddressBook" Foreground="#acb0af" Height="20" Width="20" />
-                        <TextBlock x:Name="textPhoneNumber"
-                                   Text="Phone number"
+                            <fa5:ImageAwesome Icon="Regular_AddressBook" Foreground="#acb0af" Height="20" Width="20" Margin="0,1,0,0" />
+                            <TextBlock x:Name="textPhoneNumber"
+                                    Text="+387"
                                    Style="{StaticResource textHint}"
-                                   IsHitTestVisible="False">
-                            <TextBlock.Visibility>
-                                <MultiBinding Converter="{StaticResource TextAndFocusToVisibilityConverter}">
-                                    <Binding ElementName="txtPhoneNumber" Path="Text"/>
-                                    <Binding ElementName="txtPhoneNumber" Path="IsFocused"/>
-                                </MultiBinding>
-                            </TextBlock.Visibility>
-                        </TextBlock>
+                                   IsHitTestVisible="False" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0,0,0">
+                                <TextBlock.Visibility>
+                                    <MultiBinding Converter="{StaticResource TextAndFocusToVisibilityConverter}">
+                                        <Binding ElementName="txtPhoneNumber" Path="Text"/>
+                                        <Binding ElementName="txtPhoneNumber" Path="IsFocused"/>
+                                    </MultiBinding>
+                                </TextBlock.Visibility>
+                            </TextBlock>
 
-                        <TextBox x:Name="txtPhoneNumber"
+                            <TextBox x:Name="txtPhoneNumber"
                                  Style="{StaticResource textBox}" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0,0,0">
-                            <TextBox.Text>
-                                <Binding Path="PhoneNumber"
+                                <TextBox.Text>
+                                    <Binding Path="PhoneNumber"
                                          UpdateSourceTrigger="PropertyChanged"
                                          Mode="TwoWay"
                                          ValidatesOnDataErrors="True">
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                    </Grid>
-                </Border>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="70 0 0 0 " FontSize="15" Text="Password"></TextBlock>
+                    <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 22" CornerRadius="5">
+                        <Grid Margin="7 9">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 10" CornerRadius="5">
-                    <Grid Margin="7 9">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <fa5:ImageAwesome Icon="Solid_Lock" Foreground="#acb0af" Height="20" Width="20" />
-                        <TextBlock x:Name="textPassword"
-                                   Text="Password"
+                            <fa5:ImageAwesome Icon="Solid_Lock" Foreground="#acb0af" Height="20" Width="20" />
+                            <TextBlock x:Name="textPassword"
+                                  
                                    Style="{StaticResource textHint}"
                                    IsHitTestVisible="False">
-                            <TextBlock.Visibility>
-                                <MultiBinding Converter="{StaticResource TextAndFocusToVisibilityConverter}">
-                                    <Binding Path="Password" />
-                                    <Binding ElementName="txtPassword" Path="IsKeyboardFocusWithin"/>
-                                </MultiBinding>
-                            </TextBlock.Visibility>
-                        </TextBlock>
-                        <PasswordBox 
+                                <TextBlock.Visibility>
+                                    <MultiBinding Converter="{StaticResource TextAndFocusToVisibilityConverter}">
+                                        <Binding Path="Password" />
+                                        <Binding ElementName="txtPassword" Path="IsKeyboardFocusWithin"/>
+                                    </MultiBinding>
+                                </TextBlock.Visibility>
+                            </TextBlock>
+                            <PasswordBox 
                             x:Name="txtPassword"
                             helpers:PasswordBoxHelper.Attach="True"
                             helpers:PasswordBoxHelper.Password="{Binding Password, Mode=TwoWay, ValidatesOnDataErrors=True}"
                             Style="{StaticResource textBox}"/>
-                    </Grid>
-                </Border>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="70 0 0 0 " FontSize="15" Text="Repeat Password"></TextBlock>
 
-                <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 10" CornerRadius="5">
-                    <Grid Margin="7 9">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                    <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 22" CornerRadius="5">
+                        <Grid Margin="7 9">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <fa5:ImageAwesome Icon="Solid_Lock" Foreground="#acb0af" Height="20" Width="20" />
-                        <TextBlock x:Name="textPasswordRepeat"
-                                   Text="Repeat password"
+                            <fa5:ImageAwesome Icon="Solid_Lock" Foreground="#acb0af" Height="20" Width="20" />
+                            <TextBlock x:Name="textPasswordRepeat"
+                                   
                                    Style="{StaticResource textHint}"
                                    IsHitTestVisible="False">
-                            <TextBlock.Visibility>
-                                <MultiBinding Converter="{StaticResource TextAndFocusToVisibilityConverter}">
-                                    <Binding Path="RepeatPassword" />
-                                    <Binding ElementName="txtPasswordRepeat" Path="IsKeyboardFocusWithin"/>
-                                </MultiBinding>
-                            </TextBlock.Visibility>
-                        </TextBlock>
-                        <PasswordBox 
+                                <TextBlock.Visibility>
+                                    <MultiBinding Converter="{StaticResource TextAndFocusToVisibilityConverter}">
+                                        <Binding Path="RepeatPassword" />
+                                        <Binding ElementName="txtPasswordRepeat" Path="IsKeyboardFocusWithin"/>
+                                    </MultiBinding>
+                                </TextBlock.Visibility>
+                            </TextBlock>
+                            <PasswordBox 
                             x:Name="txtPasswordRepeat"
                             helpers:PasswordBoxHelper.Attach="True"
                             helpers:PasswordBoxHelper.Password="{Binding RepeatPassword, Mode=TwoWay, ValidatesOnDataErrors=True}"
                             Style="{StaticResource textBox}">
-                        </PasswordBox>
-                    </Grid>
-                </Border>
+                            </PasswordBox>
+                        </Grid>
+                    </Border>
+                </Grid>
+
 
                 <Button Content="Sign Up" 
                         Style="{StaticResource mainButton}"

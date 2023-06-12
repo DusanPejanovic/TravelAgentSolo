@@ -7,10 +7,11 @@
         xmlns:vm="clr-namespace:SoloTravelAgent.ViewModel.Authentication"
         xmlns:v="clr-namespace:SoloTravelAgent.View.Authentication"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="600" Width="800"
+        WindowStartupLocation="CenterScreen" AllowsTransparency="True" ResizeMode="CanResizeWithGrip"
+        Title="MainWindow" Height="720" Width="900" WindowStyle="None"
         Background="Transparent"
         >
+
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:LoginViewModel}">
@@ -23,4 +24,5 @@
 
 
     <ContentControl x:Name="mainContentControl" Content="{Binding CurrentView}" />
+
 </Window>
