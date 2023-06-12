@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SoloTravelAgent.View"
              mc:Ignorable="d" 
-             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:maps="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF" xmlns:local1="clr-namespace:SoloTravelAgent.Converters"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <local1:CoordinatesToLocationConverter x:Key="CoordinatesToLocationConverter" />
     </UserControl.Resources>
 
     <Grid Grid.Column="1" Margin="30 -20 20 20">
@@ -30,8 +31,6 @@
         <TextBlock Text="{Binding SelectedTrip.Name, TargetNullValue='No Trip Selected'}" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="40 20 0 0" Foreground="#121518" HorizontalAlignment="Left"/>
 
 
-
-
         <!--Seprator-->
         <Separator Height="1" Grid.Row="3" Background="#DAE2EA" Margin="0 -1 0 10"/>
 
@@ -43,40 +42,56 @@
             <RadioButton Style="{StaticResource tabButton}" Content="Tourist Attractions" Checked="AttractionsRadioButton_Checked" />
         </StackPanel>
 
-        <!--Counter Title-->
-        <TextBlock Text="{Binding AccommodationCount, StringFormat={}{0} Accommodations}" Grid.Row="4" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <!-- Your code up to "Here you should add code" -->
 
-        <!--Filter Textbox-->
-        <!--Filter ComboBox-->
-        <Grid Width="150" HorizontalAlignment="Right" Grid.Row="4" Margin="0 0 -12 0">
-            <ComboBox SelectedIndex="0" Height="35" Style="{StaticResource filterCombobox}" SelectionChanged="ComboBox_SelectionChanged"
-              MouseEnter="ComboBox_MouseEnter"
-              MouseLeave="ComboBox_MouseLeave">
-                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="No Filter" />
-                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Stars == 5" />
-                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Stars >= 3" />
+        <!--  Here you should add code -->
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
+            <!--Trip details-->
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Trip Details:" FontWeight="Bold" FontSize="24"/>
+                <ListView ItemsSource="{Binding SelectedTrip}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" />
+                            <GridViewColumn Header="Start Date" DisplayMemberBinding="{Binding StartDate}" />
+                            <GridViewColumn Header="End Date" DisplayMemberBinding="{Binding EndDate}" />
+                            <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
 
-            </ComboBox>
+            <!--Map-->
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Accommodation Locations:" FontWeight="Bold" FontSize="24"/>
+                <!--Map placeholder. Replace this with a map control from the mapping library you are using.-->
+                <Border Width="200" Height="200" Background="White" Margin="10">
+                    <!--Bing Maps-->
+                    <maps:Map x:Name="MyMap" Grid.Row="4" CredentialsProvider="RND8jql6TLIrp84rX9UX~mhqN1Fx8KMV8ZTa56_BTFw~ApXpULgdBWsCaIdV0GOrwy5HJPqx8QFpUegZFkdVJXQugXx7RU39tG6_FUFHut0m" ZoomLevel="6">
+                        <maps:Map.Center>
+                            <maps:Location Latitude="44.7866" Longitude="20.4489" />
+                        </maps:Map.Center>
+                        <maps:Pushpin Background="Black">
+                            <maps:Pushpin.Location>
+                                <MultiBinding Converter="{StaticResource CoordinatesToLocationConverter}">
+                                    <Binding Path="SelectedTrip.Latitude" />
+                                    <Binding Path="SelectedTrip.Longitude" />
+                                </MultiBinding>
+                            </maps:Pushpin.Location>
+                            <ToolTipService.ToolTip>
+                                <Binding Path="SelectedTrip.Name" />
+                            </ToolTipService.ToolTip>
+                        </maps:Pushpin>
+                    </maps:Map>
+
+                </Border>
+            </StackPanel>
         </Grid>
 
-
-        <Grid Width="280" HorizontalAlignment="Center" Grid.Row="4" Margin="0 10 150 0">
-            <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
-    Panel.ZIndex="1" Text="Search here ..."
-    Visibility="{Binding IsSearchEmpty, Converter={StaticResource BoolToVis}}" />
-
-            <TextBox   Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
-            <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
-        </Grid>
-
-
-
-        <!--Accommodations Datagrid-->
-        <DataGrid Margin="-20 30 0 0" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" SelectedItem="{Binding SelectedAccommodation}" CellStyle="{DynamicResource DataGridCellStyle1}" ItemsSource="{Binding Accommodations}" Style="{DynamicResource DataGridStyle1}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" Width="60"/>
-            </DataGrid.Columns>
-        </DataGrid>
     </Grid>
 </UserControl>
