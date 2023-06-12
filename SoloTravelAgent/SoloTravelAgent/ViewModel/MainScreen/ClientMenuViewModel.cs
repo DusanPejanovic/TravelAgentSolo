@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Navigation;
 using SoloTravelAgent.ViewModel.Report;
 
@@ -8,6 +9,19 @@ namespace SoloTravelAgent.ViewModel.MainScreen
 {
     public class ClientMenuViewModel: ViewModelBase
     {
+        public User CurrentUser
+        {
+            get
+            {
+                return AuthenticationManager.CurrentUser;
+            }
+            set
+            {
+                AuthenticationManager.CurrentUser = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private int _selectedOption;
 
         public int SelectedOption
@@ -37,11 +51,18 @@ namespace SoloTravelAgent.ViewModel.MainScreen
                     NavigationService.Instance.NavigateTo(new TripSellReportViewModel());
                     break;
                 case 5:
+                    Logout();
                     var w = new MainWindow();
                     w.Show();
                     Messenger.Default.Send(new NotificationMessage("CloseWindow"));
                     break;
             }
+        }
+
+        public void Logout()
+        {
+            AuthenticationManager.Logout();
+            CurrentUser = null; 
         }
     }
 }

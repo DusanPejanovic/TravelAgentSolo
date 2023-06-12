@@ -51,8 +51,8 @@
 
 
                 <!--Menu Titles-->
-                <TextBlock Text="Vanja Savic" Foreground="White" FontSize="22" FontWeight="SemiBold" DockPanel.Dock="Top" Margin="5 25 0 10" TextAlignment="Center"/>
-                <TextBlock Text="ADMIN" Foreground="AliceBlue" FontSize="14" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center"/>
+                <TextBlock Text="{Binding CurrentUser.Name}" Foreground="White" FontSize="22" FontWeight="SemiBold" DockPanel.Dock="Top" Margin="5 25 0 10" TextAlignment="Center"/>
+                <TextBlock Text="CLIENT" Foreground="AliceBlue" FontSize="14" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center"/>
 
                 <!--Menu Seprator-->
                 <Separator Margin="25" Background="#A5BFD0" DockPanel.Dock="Top" Height="0.8"/>
