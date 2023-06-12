@@ -1,5 +1,6 @@
 ﻿using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
+using SoloTravelAgent.Navigation;
 using SoloTravelAgent.View.DialogView;
 using SoloTravelAgent.ViewModel;
 using System;
@@ -17,57 +18,44 @@ namespace SoloTravelAgent.View
     /// </summary>
     public partial class TripMarketView : UserControl
     {
-        private readonly TripViewModel _viewModel;
-        private readonly TravelSystemDbContext dbContext;
+        private readonly TripMarketViewModel _viewModel;
+        private readonly TravelSystemDbContext _dbContext;
+
         public TripMarketView()
         {
             InitializeComponent();
-            _viewModel = new TripViewModel();
-
+            _viewModel = new TripMarketViewModel();
             DataContext = _viewModel;
         }
 
-        private bool IsMaximize = false;
-        private void ViewIt_Click(object sender, RoutedEventArgs e)
+        private void ComboBox_MouseEnter(object sender, MouseEventArgs e)
         {
-            var button = sender as Button;
-            if (button != null)
-            {
-                var trip = button.DataContext as Trip; // Assuming your trip model class is called Trip
-                if (trip != null)
-                {
+            ComboBox comboBox = (ComboBox)sender;
+            comboBox.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C88EA7"));
 
-                    //var restaurantView = new RestaurantMarketView(trip);
-                   // restaurantView.Show();
-                    //this.Close();
-                }
-            }
         }
 
-        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ComboBox_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                //this.DragMove();
-            }
+            ComboBox comboBox = (ComboBox)sender;
+            comboBox.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#917FB3"));
+
         }
 
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new SoloTravelAgent.View.DialogView.StepperView.AddTripDialogView(_viewModel, dbContext);
-            dialog.Owner = Window.GetWindow(this);
-            dialog.ShowDialog();
-
+            //var dialog = new SoloTravelAgent.View.DialogView.StepperView.AddTripDialogView(_viewModel, _dbContext);
+            //dialog.Owner = Window.GetWindow(this);
+            //dialog.ShowDialog();
         }
 
         private async void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            var trip = (sender as Button).DataContext as Trip;
-            if (trip == null) return;
-            var dialog = new EditTripView(trip, _viewModel);
-            dialog.Owner = Window.GetWindow(this); // ovo mi je roditelj prozor
-            dialog.ShowDialog();
-
+            //var trip = (sender as Button).DataContext as Trip;
+            //if (trip == null) return;
+            //var dialog = new EditTripView(trip, _viewModel);
+            //dialog.Owner = Window.GetWindow(this); // ovo mi je roditelj prozor
+            //dialog.ShowDialog();
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -90,25 +78,9 @@ namespace SoloTravelAgent.View
 
             if (selectedTrip != null)
             {
-                //var restaurantView = new RestaurantView(selectedTrip);
-                //restaurantView.Show();
-                //this.Close();
+                var restaurantViewModel = new RestaurantViewModel(selectedTrip);
+                NavigationService.Instance.NavigateTo(restaurantViewModel);
             }
-        }
-
-
-        private void ComboBox_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ComboBox comboBox = (ComboBox)sender;
-            comboBox.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C88EA7"));
-
-        }
-
-        private void ComboBox_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ComboBox comboBox = (ComboBox)sender;
-            comboBox.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#917FB3"));
-
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -204,11 +176,6 @@ namespace SoloTravelAgent.View
             _viewModel.LoadTrips();
             var trips = _viewModel.Trips;
             return trips.Where(trip => trip.Price < 1500).ToList();
-        }
-
-        private void MenuContentHolder_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

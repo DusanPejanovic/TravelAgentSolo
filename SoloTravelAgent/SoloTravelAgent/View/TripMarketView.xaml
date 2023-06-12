@@ -28,7 +28,7 @@
 
         <Separator Height="1" Grid.Row="1" Background="#DAE2EA" Margin="0 5 0 5"/>
         <!--Counter Title-->
-        <Grid Width="150" HorizontalAlignment="Right" Grid.Row="4" Margin="0 0 50 0">
+        <Grid Width="150" HorizontalAlignment="Right" Grid.Row="2" Margin="0 0 50 0">
             <ComboBox SelectedIndex="0" Height="35" Style="{StaticResource filterCombobox}" SelectionChanged="ComboBox_SelectionChanged"
               MouseEnter="ComboBox_MouseEnter"
               MouseLeave="ComboBox_MouseLeave">
@@ -89,7 +89,11 @@
                                 </StackPanel>
                                 <Border Grid.Column="1" Background="Black" Height="120" Width="1" Margin="20 0"/>
                                 <StackPanel Grid.Column="2" Grid.RowSpan="4" Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Center">
-                                    <Button Content="View it" Style="{StaticResource addButton}" Click="ViewIt_Click" />
+                                    <Button 
+                                        Content="View it" 
+                                        Style="{StaticResource addButton}" 
+                                        Command="{Binding DataContext.ViewTripCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                        CommandParameter="{Binding}" />
                                     <Button Content="Book it" Style="{StaticResource addButton}" />
                                 </StackPanel>
                             </Grid>

@@ -20,6 +20,7 @@
         <DataTemplate DataType="{x:Type vm:AgentBookingsViewModel}">
             <v:AgentBookingsView/>
         </DataTemplate>
+
     </Window.Resources>
 
     <Grid Background="#EFF2F7">

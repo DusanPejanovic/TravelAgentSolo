@@ -55,8 +55,5 @@ namespace SoloTravelAgent.View.DialogView
                 this.Close();
             }
         }
-
-
-
     }
 }
