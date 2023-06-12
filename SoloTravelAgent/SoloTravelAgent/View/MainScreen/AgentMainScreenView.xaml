@@ -19,6 +19,15 @@
         <DataTemplate DataType="{x:Type vm:AgentBookingsViewModel}">
             <v:AgentBookingsView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:RestaurantViewModel}">
+            <v:RestaurantView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AccommodationsViewModel}">
+            <v:AccomodationsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TouristAttractionsViewModel}">
+            <v:TouristAttractionView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid Background="#EFF2F7">

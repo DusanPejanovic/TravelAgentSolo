@@ -10,8 +10,9 @@ namespace SoloTravelAgent.ViewModel
     {
         private readonly BookingService _bookingService;
 
-        public AgentBookingsViewModel(TravelSystemDbContext dbContext)
+        public AgentBookingsViewModel()
         {
+            var dbContext = new TravelSystemDbContext();
             Bookings = new ObservableCollection<Booking>();
             _bookingService = new BookingService(dbContext);
             LoadBookings();

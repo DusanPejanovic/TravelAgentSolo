@@ -1,11 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
 using SoloTravelAgent.Model.Data;
+using SoloTravelAgent.Navigation;
 
 namespace SoloTravelAgent.ViewModel.MainScreen
 {
     public class ClientMainScreenViewModel: ViewModelBase
     {
-        private TravelSystemDbContext _systemDbContext;
         public ClientMenuViewModel MenuControlVM { get; set; }
 
         private object _currentViewModel;
@@ -20,28 +20,18 @@ namespace SoloTravelAgent.ViewModel.MainScreen
             }
         }
 
-        public void ChangeViewModel(int option)
-        {
-            object vm = new object();
-            switch (option)
-            {
-                case 1:
-                    vm = new TripMarketViewModel();
-                    break;
-                case 2:
-                    vm = new AgentBookingsViewModel(_systemDbContext);
-                    break;
-            }
-
-            CurrentViewModel = vm;
-        }
-
         public ClientMainScreenViewModel()
         {
-            _systemDbContext = new TravelSystemDbContext();
             CurrentViewModel = new TripMarketViewModel();
             MenuControlVM = new ClientMenuViewModel();
-            MenuControlVM.ParentViewModel = this;
+
+            NavigationService.Instance.Navigated += OnNavigated;
+        }
+
+        private void OnNavigated()
+        { 
+            CurrentViewModel = NavigationService.Instance.CurrentViewModel;
+            RaisePropertyChanged(nameof(CurrentViewModel));
         }
     }
 }

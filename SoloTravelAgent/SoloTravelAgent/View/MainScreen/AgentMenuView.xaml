@@ -123,11 +123,21 @@
 
                 </StackPanel>
 
-                <RadioButton Style="{StaticResource menuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0 15 20">
+                <RadioButton Tag="5"
+                    Style="{StaticResource menuButton}"
+                    VerticalAlignment="Bottom" 
+                    DockPanel.Dock="Bottom"
+                    Margin="15 0 15 20">
                     <StackPanel Orientation="Horizontal">
                         <Icon:PackIconMaterial Kind="Logout" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="Logout"/>
                     </StackPanel>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <cmd:EventToCommand Command="{Binding RadioButtonCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=RadioButton}, Path=Tag}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </RadioButton>
 
             </DockPanel>

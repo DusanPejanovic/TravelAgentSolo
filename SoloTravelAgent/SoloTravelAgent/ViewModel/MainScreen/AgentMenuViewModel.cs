@@ -1,21 +1,14 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using SoloTravelAgent.Navigation;
+using SoloTravelAgent.View.MainScreen;
+using System.Windows;
 
 namespace SoloTravelAgent.ViewModel.MainScreen
 {
     public class AgentMenuViewModel : ViewModelBase
     {
-        private AgentMainScreenViewModel _parentViewModel;
-        public AgentMainScreenViewModel ParentViewModel
-        {
-            get { return _parentViewModel; }
-            set
-            {
-                _parentViewModel = value;
-                RaisePropertyChanged();
-            }
-        }
-
         private int _selectedOption;
 
         public int SelectedOption
@@ -36,7 +29,20 @@ namespace SoloTravelAgent.ViewModel.MainScreen
         {
             int option = int.Parse(selectedOption);
             SelectedOption = option;
-            ParentViewModel.ChangeViewModel(option);
+            switch (SelectedOption)
+            {
+                case 1:
+                    NavigationService.Instance.NavigateTo(new TripViewModel());
+                    break;
+                case 2:
+                    NavigationService.Instance.NavigateTo(new AgentBookingsViewModel());
+                    break;
+                case 5:
+                    var w = new MainWindow();
+                    w.Show();
+                    Messenger.Default.Send(new NotificationMessage("CloseWindow"));
+                    break;
+            }
         }
     }
 }

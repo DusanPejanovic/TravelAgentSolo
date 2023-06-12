@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using GalaSoft.MvvmLight.Messaging;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -36,6 +37,19 @@ namespace SoloTravelAgent.View.Controls
         public AgentMenuView()
         {
             InitializeComponent();
+
+            Messenger.Default.Register<NotificationMessage>(this, (message) =>
+            {
+                if (message.Notification == "CloseWindow")
+                {
+                    Window.GetWindow(this).Close();
+                }
+            });
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Messenger.Default.Unregister<NotificationMessage>(this);
         }
     }
 }

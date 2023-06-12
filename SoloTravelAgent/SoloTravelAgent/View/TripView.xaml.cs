@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.EntityFrameworkCore;
+using SoloTravelAgent.Navigation;
 
 namespace SoloTravelAgent.View
 {
@@ -23,9 +24,8 @@ namespace SoloTravelAgent.View
 
         public TripView()
         {
-            var dbContext = new TravelSystemDbContext();
             InitializeComponent();
-            _viewModel = new TripViewModel(dbContext);
+            _viewModel = new TripViewModel();
             DataContext = _viewModel;
         }
 
@@ -79,9 +79,8 @@ namespace SoloTravelAgent.View
 
             if (selectedTrip != null)
             {
-                //var restaurantView = new RestaurantView(selectedTrip);
-                //restaurantView.Show();
-                //this.Close();
+                var restaurantViewModel = new RestaurantViewModel(selectedTrip);
+                NavigationService.Instance.NavigateTo(restaurantViewModel);
             }
         }
 

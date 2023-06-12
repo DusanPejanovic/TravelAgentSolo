@@ -1,12 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SoloTravelAgent.Model.Data;
+﻿using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
-using SoloTravelAgent.View;
 using SoloTravelAgent.ViewModel;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 
 namespace SoloTravelAgent
@@ -24,7 +21,6 @@ namespace SoloTravelAgent
             var dbContext = new TravelSystemDbContext();
             DataContext = new MainViewModel(dbContext);
         }
-
 
         private void TestDatabase()
         {

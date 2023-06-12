@@ -12,8 +12,7 @@ namespace SoloTravelAgent.View
         public AgentBookingsView()
         {
             InitializeComponent();
-            var dbContext = new TravelSystemDbContext();
-            DataContext = new AgentBookingsViewModel(dbContext);
+            DataContext = new AgentBookingsViewModel();
         }
     }
 }

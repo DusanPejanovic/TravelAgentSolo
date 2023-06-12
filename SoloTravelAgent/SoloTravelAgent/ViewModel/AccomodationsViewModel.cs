@@ -20,8 +20,9 @@ namespace SoloTravelAgent.ViewModel
         private readonly AccommodationService _accommodationService;
         private readonly TripService _tripService;
         private Trip _selectedTrip;
-        public AccommodationsViewModel(TravelSystemDbContext dbContext, Trip selectedTrip)
+        public AccommodationsViewModel(Trip selectedTrip)
         {
+            var dbContext = new TravelSystemDbContext();
             _accommodationService = new AccommodationService(dbContext);
             _tripService = new TripService(dbContext);
             _selectedTrip = selectedTrip;

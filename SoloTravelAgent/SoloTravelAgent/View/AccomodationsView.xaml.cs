@@ -1,46 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using SoloTravelAgent.Model.Data;
-using SoloTravelAgent.Model.Entities;
+﻿using SoloTravelAgent.Model.Entities;
+using SoloTravelAgent.Navigation;
 using SoloTravelAgent.View.DialogView;
 using SoloTravelAgent.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace SoloTravelAgent.View
 {
     /// <summary>
-    /// Interaction logic for AccomodationView.xaml
+    /// Interaction logic for AccomodationsView.xaml
     /// </summary>
-    public partial class AccomodationView : Window
+    public partial class AccomodationsView : UserControl
     {
-        private readonly AccommodationsViewModel _viewModel;
+        private AccommodationsViewModel _viewModel;
         private Trip _selectedTrip;
-        public AccomodationView(Trip selectedTrip)
+
+        public AccomodationsView()
         {
             InitializeComponent();
-            _selectedTrip = selectedTrip;
-            var dbContext = new TravelSystemDbContext();
-            _viewModel = new AccommodationsViewModel(dbContext, selectedTrip);
-            
-          
-            DataContext = _viewModel;
-
+            Loaded += OnLoaded;
         }
+
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel = DataContext as AccommodationsViewModel;
+            _selectedTrip = _viewModel.SelectedTrip;
+        }
+
         private void BackButtonClicked(Object sender, RoutedEventArgs e)
         {
-            //var w = new TripView();
-            //w.Show();
-            //this.Close();
+            var vm = new TripViewModel();
+            NavigationService.Instance.NavigateTo(vm);
         }
 
         public int RestaurantCount
@@ -50,16 +46,14 @@ namespace SoloTravelAgent.View
 
         private void RestaurantRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            var w = new RestaurantView(_selectedTrip);
-            w.Show();
-            this.Close();
+            var vm = new RestaurantViewModel(_selectedTrip);
+            NavigationService.Instance.NavigateTo(vm);
         }
 
         private void AttractionsRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            var w = new TouristAttractionView(_selectedTrip);
-            w.Show();
-            this.Close();
+            var vm = new TouristAttractionsViewModel(_selectedTrip);
+            NavigationService.Instance.NavigateTo(vm);
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -81,7 +75,7 @@ namespace SoloTravelAgent.View
             var accommodation = (sender as Button).DataContext as Accommodation;
             if (accommodation == null) return;
             var dialog = new EditAccommodationDialogView(accommodation, _viewModel);
-            dialog.Owner = this;
+            dialog.Owner = Window.GetWindow(this);
             dialog.ShowDialog();
 
         }
@@ -89,31 +83,29 @@ namespace SoloTravelAgent.View
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new AddAccommodationDialogView(_viewModel);
-            dialog.Owner = this;
+            dialog.Owner = Window.GetWindow(this);
             dialog.ShowDialog();
 
         }
-
-
-
-
 
         private bool IsMaximize = false;
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
+                var window = Window.GetWindow(this);
+
                 if (IsMaximize)
                 {
-                    this.WindowState = WindowState.Normal;
-                    this.Width = 1080;
-                    this.Height = 720;
+                    window.WindowState = WindowState.Normal;
+                    window.Width = 1080;
+                    window.Height = 720;
 
                     IsMaximize = false;
                 }
                 else
                 {
-                    this.WindowState = WindowState.Maximized;
+                    window.WindowState = WindowState.Maximized;
 
                     IsMaximize = true;
                 }
@@ -124,7 +116,7 @@ namespace SoloTravelAgent.View
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                this.DragMove();
+                Window.GetWindow(this).DragMove();
             }
         }
 
@@ -180,10 +172,9 @@ namespace SoloTravelAgent.View
         private List<Accommodation> FilteBetterThan3()
         {
             _viewModel.LoadAccommodations();
-            var  Accommodations = _viewModel.Accommodations;
+            var Accommodations = _viewModel.Accommodations;
             return Accommodations.Where(Accommodation => Accommodation.Stars >= 3).ToList();
         }
-
 
 
         private void UpdateCollection(List<Accommodation> newAttractions)

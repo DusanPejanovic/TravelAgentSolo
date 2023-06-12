@@ -22,8 +22,7 @@ namespace SoloTravelAgent.View
         public TripMarketView()
         {
             InitializeComponent();
-            dbContext = new TravelSystemDbContext();
-            _viewModel = new TripViewModel(dbContext);
+            _viewModel = new TripViewModel();
 
             DataContext = _viewModel;
         }

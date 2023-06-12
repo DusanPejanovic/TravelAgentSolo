@@ -22,23 +22,23 @@ namespace SoloTravelAgent.View
             InitializeComponent();
             _selectedTrip = selectedTrip;
             var dbContext = new TravelSystemDbContext();
-            _viewModel = new RestaurantViewModel(dbContext, selectedTrip);
+            _viewModel = new RestaurantViewModel(selectedTrip);
 
             DataContext = _viewModel;
         }
 
         private void AccommodationsRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            var w = new AccomodationView(_selectedTrip);
-            w.Show();
-            this.Close();
+            //var w = new AccomodationView(_selectedTrip);
+            //w.Show();
+            //this.Close();
         }
 
         private void AttractionsRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            var w = new TouristAttractionView(_selectedTrip);
-            w.Show();
-            this.Close();
+            //var w = new TouristAttractionView(_selectedTrip);
+            //w.Show();
+            //this.Close();
         }
 
         private void BackButtonClicked(Object sender, RoutedEventArgs e)
@@ -79,10 +79,6 @@ namespace SoloTravelAgent.View
             dialog.ShowDialog();
 
         }
-
-
-
-
 
         private bool IsMaximize = false;
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
