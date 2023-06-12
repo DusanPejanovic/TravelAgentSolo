@@ -63,6 +63,12 @@ namespace SoloTravelAgent.View
             NavigationService.Instance.NavigateTo(vm);
         }
 
+        private void DescriptionRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            var vm = new DescriptionViewModel(_selectedTrip);
+            NavigationService.Instance.NavigateTo(vm);
+        }
+
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             var accommodation = (sender as Button).DataContext as Accommodation;

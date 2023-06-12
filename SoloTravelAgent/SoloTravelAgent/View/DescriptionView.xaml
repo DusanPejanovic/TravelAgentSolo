@@ -37,8 +37,9 @@
 
         <!--Tab buttons-->
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0 15 0 0">
+            <RadioButton Style="{StaticResource tabButton}" Content="Description" IsChecked="True"/>
             <RadioButton Style="{StaticResource tabButton}" Content="Restaurants" Checked="RestaurantRadioButton_Checked"/>
-            <RadioButton Style="{StaticResource tabButton}" Content="Accommodations" IsChecked="True"/>
+            <RadioButton Style="{StaticResource tabButton}" Content="Accommodations" Checked="AttractionsRadioButton_Checked"/>
             <RadioButton Style="{StaticResource tabButton}" Content="Tourist Attractions" Checked="AttractionsRadioButton_Checked" />
         </StackPanel>
 
@@ -75,11 +76,6 @@
         <DataGrid Margin="-20 30 0 0" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" SelectedItem="{Binding SelectedAccommodation}" CellStyle="{DynamicResource DataGridCellStyle1}" ItemsSource="{Binding Accommodations}" Style="{DynamicResource DataGridStyle1}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" Width="60"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="*"/>
-                <DataGridTextColumn Header="Address" Binding="{Binding Address}" IsReadOnly="True" Width="*"/>
-                <DataGridTextColumn Header="Stars" Binding="{Binding Stars}" IsReadOnly="True" Width="60"/>
-                <DataGridTextColumn Header="Website" Binding="{Binding Website}" IsReadOnly="True" Width="180"/>
-                <DataGridTextColumn Header="Contact Number" Binding="{Binding PhoneNumber}" IsReadOnly="True" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

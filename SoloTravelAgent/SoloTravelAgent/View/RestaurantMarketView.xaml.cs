@@ -167,6 +167,12 @@ namespace SoloTravelAgent.View
             }
         }
 
+        private void DescriptionRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            var vm = new DescriptionViewModel(_selectedTrip);
+            NavigationService.Instance.NavigateTo(vm);
+        }
+
         private void UpdateCollection(List<Restaurant> newRestaurants)
         {
             _viewModel.Restaurants.Clear();

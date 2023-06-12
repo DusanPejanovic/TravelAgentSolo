@@ -26,12 +26,14 @@
             <v:RestaurantMarketView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:AccommodationsViewModel}">
-            <v:DescriptionView/>
+            <v:AccomodationsMarketView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:TouristAttractionsViewModel}">
             <v:TouristAttractionMarketView/>
         </DataTemplate>
-
+        <DataTemplate DataType="{x:Type vm:DescriptionViewModel}">
+            <v:DescriptionView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid Background="#EFF2F7">

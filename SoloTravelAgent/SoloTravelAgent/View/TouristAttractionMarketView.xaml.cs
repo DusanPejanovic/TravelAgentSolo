@@ -110,6 +110,12 @@ namespace SoloTravelAgent.View
             var vm = new RestaurantViewModel(_selectedTrip);
             NavigationService.Instance.NavigateTo(vm);
         }
+        private void DescriptionRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            var vm = new DescriptionViewModel(_selectedTrip);
+            NavigationService.Instance.NavigateTo(vm);
+        }
+
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {

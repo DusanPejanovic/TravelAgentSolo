@@ -37,6 +37,7 @@
 
         <!--Tab buttons-->
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0 15 0 0">
+            <RadioButton Style="{StaticResource tabButton}" Content="Description" Checked="DescriptionRadioButton_Checked"/>
             <RadioButton Style="{StaticResource tabButton}" Content="Restaurants" Checked="RestaurantRadioButton_Checked"/>
             <RadioButton Style="{StaticResource tabButton}" Content="Accommodations" IsChecked="True"/>
             <RadioButton Style="{StaticResource tabButton}" Content="Tourist Attractions" Checked="AttractionsRadioButton_Checked" />

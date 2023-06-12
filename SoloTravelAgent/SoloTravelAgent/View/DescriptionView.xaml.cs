@@ -23,7 +23,7 @@ namespace SoloTravelAgent.View
     /// </summary>
     public partial class DescriptionView : UserControl
     {
-        private AccommodationsViewModel _viewModel;
+        private DescriptionViewModel _viewModel;
         private Trip _selectedTrip;
 
         public DescriptionView()
@@ -35,7 +35,7 @@ namespace SoloTravelAgent.View
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _viewModel = DataContext as AccommodationsViewModel;
+            _viewModel = DataContext as DescriptionViewModel;
             _selectedTrip = _viewModel.SelectedTrip;
         }
 
@@ -76,23 +76,7 @@ namespace SoloTravelAgent.View
             }
         }
 
-        private async void EditButton_Click(object sender, RoutedEventArgs e)
-        {
-            var accommodation = (sender as Button).DataContext as Accommodation;
-            if (accommodation == null) return;
-            var dialog = new EditAccommodationDialogView(accommodation, _viewModel);
-            dialog.Owner = Window.GetWindow(this);
-            dialog.ShowDialog();
-
-        }
-
-        private async void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new AddAccommodationDialogView(_viewModel);
-            dialog.Owner = Window.GetWindow(this);
-            dialog.ShowDialog();
-
-        }
+        
 
         private bool IsMaximize = false;
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

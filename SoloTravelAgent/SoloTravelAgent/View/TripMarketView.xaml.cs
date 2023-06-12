@@ -144,7 +144,6 @@ namespace SoloTravelAgent.View
             return trips.Where(trip => trip.StartDate >= firstDayOfNextMonth && trip.StartDate <= lastDayOfNextMonth).ToList();
         }
 
-
         private List<Trip> FilterTripsNextWeek()
         {
             _viewModel.LoadTrips();
