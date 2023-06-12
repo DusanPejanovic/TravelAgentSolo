@@ -51,8 +51,6 @@
         <TextBlock Text="{Binding Path=AttractionCount, StringFormat={}{0} Attractions}" Grid.Row="4" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
 
-
-
         <Grid Width="150" HorizontalAlignment="Right" Grid.Row="4" Margin="0 0 -12 0">
             <ComboBox SelectedIndex="0" Height="35" Style="{StaticResource filterCombobox}" SelectionChanged="ComboBox_SelectionChanged"
               MouseEnter="ComboBox_MouseEnter"
@@ -71,6 +69,7 @@
 
             <TextBox   Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
             <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
+        </Grid>
 
         <!--Attractions Datagrid-->
         <DataGrid Margin="-20 30 0 0" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" SelectedItem="{Binding SelectedTouristAttraction}" CellStyle="{DynamicResource DataGridCellStyle1}" ItemsSource="{Binding TouristAttractions}" Style="{DynamicResource DataGridStyle1}">
