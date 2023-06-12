@@ -32,13 +32,7 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 
 
 
-        <!--Add Button-->
-        <Button Style="{StaticResource addButton}" Click="AddButton_Click">
-            <StackPanel Orientation="Horizontal">
-                <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Margin="0 1 8 0" Width="11" Height="11"/>
-                <TextBlock Text="Add New Restaurant"/>
-            </StackPanel>
-        </Button>
+  
 
         <!--Seprator-->
         <Separator Height="1" Grid.Row="3" Background="#DAE2EA" Margin="0 -1 0 10"/>
