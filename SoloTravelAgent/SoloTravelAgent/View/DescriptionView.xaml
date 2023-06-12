@@ -47,7 +47,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Background="White" Margin="10" Padding="10" Grid.Column="0" CornerRadius="10">
+            <Border Background="White" Margin="20" Padding="10" Grid.Column="0" CornerRadius="10">
                 <Viewbox>
                     <StackPanel>
                         <TextBlock Text="Trip Details:" FontWeight="Bold" FontSize="24" Margin="10" FontFamily="Segoe UI"/>
@@ -79,7 +79,7 @@
 
             <!--Map-->
             <Grid Grid.Column="1">
-                <Border Background="White" Margin="10" Padding="10" CornerRadius="10">
+                <Border Background="White" Margin="20" Padding="10" CornerRadius="10">
                     <!--Bing Maps-->
                     <maps:Map x:Name="MyMap" Grid.Row="4" CredentialsProvider="RND8jql6TLIrp84rX9UX~mhqN1Fx8KMV8ZTa56_BTFw~ApXpULgdBWsCaIdV0GOrwy5HJPqx8QFpUegZFkdVJXQugXx7RU39tG6_FUFHut0m" ZoomLevel="6">
                         <maps:Map.Center>
