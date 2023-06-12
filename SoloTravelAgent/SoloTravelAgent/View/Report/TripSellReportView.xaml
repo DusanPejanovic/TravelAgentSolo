@@ -1,0 +1,167 @@
+﻿<UserControl x:Class="SoloTravelAgent.View.Report.TripSellReportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SoloTravelAgent.View.Report"
+             xmlns:converters="clr-namespace:SoloTravelAgent.Converters"
+             mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:MoneyToColorConverter x:Key="MoneyToColorConverter"/>
+        <converters:TicketsToColorConverter x:Key="TicketsToColorConverter"/>
+        <converters:TicketsToTextConverter x:Key="TicketsToTextConverter"/>
+    </UserControl.Resources>
+
+    <Border CornerRadius="30" Background="#EFF2F7">
+        <Grid Grid.Column="1" Margin="30 -20 20 20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Trip Sales Report" 
+                       Grid.Row="1"
+                       FontSize="32" 
+                       FontWeight="SemiBold" 
+                       Margin="0 20 0 0" 
+                       Foreground="#121518"
+                       HorizontalAlignment="Left"/>
+
+            <!--Filter ComboBox-->
+            <Grid Width="150"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Bottom"
+                  Grid.Row="1" 
+                  Margin="0 0 -12 0">
+                <ComboBox SelectedItem="{Binding SelectedFilter}"
+                          ItemsSource="{Binding Filters}"
+                          Height="35"
+                          Style="{StaticResource filterCombobox}">
+                    <ComboBox.Resources>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="MinHeight" Value="30"/>
+                            <Setter Property="Width" Value="100"/>
+                            <Setter Property="Foreground" Value="#185FAD"/>
+                            <Setter Property="Background" Value="White"/>
+                        </Style>
+                    </ComboBox.Resources>
+                </ComboBox>
+            </Grid>
+
+            <!--Seprator-->
+            <Separator Height="1" Grid.Row="3" Background="#DAE2EA" Margin="0 10 0 10"/>
+
+
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="0 10"
+                        Grid.Row="4" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+
+                <TextBlock Text="{Binding Path=TripStatisticsCount, StringFormat={}{0} Trips}"
+                           FontSize="18" 
+                           FontWeight="SemiBold"
+                           Foreground="#121518"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Text="|"
+                           Margin="10 0"
+                           FontSize="18" 
+                           FontWeight="SemiBold"
+                           Foreground="#B0B9C6"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock
+                       FontSize="18"
+                       FontWeight="SemiBold">
+                    <Run Foreground="#121518" Text="Filtered By: " />
+                    <Run Foreground="#917FB3" Text="{Binding Path=SelectedFilter}" />
+                </TextBlock>
+            </StackPanel>
+
+            <!--Search input-->
+            <Grid Width="280" HorizontalAlignment="Right" Grid.Row="4" Margin="0 0 0 0">
+                <TextBlock Margin="20 0" 
+                           VerticalAlignment="Center" 
+                           Foreground="#B0B9C6" 
+                           IsHitTestVisible="False"
+                           Panel.ZIndex="1"
+                           Text="Search here ..."
+                           Visibility="{Binding IsSearchEmpty, Converter={StaticResource BoolToVis}}" />
+
+                <TextBox   
+                    Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource searchTextbox}"/>
+                <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
+            </Grid>
+
+            <!--Bookings Datagrid-->
+            <DataGrid ItemsSource="{Binding TripStatistics}"
+                      SelectedItem="{Binding SelectedTripStatistics}"
+                      RowStyle="{DynamicResource DataGridRowStyle1}"
+                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                      CellStyle="{DynamicResource DataGridCellStyle1}"
+                      x:Name="tripsDataGrid"
+                      Style="{DynamicResource DataGridStyle1}"
+                      MouseDoubleClick="myDataGrid_MouseDoubleClick"
+                      >
+
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="#ID" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding TripId}"/>
+                    <DataGridTextColumn Header="Trip name" Binding="{Binding TripName}" IsReadOnly="True" Width="*"/>
+                    <DataGridTextColumn Header="Sold tickets" Binding="{Binding NumberOfBookings}" IsReadOnly="True" Width="*"/>
+                    <DataGridTemplateColumn Header="Total earnings" IsReadOnly="True" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="{Binding TotalMoneyEarned, Converter={StaticResource MoneyToColorConverter}}">
+                                        <TextBlock Text="$" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
+                                    </Border>
+
+                                    <TextBlock Text="{Binding TotalMoneyEarned}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Popularity" IsReadOnly="True" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Width="100" Height="25" CornerRadius="5" Margin="0 0 10 0" Background="{Binding NumberOfBookings, Converter={StaticResource TicketsToColorConverter}}">
+                                        <TextBlock Text="{Binding NumberOfBookings, Converter={StaticResource TicketsToTextConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
+                                    </Border>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button 
+                                    Click="Button_Click"
+                                    ToolTip="Overview of sold bookings for that trip"
+                                    Width="30"
+                                    Style="{StaticResource gridEditButton}"
+                                    >
+                                     <Icon:PackIconMaterial Kind="InformationOutline" Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
+</UserControl>

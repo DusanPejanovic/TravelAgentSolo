@@ -1,48 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using SoloTravelAgent.Model.Data;
-using SoloTravelAgent.Model.Entities;
+﻿using SoloTravelAgent.Model.Entities;
+using SoloTravelAgent.Navigation;
 using SoloTravelAgent.View.DialogView;
 using SoloTravelAgent.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace SoloTravelAgent.View
 {
     /// <summary>
     /// Interaction logic for TouristAttractionView.xaml
     /// </summary>
-    public partial class TouristAttractionView : Window
+    public partial class TouristAttractionView : UserControl
     {
-
-        private readonly TouristAttractionsViewModel _viewModel;
+        private TouristAttractionsViewModel _viewModel;
         private Trip _selectedTrip;
 
-        public TouristAttractionView(Trip selectedTrip)
+        public TouristAttractionView()
         {
             InitializeComponent();
-            var dbContext = new TravelSystemDbContext();
-            _viewModel = new TouristAttractionsViewModel(dbContext, selectedTrip);
-            _selectedTrip = selectedTrip;
+            Loaded += OnLoaded;
+        }
 
-            DataContext = _viewModel;
-
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel = DataContext as TouristAttractionsViewModel;
+            _selectedTrip = _viewModel.SelectedTrip;
         }
 
         private void BackButtonClicked(Object sender, RoutedEventArgs e)
         {
-            var w = new TripView();
-            w.Show();
-            this.Close();
+            var vm = new TripViewModel();
+            NavigationService.Instance.NavigateTo(vm);
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -59,24 +52,23 @@ namespace SoloTravelAgent.View
             }
         }
 
-
-
         private bool IsMaximize = false;
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
+                var window = Window.GetWindow(this);
                 if (IsMaximize)
                 {
-                    this.WindowState = WindowState.Normal;
-                    this.Width = 1080;
-                    this.Height = 720;
+                    window.WindowState = WindowState.Normal;
+                    window.Width = 1080;
+                    window.Height = 720;
 
                     IsMaximize = false;
                 }
                 else
                 {
-                    this.WindowState = WindowState.Maximized;
+                    window.WindowState = WindowState.Maximized;
 
                     IsMaximize = true;
                 }
@@ -85,9 +77,8 @@ namespace SoloTravelAgent.View
 
         private void AccommodationsRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            var accommodationView = new AccomodationView(_selectedTrip);
-            accommodationView.Show();
-            this.Close();
+            var vm = new AccommodationsViewModel(_selectedTrip);
+            NavigationService.Instance.NavigateTo(vm);
         }
 
         private async void EditButton_Click(object sender, RoutedEventArgs e)
@@ -95,7 +86,7 @@ namespace SoloTravelAgent.View
             var attraction = (sender as Button).DataContext as TouristAttraction;
             if (attraction == null) return;
             var dialog = new EditAttractionDialogView(attraction, _viewModel);
-            dialog.Owner = this; // ovo mi je roditelj prozor
+            dialog.Owner = Window.GetWindow(this); // ovo mi je roditelj prozor
             dialog.ShowDialog();
 
         }
@@ -103,24 +94,22 @@ namespace SoloTravelAgent.View
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new AddAttractionDialogView(_viewModel);
-            dialog.Owner = this;
+            dialog.Owner = Window.GetWindow(this);
             dialog.ShowDialog();
 
         }
 
-
         private void RestaurantRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            var w = new RestaurantView(_selectedTrip);
-            w.Show();
-            this.Close();
+            var vm = new RestaurantViewModel(_selectedTrip);
+            NavigationService.Instance.NavigateTo(vm);
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                this.DragMove();
+                Window.GetWindow(this).DragMove();
             }
         }
 
@@ -186,10 +175,5 @@ namespace SoloTravelAgent.View
                 _viewModel.TouristAttractions.Add(attraction);
             }
         }
-
-
-       
     }
-
-
 }

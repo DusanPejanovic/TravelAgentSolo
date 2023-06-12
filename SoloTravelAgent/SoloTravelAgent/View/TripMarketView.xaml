@@ -1,110 +1,106 @@
-﻿<Window x:Class="SoloTravelAgent.View.TripMarketView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SoloTravelAgent.View.Controls"
-        Height="720" Width="1080" WindowStartupLocation="CenterScreen" AllowsTransparency="True"
-        Background="Transparent" WindowStyle="None" ResizeMode="CanResizeWithGrip">
+﻿<UserControl x:Class="SoloTravelAgent.View.TripMarketView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SoloTravelAgent.View"
+             mc:Ignorable="d" 
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             d:DesignHeight="450" d:DesignWidth="800">
 
-    <Window.Resources>
+    <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
-    </Window.Resources>
-    <Border CornerRadius="30" Background="#EFF2F7">
-        <Grid>
-            <!--MenuContentControl with MainSectionContent-->
-            <local:MenuContentControl x:Name="MenuContentHolder">
-                <local:MenuContentControl.MainSectionContent>
-                    <!--Main Section-->
-                    <Grid Grid.Column="1" Margin="30 -20 20 20">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
+    </UserControl.Resources>
 
-                        <TextBlock Text="Travel Management" Grid.Row="0" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0" Foreground="#121518" HorizontalAlignment="Left"/>
-                        <!--Separator-->
-                
-                        <Separator Height="1" Grid.Row="1" Background="#DAE2EA" Margin="0 5 0 5"/>
-                        <!--Counter Title-->
-                        <Grid Width="150" HorizontalAlignment="Right" Grid.Row="4" Margin="0 -55 30 0">
-                            <ComboBox SelectedIndex="0" Height="35" Style="{StaticResource filterCombobox}" SelectionChanged="ComboBox_SelectionChanged"
+    <Grid Grid.Column="1" Margin="30 -20 20 20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Travel Management" Grid.Row="0" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0" Foreground="#121518" HorizontalAlignment="Left"/>
+        <!--Separator-->
+
+        <Separator Height="1" Grid.Row="1" Background="#DAE2EA" Margin="0 5 0 5"/>
+        <!--Counter Title-->
+        <Grid Width="150" HorizontalAlignment="Right" Grid.Row="2" Margin="0 0 50 0">
+            <ComboBox SelectedIndex="0" Height="35" Style="{StaticResource filterCombobox}" SelectionChanged="ComboBox_SelectionChanged"
               MouseEnter="ComboBox_MouseEnter"
               MouseLeave="ComboBox_MouseLeave">
-                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="No Filter" />
-                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Price >= 1500" />
-                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Price &lt; 1500" />
-                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="This Month" />
-                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Next Month" />
-                                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Next Week" />
+                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="No Filter" />
+                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Price >= 1500" />
+                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Price &lt; 1500" />
+                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="This Month" />
+                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Next Month" />
+                <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Next Week" />
 
-                            </ComboBox>
-                        </Grid>
+            </ComboBox>
+        </Grid>
 
-                        <TextBlock Text="{Binding Path=TripCount, StringFormat={}{0} Trips}" Grid.Row="2" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <Grid Width="280" HorizontalAlignment="Center" Grid.Row="2" Margin="0 0 150 0">
-                            <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+        <TextBlock Text="{Binding Path=TripCount, StringFormat={}{0} Trips}" Grid.Row="2" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Grid Width="280" HorizontalAlignment="Center" Grid.Row="2" Margin="0 0 150 0">
+            <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
     Panel.ZIndex="1" Text="Search here ..."
     Visibility="{Binding IsSearchEmpty, Converter={StaticResource BoolToVis}}" />
 
-                            <TextBox   Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
-                            
-                            
-                            <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
-                        </Grid>
-                        <TextBlock Text="{Binding Path=TripCount, StringFormat={}{0} Trips}" Grid.Row="2" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <!-- Trips Card -->
-                        <ScrollViewer Grid.Row="5">
-                            <ItemsControl ItemsSource="{Binding Trips}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Background="White" CornerRadius="10" Padding="20" Margin="10" Width="Auto" MaxWidth="400">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition Height="auto"/>
-                                                </Grid.RowDefinitions>
-                                                <StackPanel Grid.Column="0" Grid.RowSpan="4" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                    <TextBlock Grid.Row="0" Text="{Binding Name}" FontWeight="Bold" FontSize="18"/>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Description}" TextWrapping="Wrap" MaxHeight="60"/>
-                                                    <StackPanel Grid.Row="2" Orientation="Horizontal">
-                                                        <TextBlock Text="{Binding StartDate, StringFormat=\{0:d\}}" FontWeight="Bold" FontSize="14"/>
-                                                        <TextBlock Text=" - " FontWeight="Bold" FontSize="14"/>
-                                                        <TextBlock Text="{Binding EndDate, StringFormat=\{0:d\}}" FontWeight="Bold" FontSize="14"/>
-                                                    </StackPanel>
-                                                    <TextBlock Grid.Row="3" Text="{Binding Price}" FontWeight="Bold" FontSize="14"/>
-                                                </StackPanel>
-                                                <Border Grid.Column="1" Background="Black" Height="120" Width="1" Margin="20 0"/>
-                                                <StackPanel Grid.Column="2" Grid.RowSpan="4" Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Center">
-                                                    <Button Content="View it" Style="{StaticResource addButton}" Click="ViewIt_Click" />
-                                                    <Button Content="Book it" Style="{StaticResource addButton}" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
-                    </Grid>
-                </local:MenuContentControl.MainSectionContent>
-            </local:MenuContentControl>
+            <TextBox   Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
+
+
+            <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
         </Grid>
-    </Border>
-</Window>
+        <TextBlock Text="{Binding Path=TripCount, StringFormat={}{0} Trips}" Grid.Row="2" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <!-- Trips Card -->
+        <ScrollViewer Grid.Row="5">
+            <ItemsControl ItemsSource="{Binding Trips}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White" CornerRadius="10" Padding="20" Margin="10" Width="Auto" MaxWidth="400">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Column="0" Grid.RowSpan="4" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Grid.Row="0" Text="{Binding Name}" FontWeight="Bold" FontSize="18"/>
+                                    <TextBlock Grid.Row="1" Text="{Binding Description}" TextWrapping="Wrap" MaxHeight="60"/>
+                                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                        <TextBlock Text="{Binding StartDate, StringFormat=\{0:d\}}" FontWeight="Bold" FontSize="14"/>
+                                        <TextBlock Text=" - " FontWeight="Bold" FontSize="14"/>
+                                        <TextBlock Text="{Binding EndDate, StringFormat=\{0:d\}}" FontWeight="Bold" FontSize="14"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Row="3" Text="{Binding Price}" FontWeight="Bold" FontSize="14"/>
+                                </StackPanel>
+                                <Border Grid.Column="1" Background="Black" Height="120" Width="1" Margin="20 0"/>
+                                <StackPanel Grid.Column="2" Grid.RowSpan="4" Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Center">
+                                    <Button 
+                                        Content="View it" 
+                                        Style="{StaticResource addButton}" 
+                                        Command="{Binding DataContext.ViewTripCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                        CommandParameter="{Binding}" />
+                                    <Button Content="Book it" Style="{StaticResource addButton}" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

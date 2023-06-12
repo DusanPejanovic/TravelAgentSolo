@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SoloTravelAgent.Model.DTO;
 
 namespace SoloTravelAgent.Model.Service
 {
@@ -42,6 +43,25 @@ namespace SoloTravelAgent.Model.Service
         public void RemoveBooking(Booking booking)
         {
             _bookingRepository.Remove(booking);
+        }
+
+        public IEnumerable<Booking> GetBookingsByTripId(int tripId)
+        {
+            return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId);
+        }
+
+        public IEnumerable<Booking> GetCurrentMonthBookingsForTrip(int tripId)
+        {
+            var now = DateTime.Now;
+            return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId && b.BookingDate.Month == now.Month && b.BookingDate.Year == now.Year);
+        }
+
+        public IEnumerable<Booking> GetBookingsForPreviousMonthsAndTrip(int months, int tripId)
+        {
+            var cutOffDate = DateTime.Now.AddMonths(-months);
+            return _bookingRepository
+                .GetAll()
+                .Where(b => b.Trip.Id == tripId &&  b.BookingDate >= cutOffDate && b.IsPaid == true);
         }
     }
 }

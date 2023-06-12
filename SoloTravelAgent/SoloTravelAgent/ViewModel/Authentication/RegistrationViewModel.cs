@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Service;
 using SoloTravelAgent.View;
+using SoloTravelAgent.View.MainScreen;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
@@ -237,7 +238,7 @@ namespace SoloTravelAgent.ViewModel.Authentication
             else
             {
                 _authService.Register(_name, _email, _phoneNumber, _password);
-                var w = new TripMarketView();
+                var w = new ClientMainScreenView();
                 w.Show();
             }
         }

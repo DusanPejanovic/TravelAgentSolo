@@ -62,7 +62,5 @@ namespace SoloTravelAgent.Model.Repository.Implements
             _dbSet.Remove(entity);
             _context.SaveChanges();
         }
-
-
     }
 }

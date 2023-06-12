@@ -1,66 +1,57 @@
-﻿using SoloTravelAgent.Model.Data;
-using SoloTravelAgent.Model.Entities;
+﻿using SoloTravelAgent.Model.Entities;
+using SoloTravelAgent.Navigation;
 using SoloTravelAgent.View.DialogView;
 using SoloTravelAgent.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace SoloTravelAgent.View
 {
     /// <summary>
     /// Interaction logic for RestaurantView.xaml
     /// </summary>
-    public partial class RestaurantView : Window
+    public partial class RestaurantView : UserControl
     {
-
-        private readonly RestaurantViewModel _viewModel;
+        private RestaurantViewModel _viewModel;
         public Trip _selectedTrip;
-        public RestaurantView(Trip selectedTrip)
+        public RestaurantView()
         {
             InitializeComponent();
-            _selectedTrip = selectedTrip;
-            var dbContext = new TravelSystemDbContext();
-            _viewModel = new RestaurantViewModel(dbContext, selectedTrip);
+            Loaded += OnLoaded;
+        }
 
-            DataContext = _viewModel;
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel = DataContext as RestaurantViewModel;
+            _selectedTrip = _viewModel.SelectedTrip;
         }
 
         private void AccommodationsRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            var w = new AccomodationView(_selectedTrip);
-            w.Show();
-            this.Close();
+            var vm = new AccommodationsViewModel(_selectedTrip);
+            NavigationService.Instance.NavigateTo(vm);
         }
 
         private void AttractionsRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            var w = new TouristAttractionView(_selectedTrip);
-            w.Show();
-            this.Close();
+            var vm = new TouristAttractionsViewModel(_selectedTrip);
+            NavigationService.Instance.NavigateTo(vm);
         }
 
-        private void BackButtonClicked(Object sender, RoutedEventArgs e) {
-            var w = new TripView();
-            w.Show();
-            this.Close();
+        private void BackButtonClicked(Object sender, RoutedEventArgs e)
+        {
+            var vm = new TripViewModel();
+            NavigationService.Instance.NavigateTo(vm);
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            var restaurant = (sender as Button).DataContext as Restaurant; 
+            var restaurant = (sender as Button).DataContext as Restaurant;
             if (restaurant == null) return;
 
             var msg = $"Are you sure you want to delete the restaurant: {restaurant.Name}?";
@@ -77,39 +68,35 @@ namespace SoloTravelAgent.View
             var restaurant = (sender as Button).DataContext as Restaurant;
             if (restaurant == null) return;
             var dialog = new EditRestaurantDialogView(restaurant, _viewModel);
-            dialog.Owner = this;
+            dialog.Owner = Window.GetWindow(this);
             dialog.ShowDialog();
-
         }
 
         private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new AddRestaurantDialogView(_viewModel);
-            dialog.Owner = this;
+            dialog.Owner = Window.GetWindow(this);
             dialog.ShowDialog();
-
         }
-
-
-
-
 
         private bool IsMaximize = false;
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
+                var window = Window.GetWindow(this);
+
                 if (IsMaximize)
                 {
-                    this.WindowState = WindowState.Normal;
-                    this.Width = 1080;
-                    this.Height = 720;
+                    window.WindowState = WindowState.Normal;
+                    window.Width = 1080;
+                    window.Height = 720;
 
                     IsMaximize = false;
                 }
                 else
                 {
-                    this.WindowState = WindowState.Maximized;
+                    window.WindowState = WindowState.Maximized;
 
                     IsMaximize = true;
                 }
@@ -120,7 +107,7 @@ namespace SoloTravelAgent.View
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                this.DragMove();
+                Window.GetWindow(this).DragMove();
             }
         }
 
@@ -171,9 +158,8 @@ namespace SoloTravelAgent.View
                     _viewModel.LoadRestaurants();
                 }
             }
-
-
         }
+
         private void UpdateCollection(List<Restaurant> newRestaurants)
         {
             _viewModel.Restaurants.Clear();
@@ -211,12 +197,5 @@ namespace SoloTravelAgent.View
             var Restaurants = _viewModel.Restaurants;
             return Restaurants.Where(Restaurant => Restaurant.Cuisine == "Mexican").ToList();
         }
-
-
-
     }
-
-
-
-
 }

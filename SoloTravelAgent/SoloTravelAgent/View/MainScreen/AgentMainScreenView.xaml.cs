@@ -1,33 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SoloTravelAgent.ViewModel.MainScreen;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SoloTravelAgent.View.Controls
 {
     /// <summary>
     /// Interaction logic for MenuContentControl.xaml
     /// </summary>
-    public partial class MenuContentControl : UserControl
+    public partial class AgentMainScreenView : Window
     {
         public static readonly DependencyProperty MainSectionContentProperty =
-            DependencyProperty.Register("MainSectionContent", typeof(object), typeof(MenuContentControl), new PropertyMetadata(null));
+        DependencyProperty.Register("MainSectionContent", typeof(object), typeof(AgentMainScreenView), new PropertyMetadata(null));
 
         public static readonly DependencyProperty IsMenuVisibleProperty =
-        DependencyProperty.Register("IsMenuVisible", typeof(bool), typeof(MenuContentControl), new PropertyMetadata(false));
-
-
+        DependencyProperty.Register("IsMenuVisible", typeof(bool), typeof(AgentMainScreenView), new PropertyMetadata(false));
 
         public bool IsMenuVisible
         {
@@ -39,7 +27,6 @@ namespace SoloTravelAgent.View.Controls
             }
         }
 
-
         public object MainSectionContent
         {
             get { return GetValue(MainSectionContentProperty); }
@@ -47,11 +34,11 @@ namespace SoloTravelAgent.View.Controls
         }
 
 
-        public MenuContentControl()
+        public AgentMainScreenView()
         {
             InitializeComponent();
-            IsMenuVisible = true;  // Set initial visibility state
-           
+            DataContext = new AgentMainScreenViewModel();
+            IsMenuVisible = true;  
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
@@ -109,7 +96,5 @@ namespace SoloTravelAgent.View.Controls
             };
             MenuControl.BeginAnimation(UIElement.OpacityProperty, opacityAnimation);
         }
-
-
     }
 }

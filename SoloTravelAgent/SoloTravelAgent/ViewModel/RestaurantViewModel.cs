@@ -1,10 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using Microsoft.VisualBasic;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -24,8 +21,9 @@ namespace SoloTravelAgent.ViewModel
         private Trip _selectedTrip;
         private int _numberOfRestaurants;
   
-            public RestaurantViewModel(TravelSystemDbContext dbContext, Trip selectedTrip)
+        public RestaurantViewModel(Trip selectedTrip)
         {
+            var dbContext = new TravelSystemDbContext();
             _restaurantService = new RestaurantService(dbContext);
             _tripService = new TripService(dbContext);
             _selectedTrip = selectedTrip;   
@@ -89,8 +87,6 @@ namespace SoloTravelAgent.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
-
         public void AddRestaurant(Restaurant restaurant)
         {
             var trip = _tripService.GetTrip(SelectedTrip.Id);
@@ -101,7 +97,6 @@ namespace SoloTravelAgent.ViewModel
             LoadRestaurants();
             OnPropertyChanged(nameof(RestaurantCount));
         }
-
 
         public void UpdateRestaurant()
         {
@@ -124,11 +119,11 @@ namespace SoloTravelAgent.ViewModel
             
         }
 
-
         private bool CanAddOrUpdateRestaurant()
         {
             return true;
         }
+
 
         private bool CanDeleteRestaurant()
         { 

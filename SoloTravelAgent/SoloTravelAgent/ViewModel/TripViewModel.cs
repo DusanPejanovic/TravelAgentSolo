@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
@@ -22,10 +17,9 @@ namespace SoloTravelAgent.ViewModel
         private bool _isSearchEmpty = true;
         private ICollectionView _filteredTrips;
 
-  
-
-        public TripViewModel(TravelSystemDbContext dbContext)
+        public TripViewModel()
         {
+            var dbContext = new TravelSystemDbContext();
             Trips = new ObservableCollection<Trip>();
             _tripService = new TripService(dbContext);
             LoadTrips();
@@ -45,8 +39,6 @@ namespace SoloTravelAgent.ViewModel
         public ICommand UpdateTripCommand { get; set; }
 
         public ICommand DeleteTripCommand { get; set; }
-
-     
 
         public string SearchText
         {

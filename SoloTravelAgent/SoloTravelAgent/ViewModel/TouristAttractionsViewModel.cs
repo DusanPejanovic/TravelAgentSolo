@@ -21,8 +21,9 @@ namespace SoloTravelAgent.ViewModel
         private readonly TripService _tripService;
         private Trip _selectedTrip;
 
-        public TouristAttractionsViewModel(TravelSystemDbContext dbContext, Trip selectedTrip)
+        public TouristAttractionsViewModel(Trip selectedTrip)
         {
+            var dbContext = new TravelSystemDbContext();
             _selectedTrip = selectedTrip;
             _tripService = new TripService(dbContext);
             _touristAttractionService = new TouristAttractionService(dbContext);

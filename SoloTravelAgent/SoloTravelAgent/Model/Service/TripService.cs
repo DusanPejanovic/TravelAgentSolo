@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SoloTravelAgent.Model.DTO;
 
 namespace SoloTravelAgent.Model.Service
 {
@@ -49,5 +50,4 @@ namespace SoloTravelAgent.Model.Service
             return allTrips.Where(filterCondition);
         }
     }
-
 }

@@ -1,13 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SoloTravelAgent.Model.Data;
+﻿using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
-using SoloTravelAgent.View;
 using SoloTravelAgent.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 
 namespace SoloTravelAgent
@@ -26,7 +23,6 @@ namespace SoloTravelAgent
             DataContext = new MainViewModel(dbContext);
         }
 
-
         private void TestDatabase()
         {
 
@@ -43,24 +39,6 @@ namespace SoloTravelAgent
             }
             var ag = new Agent { Name = "John Doe", Email = "vanja@gmail.com", PhoneNumber = "555-1234", Password = "vanja123" };
             agentService.AddAgent(ag);
-        }
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            var w = new TripMarketView();
-            w.Show();
-           
-        }
-
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-            var w = new TripView();
-            w.Show();
-
         }
     }
 }
