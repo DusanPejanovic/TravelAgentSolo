@@ -24,7 +24,7 @@
             <v:RestaurantMarketView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:AccommodationsViewModel}">
-            <v:AccomodationsMarketView/>
+            <v:DescriptionView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:TouristAttractionsViewModel}">
             <v:TouristAttractionMarketView/>
