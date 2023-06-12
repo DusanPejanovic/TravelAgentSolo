@@ -23,6 +23,6 @@
     </Window.Resources>
 
 
-    <ContentControl x:Name="mainContentControl" Content="{Binding CurrentView}" />
+    <ContentControl MouseDown="contentMouseDown" x:Name="mainContentControl" Content="{Binding CurrentView}" />
 
 </Window>

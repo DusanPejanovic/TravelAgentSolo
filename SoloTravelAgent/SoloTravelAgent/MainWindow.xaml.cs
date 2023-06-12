@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 
 namespace SoloTravelAgent
 {
@@ -21,6 +22,12 @@ namespace SoloTravelAgent
             InitializeComponent();
             var dbContext = new TravelSystemDbContext();
             DataContext = new MainViewModel(dbContext);
+        }
+
+        private void contentMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
 
         private void TestDatabase()
