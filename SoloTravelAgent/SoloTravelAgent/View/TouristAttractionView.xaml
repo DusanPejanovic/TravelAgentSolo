@@ -84,7 +84,7 @@
                                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="*"/>
                                 <DataGridTextColumn Header="Address" Binding="{Binding Address}" IsReadOnly="True" Width="*"/>
                                 <DataGridTextColumn Header="Description" Binding="{Binding Description}" IsReadOnly="True" Width="210"/>
-                                <DataGridTextColumn Header="EntryFee" Binding="{Binding EntryFee}" IsReadOnly="True" Width="60"/>
+                                <DataGridTextColumn Header="EntryFee" Binding="{Binding EntryFee}" IsReadOnly="True" Width="90"/>
                                 <DataGridTextColumn Header="Website" Binding="{Binding Website}" IsReadOnly="True" Width="180"/>
                                 <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                                     <DataGridTemplateColumn.CellTemplate>
