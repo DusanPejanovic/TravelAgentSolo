@@ -19,9 +19,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <Button Style="{StaticResource topButton}"  Click="BackButtonClicked" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 30 0 0" Grid.Row="1" Background="#dcdcdc">
@@ -43,38 +41,49 @@
         </StackPanel>
 
         <!-- Your code up to "Here you should add code" -->
-
-        <!--  Here you should add code -->
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!--Trip details-->
-            <StackPanel Grid.Column="0">
-                <TextBlock Text="Trip Details:" FontWeight="Bold" FontSize="24"/>
-                <ListView ItemsSource="{Binding SelectedTrip}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" />
-                            <GridViewColumn Header="Start Date" DisplayMemberBinding="{Binding StartDate}" />
-                            <GridViewColumn Header="End Date" DisplayMemberBinding="{Binding EndDate}" />
-                            <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </StackPanel>
+            <Border Background="White" Margin="10" Padding="10" Grid.Column="0" CornerRadius="10">
+                <Viewbox>
+                    <StackPanel>
+                        <TextBlock Text="Trip Details:" FontWeight="Bold" FontSize="24" Margin="10" FontFamily="Segoe UI"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="10">
+                            <Icon:PackIconMaterial Kind="Calendar" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="Start Date: " FontWeight="Bold" FontSize="22" FontFamily="Segoe UI"/>
+                            <TextBlock Text="{Binding SelectedTrip.StartDate, StringFormat='{}{0:dd/MM/yyyy}'}" FontSize="22" FontFamily="Segoe UI"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="10">
+                            <Icon:PackIconMaterial Kind="Calendar" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="End Date: " FontWeight="Bold" FontSize="22" FontFamily="Segoe UI"/>
+                            <TextBlock Text="{Binding SelectedTrip.EndDate, StringFormat='{}{0:dd/MM/yyyy}'}" FontSize="22" FontFamily="Segoe UI"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="10">
+                            <Icon:PackIconMaterial Kind="CurrencyUsd" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="Price: " FontWeight="Bold" FontSize="22" FontFamily="Segoe UI"/>
+                            <TextBlock Text="{Binding SelectedTrip.Price, StringFormat='{}{0:C}'}" FontSize="22" FontFamily="Segoe UI"/>
+                        </StackPanel>
+
+                        <TextBlock Text="Description: " FontWeight="Bold" FontSize="22" Margin="10" FontFamily="Segoe UI"/>
+                        <TextBlock Text="{Binding SelectedTrip.Description}" TextWrapping="Wrap" FontSize="22" Margin="10" FontFamily="Segoe UI"/>
+                    </StackPanel>
+                </Viewbox>
+            </Border>
+
 
             <!--Map-->
-            <StackPanel Grid.Column="1">
-                <TextBlock Text="Accommodation Locations:" FontWeight="Bold" FontSize="24"/>
-                <!--Map placeholder. Replace this with a map control from the mapping library you are using.-->
-                <Border Width="200" Height="200" Background="White" Margin="10">
+            <Grid Grid.Column="1">
+                <Border Background="White" Margin="10" Padding="10" CornerRadius="10">
                     <!--Bing Maps-->
                     <maps:Map x:Name="MyMap" Grid.Row="4" CredentialsProvider="RND8jql6TLIrp84rX9UX~mhqN1Fx8KMV8ZTa56_BTFw~ApXpULgdBWsCaIdV0GOrwy5HJPqx8QFpUegZFkdVJXQugXx7RU39tG6_FUFHut0m" ZoomLevel="6">
                         <maps:Map.Center>
-                            <maps:Location Latitude="44.7866" Longitude="20.4489" />
+                            <maps:Location Latitude="44.0128" Longitude="20.9114" />
                         </maps:Map.Center>
                         <maps:Pushpin Background="Black">
                             <maps:Pushpin.Location>
@@ -88,10 +97,8 @@
                             </ToolTipService.ToolTip>
                         </maps:Pushpin>
                     </maps:Map>
-
                 </Border>
-            </StackPanel>
+            </Grid>
         </Grid>
-
     </Grid>
 </UserControl>
