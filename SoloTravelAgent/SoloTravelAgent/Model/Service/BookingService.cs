@@ -5,9 +5,6 @@ using SoloTravelAgent.Model.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SoloTravelAgent.Model.DTO;
 
 namespace SoloTravelAgent.Model.Service
 {
@@ -45,6 +42,25 @@ namespace SoloTravelAgent.Model.Service
             _bookingRepository.Remove(booking);
         }
 
+        public void ApproveBooking(int id)
+        {
+            var booking = _bookingRepository.Get(id);
+            if (booking != null)
+            {
+                booking.IsPaid = true;
+                _bookingRepository.Update(booking);
+            }
+        }
+
+        public void DeleteBooking(int id)
+        {
+            var booking = _bookingRepository.Get(id);
+            if (booking != null)
+            {
+                _bookingRepository.Remove(booking);
+            }
+        }
+
         public IEnumerable<Booking> GetBookingsByTripId(int tripId)
         {
             return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId);
@@ -62,6 +78,25 @@ namespace SoloTravelAgent.Model.Service
             return _bookingRepository
                 .GetAll()
                 .Where(b => b.Trip.Id == tripId &&  b.BookingDate >= cutOffDate && b.IsPaid == true);
+        }
+
+        public IEnumerable<Booking> GetUnpaidBookings()
+        {
+            return _bookingRepository.GetAll().Where(b=> !b.IsPaid);
+        }
+
+        public IEnumerable<Booking> GetUnpaidBookingsThisWeek()
+        {
+            DateTime startOfWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
+            DateTime endOfWeek = startOfWeek.AddDays(7);
+
+            return _bookingRepository.GetAll().Where(b => !b.IsPaid && b.BookingDate >= startOfWeek && b.BookingDate < endOfWeek);
+        }
+
+        public IEnumerable<Booking> GetUnpaidBookingsThisMonth()
+        {
+            var now = DateTime.Now;
+            return _bookingRepository.GetAll().Where(b => !b.IsPaid && b.BookingDate.Month == now.Month && b.BookingDate.Year == now.Year);
         }
     }
 }

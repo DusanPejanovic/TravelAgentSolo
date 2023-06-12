@@ -9,6 +9,8 @@
              xmlns:v="clr-namespace:SoloTravelAgent.View"
              xmlns:reportV="clr-namespace:SoloTravelAgent.View.Report"
              xmlns:reportVm="clr-namespace:SoloTravelAgent.ViewModel.Report"
+             xmlns:bookingV="clr-namespace:SoloTravelAgent.View.BookingManagement"
+             xmlns:bookingVm="clr-namespace:SoloTravelAgent.ViewModel.BookingManagement"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="750">
 
@@ -32,6 +34,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type reportVm:SoldBookingsForTripViewModel}">
             <reportV:SoldBookingsForTrip/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type bookingVm:AgentBookingManagementViewModel}">
+            <bookingV:AgentBookingManagementView/>
         </DataTemplate>
     </Window.Resources>
 

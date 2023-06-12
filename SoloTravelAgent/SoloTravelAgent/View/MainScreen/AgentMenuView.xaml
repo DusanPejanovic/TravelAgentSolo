@@ -95,8 +95,8 @@
                                  Style="{StaticResource menuButton}"
                                  IsChecked="{Binding SelectedOption, Converter={StaticResource OptionToIsCheckedConverter}, ConverterParameter=3, Mode=TwoWay}">
                         <StackPanel Orientation="Horizontal">
-                            <Icon:PackIconMaterial Kind="FileDocument" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Reports"/>
+                            <Icon:PackIconMaterial Kind="Book" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Pending Bookings"/>
                         </StackPanel>
 
                         <i:Interaction.Triggers>
