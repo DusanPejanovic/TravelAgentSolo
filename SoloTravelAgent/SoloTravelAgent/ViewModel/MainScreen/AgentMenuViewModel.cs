@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using SoloTravelAgent.Navigation;
 using SoloTravelAgent.View.MainScreen;
+using SoloTravelAgent.ViewModel.BookingManagement;
 using SoloTravelAgent.ViewModel.Report;
 using System.Windows;
 
@@ -37,6 +38,9 @@ namespace SoloTravelAgent.ViewModel.MainScreen
                     break;
                 case 2:
                     NavigationService.Instance.NavigateTo(new TripSellReportViewModel());
+                    break;
+                case 3:
+                    NavigationService.Instance.NavigateTo(new AgentBookingManagementViewModel());
                     break;
                 case 5:
                     var w = new MainWindow();
