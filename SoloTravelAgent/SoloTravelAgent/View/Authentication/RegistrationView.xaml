@@ -31,8 +31,8 @@
             <Grid>
                 <Canvas>
                     <Polygon Points="0,20 120,80 0,150" Fill="#A4CFF0" />
-                    <Polygon Points="100,400 200,370 180,470" Fill="#A4CFF0" />
-                    <Ellipse Margin="250 450 0 0" Width="40" Height="40" Fill="#A4CFF0" />
+                    <Polygon Points="50,550 150,520 130,630" Fill="#A4CFF0" />
+                    <Ellipse Margin="250 500 0 0" Width="40" Height="40" Fill="#A4CFF0" />
                     <Ellipse Margin="50 400 0 0" Width="20" Height="20" Fill="#A4CFF0" />
                 </Canvas>
 
