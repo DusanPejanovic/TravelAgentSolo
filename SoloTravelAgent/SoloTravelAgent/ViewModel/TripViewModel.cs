@@ -99,6 +99,15 @@ namespace SoloTravelAgent.ViewModel
                 LoadTrips();
             }
         }
+        public void UpdateT(Trip t)
+        {
+            if (SelectedTrip != null)
+            {
+                _tripService.UpdateTrip(t);
+                LoadTrips();
+            }
+        }
+
 
         private void DeleteTrip()
         {

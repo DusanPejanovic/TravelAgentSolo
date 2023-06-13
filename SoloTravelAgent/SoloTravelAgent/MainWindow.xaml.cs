@@ -38,7 +38,27 @@ namespace SoloTravelAgent
 
             var agentService = new AgentService(dbContext);
 
-     
+            var tService = new TouristAttractionService(dbContext);
+
+            var ttService = new TripService(dbContext);
+
+            var t = new TouristAttraction { Name = "ss4324", Address = "aa", Description = "aaa", EntryFee = 1000, Website="com" };
+            tService.AddAttraction(t);
+
+            var trip = new Trip { Name = "ss", Description = "aaa", StartDate = DateTime.Now, EndDate = DateTime.Now, Price = 1000, Latitude=43, Longitude=32};
+
+
+            var tripTourist = new TripTouristAttraction
+            {
+                Trip = trip,
+                TouristAttraction = tService.GetAttraction(2)
+
+            };
+
+            trip.TripTouristAttractions.Add(tripTourist);
+
+            ttService.AddTrip(trip);
+
             List<Agent> agents = (List<Agent>)agentService.GetAllAgents();
             foreach (Agent age in agents)
             {
