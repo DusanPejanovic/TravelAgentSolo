@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using SoloTravelAgent.Help;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.DTO;
 using SoloTravelAgent.Model.Service;
@@ -7,6 +8,7 @@ using SoloTravelAgent.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace SoloTravelAgent.ViewModel.Report
 {
@@ -83,6 +85,8 @@ namespace SoloTravelAgent.ViewModel.Report
 
         public RelayCommand<int> ShowSoldBookingsCommand { get; }
 
+        public RelayCommand<string> ShowHelpCommand { get; private set; }
+
         private readonly TripStatisticsService _tripStatisticsService;
 
         public TripSellReportViewModel() {
@@ -101,6 +105,13 @@ namespace SoloTravelAgent.ViewModel.Report
             SelectedFilter = filters.First();
 
             ShowSoldBookingsCommand = new RelayCommand<int>(ShowSoldBookings);
+            ShowHelpCommand = new RelayCommand<string>(ShowHelpExecute);
+        }
+
+        private void ShowHelpExecute(string helpKey)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            HelpProvider.ShowHelp(helpKey, mainWindow);
         }
 
         public void ShowSoldBookings(int tripId)

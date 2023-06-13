@@ -131,7 +131,7 @@
                       Style="{DynamicResource DataGridStyle1}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="#ID" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding Id}"/>
-                    <DataGridTemplateColumn Header="Client" IsReadOnly="True" Width="*">
+                    <DataGridTemplateColumn Header="Client" IsReadOnly="True" Width="1.2*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

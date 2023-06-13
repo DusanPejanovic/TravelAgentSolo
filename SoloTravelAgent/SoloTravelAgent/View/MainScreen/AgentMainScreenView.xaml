@@ -13,9 +13,8 @@
              xmlns:bookingV="clr-namespace:SoloTravelAgent.View.BookingManagement"
              xmlns:bookingVm="clr-namespace:SoloTravelAgent.ViewModel.BookingManagement"
              mc:Ignorable="d" 
-              Height="700"
-     
-        Width="1100">
+             Height="700"
+             Width="1100">
 
     <Window.Resources>
         <local:BoolToVisibilityConverter x:Key="BoolToVisibility"/>

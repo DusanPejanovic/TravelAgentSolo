@@ -64,13 +64,13 @@ namespace SoloTravelAgent.Model.Service
 
         public IEnumerable<Booking> GetBookingsByTripId(int tripId)
         {
-            return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId);
+            return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId && b.IsPaid == true);
         }
 
         public IEnumerable<Booking> GetCurrentMonthBookingsForTrip(int tripId)
         {
             var now = DateTime.Now;
-            return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId && b.BookingDate.Month == now.Month && b.BookingDate.Year == now.Year);
+            return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId && b.BookingDate.Month == now.Month && b.BookingDate.Year == now.Year && b.IsPaid == true);
         }
 
         public IEnumerable<Booking> GetBookingsForPreviousMonthsAndTrip(int months, int tripId)

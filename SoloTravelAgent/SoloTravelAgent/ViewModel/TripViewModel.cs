@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using SoloTravelAgent.Help;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
@@ -17,6 +19,8 @@ namespace SoloTravelAgent.ViewModel
         private bool _isSearchEmpty = true;
         private ICollectionView _filteredTrips;
 
+        public RelayCommand<string> ShowHelpCommand { get; private set; }
+
         public TripViewModel()
         {
             var dbContext = new TravelSystemDbContext();
@@ -27,6 +31,14 @@ namespace SoloTravelAgent.ViewModel
             UpdateTripCommand = new RelayCommand(_ => UpdateTrip(), _ => CanAddOrUpdateTrip());
             DeleteTripCommand = new RelayCommand(_ => DeleteTrip(), _ => CanDeleteTrip());
             SearchText = string.Empty;
+
+            ShowHelpCommand = new RelayCommand<string>(ShowHelpExecute);
+        }
+
+        private void ShowHelpExecute(string helpKey)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            HelpProvider.ShowHelp(helpKey, mainWindow);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -56,19 +56,18 @@ namespace SoloTravelAgent.Model.Service
 
         public IEnumerable<TripStatistics> GetTripStatisticsForAllTime()
         {
-            var trips = _tripRepository.GetAll();
-            var bookings = _bookingRepository.GetAll().Where(b => b.IsPaid == true);
-            var tripStats = from trip in trips
-                            join booking in bookings on trip.Id equals booking.Trip.Id into tripGroup
-                            from subTrip in tripGroup.DefaultIfEmpty()
-                            select new TripStatistics
-                            {
-                                TripId = trip.Id,
-                                TripName = trip.Name,
-                                NumberOfBookings = tripGroup.Count(),
-                                TotalMoneyEarned = tripGroup.Sum(b => b != null ? b.Trip.Price : 0)
-                            };
-            return tripStats.ToList();
+            return _bookingRepository
+                .GetAll()
+                .Where(b => b.IsPaid == true)
+                .GroupBy(b => new { b.Trip.Id, b.Trip.Name })
+                .Select(g => new TripStatistics
+                {
+                    TripId = g.Key.Id,
+                    TripName = g.Key.Name,
+                    NumberOfBookings = g.Count(),
+                    TotalMoneyEarned = g.Sum(b => b.Trip.Price)
+                })
+                .ToList();
         }
 
         public IEnumerable<TripStatistics> GetPopularTrips()

@@ -1,9 +1,13 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using SoloTravelAgent.Help;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 
 namespace SoloTravelAgent.ViewModel.BookingManagement
 {
@@ -69,6 +73,8 @@ namespace SoloTravelAgent.ViewModel.BookingManagement
 
         private readonly BookingService _bookingService;
 
+        public RelayCommand<string> ShowHelpCommand { get; private set; }
+
         public AgentBookingManagementViewModel()
         {
             var dbContext = new TravelSystemDbContext();
@@ -81,6 +87,14 @@ namespace SoloTravelAgent.ViewModel.BookingManagement
                 "This Month",
             };
             SelectedFilter = filters.First();
+
+            ShowHelpCommand = new RelayCommand<string>(ShowHelpExecute);
+        }
+
+        private void ShowHelpExecute(string helpKey)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            HelpProvider.ShowHelp(helpKey, mainWindow);
         }
 
         public void ApproveBooking(int id)
