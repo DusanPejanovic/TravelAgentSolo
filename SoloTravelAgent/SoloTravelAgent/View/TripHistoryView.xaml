@@ -10,6 +10,10 @@
              xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <UserControl.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding ShowHelpCommand}" CommandParameter="BoughtTrips"/>
+    </UserControl.InputBindings>
+
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <converters:MoneyToColorConverter x:Key="MoneyToColorConverter"/>

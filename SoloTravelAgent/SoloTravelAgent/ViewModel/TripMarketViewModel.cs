@@ -11,6 +11,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using SoloTravelAgent.ViewModel.BookingManagement;
 using System.Windows;
+using SoloTravelAgent.Help;
 
 namespace SoloTravelAgent.ViewModel
 {
@@ -22,6 +23,7 @@ namespace SoloTravelAgent.ViewModel
         private string _searchText;
         private bool _isSearchEmpty = true;
         private ICollectionView _filteredTrips;
+        public RelayCommand<string> ShowHelpCommand { get; private set; }
 
         public TripMarketViewModel()
         {
@@ -37,6 +39,14 @@ namespace SoloTravelAgent.ViewModel
             UpdateTripCommand = new RelayCommand(_ => UpdateTrip(), _ => CanAddOrUpdateTrip());
             DeleteTripCommand = new RelayCommand(_ => DeleteTrip(), _ => CanDeleteTrip());
             SearchText = string.Empty;
+
+            ShowHelpCommand = new RelayCommand<string>(ShowHelpExecute);
+        }
+
+        private void ShowHelpExecute(string helpKey)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            HelpProvider.ShowHelp(helpKey, mainWindow);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
