@@ -117,7 +117,7 @@
                     <DataGridTextColumn Header="Trip" Binding="{Binding Trip.Name}" IsReadOnly="True" Width="*"/>
                     <DataGridTextColumn Header="Price" Binding="{Binding Trip.Price}" IsReadOnly="True" Width="*"/>
                     <DataGridTextColumn Header="Booking Date" Binding="{Binding BookingDate, StringFormat=dd-MM-yyyy}" IsReadOnly="True" Width="*"/>
-                    <DataGridTemplateColumn Header="Cancle" IsReadOnly="True" Width="auto">
+                    <DataGridTemplateColumn Header="Cancel" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
