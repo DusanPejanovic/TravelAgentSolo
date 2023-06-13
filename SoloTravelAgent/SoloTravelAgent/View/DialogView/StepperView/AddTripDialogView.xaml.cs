@@ -91,7 +91,6 @@ namespace SoloTravelAgent.View.DialogView.StepperView
 
             return existingAttractions;
         }
-
         public void ViewModel_GoToNextStep()
         {
             _viewModel.NextStep();
