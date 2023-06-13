@@ -48,7 +48,10 @@ namespace SoloTravelAgent.ViewModel.MainScreen
                     NavigationService.Instance.NavigateTo(new TripMarketViewModel());
                     break;
                 case 2:
-                    NavigationService.Instance.NavigateTo(new TripSellReportViewModel());
+                    NavigationService.Instance.NavigateTo(new TripBookedViewModel());
+                    break;
+                case 3:
+                    NavigationService.Instance.NavigateTo(new TripHistoryViewModel());
                     break;
                 case 5:
                     Logout();

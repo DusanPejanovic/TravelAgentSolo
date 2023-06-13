@@ -106,17 +106,7 @@
                         </i:Interaction.Triggers>
                     </RadioButton>
 
-                    <RadioButton Tag="4"
-                                 Style="{StaticResource menuButton}"
-                                 IsChecked="{Binding SelectedOption, Converter={StaticResource OptionToIsCheckedConverter}, ConverterParameter=4, Mode=TwoWay}">
-                   
-
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Checked">
-                                <cmd:EventToCommand Command="{Binding RadioButtonCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=RadioButton}, Path=Tag}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </RadioButton>
+                  
 
                 </StackPanel>
 
