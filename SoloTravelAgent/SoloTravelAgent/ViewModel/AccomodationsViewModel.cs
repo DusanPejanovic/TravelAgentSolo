@@ -76,7 +76,22 @@ namespace SoloTravelAgent.ViewModel
             }
         }
 
+        private string searchText;
+        public string SearchText
+        {
+            get { return searchText; }
+            set
+            {
+                searchText = value;
+                OnPropertyChanged(nameof(searchText));
+                OnPropertyChanged(nameof(IsSearchEmpty));
+            }
+        }
 
+        public bool IsSearchEmpty
+        {
+            get { return string.IsNullOrEmpty(SearchText); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

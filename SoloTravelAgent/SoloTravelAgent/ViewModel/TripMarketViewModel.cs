@@ -68,20 +68,15 @@ namespace SoloTravelAgent.ViewModel
             set
             {
                 _searchText = value;
-                OnPropertyChanged(nameof(SearchText));
-                IsSearchEmpty = string.IsNullOrEmpty(value);
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsSearchEmpty));
                 FilterCollection();
             }
         }
 
         public bool IsSearchEmpty
         {
-            get { return _isSearchEmpty; }
-            set
-            {
-                _isSearchEmpty = value;
-                OnPropertyChanged(nameof(IsSearchEmpty));
-            }
+            get { return string.IsNullOrEmpty(SearchText); }
         }
 
         public int TripCount
