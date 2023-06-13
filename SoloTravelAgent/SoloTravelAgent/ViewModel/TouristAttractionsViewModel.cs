@@ -12,6 +12,8 @@ using Microsoft.VisualBasic;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace SoloTravelAgent.ViewModel
 {
@@ -20,6 +22,28 @@ namespace SoloTravelAgent.ViewModel
         private readonly TouristAttractionService _touristAttractionService;
         private readonly TripService _tripService;
         private Trip _selectedTrip;
+        private ICollectionView _touristAttractionsView;
+        public ICollectionView TouristAttractionsView
+        {
+            get { return _touristAttractionsView; }
+            set
+            {
+                _touristAttractionsView = value;
+                OnPropertyChanged(nameof(TouristAttractionsView));
+            }
+        }
+
+        private string _searchText = string.Empty;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                TouristAttractionsView.Refresh(); // Refresh the view to apply filters.
+            }
+        }
 
         public TouristAttractionsViewModel(Trip selectedTrip)
         {
@@ -27,10 +51,24 @@ namespace SoloTravelAgent.ViewModel
             _selectedTrip = selectedTrip;
             _tripService = new TripService(dbContext);
             _touristAttractionService = new TouristAttractionService(dbContext);
+
+            TouristAttractionsView = CollectionViewSource.GetDefaultView(TouristAttractions);
+            TouristAttractionsView.Filter = FilterTouristAttractions;
             LoadTouristAttractions();
+
             AddTouristAttractionCommand = new RelayCommand<TouristAttraction>(attraction => AddTouristAttraction(attraction), _ => CanAddOrUpdateTouristAttraction());
             UpdateTouristAttractionCommand = new RelayCommand(_ => UpdateTouristAttraction(), _ => CanAddOrUpdateTouristAttraction());
             DeleteTouristAttractionCommand = new RelayCommand(_ => DeleteTouristAttraction(), _ => CanDeleteTouristAttraction());
+        
+        
+        }
+        private bool FilterTouristAttractions(object item)
+        {
+            if (item is TouristAttraction touristAttraction)
+            {
+                return string.IsNullOrEmpty(SearchText) || touristAttraction.Name.StartsWith(SearchText, StringComparison.OrdinalIgnoreCase);
+            }
+            return false;
         }
 
         public ObservableCollection<TouristAttraction> TouristAttractions { get; set; } = new ObservableCollection<TouristAttraction>();
@@ -83,8 +121,12 @@ namespace SoloTravelAgent.ViewModel
                     var attraction = tripTouristAttraction.TouristAttraction;
                     TouristAttractions.Add(attraction);
                 }
+
+                // Ensure that the view gets refreshed when new data is loaded.
+                TouristAttractionsView.Refresh();
             }
         }
+
 
         public void AddTouristAttraction(TouristAttraction touristAttraction)
         {
