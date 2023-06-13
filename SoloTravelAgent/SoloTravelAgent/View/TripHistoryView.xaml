@@ -1,15 +1,22 @@
 ﻿<UserControl x:Class="SoloTravelAgent.View.TripHistoryView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SoloTravelAgent.View"
+             xmlns:local="clr-namespace:SoloTravelAgent.View.BookingManagement"
              mc:Ignorable="d" 
-                     xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:converters="clr-namespace:SoloTravelAgent.Converters"
+             xmlns:userControls="clr-namespace:SoloTravelAgent.View.UserControls"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:MoneyToColorConverter x:Key="MoneyToColorConverter"/>
+        <converters:TicketsToColorConverter x:Key="TicketsToColorConverter"/>
+        <converters:TicketsToTextConverter x:Key="TicketsToTextConverter"/>
+        <converters:EmailToFirstCharacterConverter x:Key="EmailToFirstCharacterConverter"/>
+        <converters:EmailToColorConverter x:Key="EmailToColorConverter"/>
     </UserControl.Resources>
 
     <Border CornerRadius="30" Background="#EFF2F7">
@@ -24,53 +31,93 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Travel Management" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0" Foreground="#121518" HorizontalAlignment="Left"/>
+            <TextBlock Text="Pending Bookings" 
+                       Grid.Row="1"
+                       FontSize="32" 
+                       FontWeight="SemiBold" 
+                       Margin="0 20 0 0" 
+                       Foreground="#121518"
+                       HorizontalAlignment="Left"/>
 
-
-     
-            <!--Seprator-->
-            <Separator Height="1" Grid.Row="3" Background="#DAE2EA" Margin="0 10 0 10"/>
-
-            <!--Counter Title-->
-
-            <TextBlock Text="{Binding Path=TripCount, StringFormat={}{0} Trips}" Grid.Row="4" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
-            <!--Filter Textbox-->
             <!--Filter ComboBox-->
-            <Grid Width="150" HorizontalAlignment="Right" Grid.Row="4" Margin="0 0 -12 0">
-                <ComboBox SelectedIndex="0" Height="35" Style="{StaticResource filterCombobox}" SelectionChanged="ComboBox_SelectionChanged"
-              MouseEnter="ComboBox_MouseEnter"
-              MouseLeave="ComboBox_MouseLeave">
-                    <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="No Filter" />
-                    <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Price >= 1500" />
-                    <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Price &lt; 1500" />
-                    <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="This Month" />
-                    <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Next Month" />
-                    <ComboBoxItem MinHeight="30" Width="100" Foreground="#185FAD" Background="White" Content="Next Week" />
-
+            <Grid Width="150"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Bottom"
+                  Grid.Row="1" 
+                  Margin="0 0 -12 0">
+                <ComboBox SelectedItem="{Binding SelectedFilter}"
+                          ItemsSource="{Binding Filters}"
+                          Height="35"
+                          Style="{StaticResource filterCombobox}">
+                    <ComboBox.Resources>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="MinHeight" Value="30"/>
+                            <Setter Property="Width" Value="100"/>
+                            <Setter Property="Foreground" Value="#185FAD"/>
+                            <Setter Property="Background" Value="White"/>
+                        </Style>
+                    </ComboBox.Resources>
                 </ComboBox>
             </Grid>
 
+            <!--Seprator-->
+            <Separator Height="1" Grid.Row="3" Background="#DAE2EA" Margin="0 10 0 10"/>
 
-            <Grid Width="280" HorizontalAlignment="Center" Grid.Row="4" Margin="0 0 150 0">
-                <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
-    Panel.ZIndex="1" Text="Search here ..."
-    Visibility="{Binding IsSearchEmpty, Converter={StaticResource BoolToVis}}" />
+            <StackPanel Orientation="Horizontal"
+                        Margin="0 10"
+                        Grid.Row="4" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
 
-                <TextBox   Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
+                <TextBlock Text="{Binding Path=TripStatisticsCount, StringFormat={}{0} Trips}"
+                           FontSize="18" 
+                           FontWeight="SemiBold"
+                           Foreground="#121518"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Text="|"
+                           Margin="10 0"
+                           FontSize="18" 
+                           FontWeight="SemiBold"
+                           Foreground="#B0B9C6"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock
+                       FontSize="18"
+                       FontWeight="SemiBold">
+                    <Run Foreground="#121518" Text="Filtered By: " />
+                    <Run Foreground="#917FB3" Text="{Binding Path=SelectedFilter}" />
+                </TextBlock>
+            </StackPanel>
+
+            <!--Search input-->
+            <Grid Width="280" HorizontalAlignment="Right" Grid.Row="4" Margin="0 0 0 0">
+                <TextBlock Margin="20 0" 
+                           VerticalAlignment="Center" 
+                           Foreground="#B0B9C6" 
+                           IsHitTestVisible="False"
+                           Panel.ZIndex="1"
+                           Text="Search here ..."
+                           Visibility="{Binding IsSearchEmpty, Converter={StaticResource BoolToVis}}" />
+
+                <TextBox   
+                    Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource searchTextbox}"/>
                 <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
             </Grid>
 
-
-            <!--Restaurant Datagrid-->
-            <DataGrid Margin="-20 20 0 0" RowStyle="{DynamicResource DataGridRowStyle1}"  MouseDoubleClick="DataGrid_MouseDoubleClick" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" SelectedItem="{Binding SelectedTrip}" CellStyle="{DynamicResource DataGridCellStyle1}" ItemsSource="{Binding Trips}" Style="{DynamicResource DataGridStyle1}">
+            <!--Bookings Datagrid-->
+            <DataGrid ItemsSource="{Binding PendingBookings}"
+                      RowStyle="{DynamicResource DataGridRowStyle1}"
+                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                      CellStyle="{DynamicResource DataGridCellStyle1}"
+                      x:Name="membersDataGrid" 
+                      Style="{DynamicResource DataGridStyle1}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" Width="60"/>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" MaxWidth="170"/>
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" IsReadOnly="True" MinWidth="160"/>
-                    <DataGridTextColumn Header="Start Date" Binding="{Binding StartDate, StringFormat=\{0:d\}}" IsReadOnly="True" Width="100"/>
-                    <DataGridTextColumn Header="End Date" Binding="{Binding EndDate, StringFormat=\{0:d\}}" IsReadOnly="True" Width="100"/>
-                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" IsReadOnly="True" Width="80"/>
+                    <DataGridTextColumn Header="Trip" Binding="{Binding Trip.Name}" IsReadOnly="True" Width="*"/>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Trip.Price}" IsReadOnly="True" Width="*"/>
+                    <DataGridTextColumn Header="Booking Date" Binding="{Binding BookingDate, StringFormat=dd-MM-yyyy}" IsReadOnly="True" Width="*"/>
+                    
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
