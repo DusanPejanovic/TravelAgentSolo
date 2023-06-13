@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SoloTravelAgent.Model.Entities;
+using System.IO;
 
 namespace SoloTravelAgent.Model.Data
 {
@@ -16,7 +17,10 @@ namespace SoloTravelAgent.Model.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=C:\\Users\\jovanserbedzija\\Desktop\\TravelAgentSolo\\SoloTravelAgent\\SoloTravelAgent\\travel_system.db").UseLazyLoadingProxies();
+            var folder = Directory.GetCurrentDirectory();
+            var DbPath = Path.Join(folder, "..\\..\\..\\");
+            DbPath = Path.Join(DbPath, "travel_system.db");
+            optionsBuilder.UseSqlite($"Data Source={DbPath}").UseLazyLoadingProxies();
         }
     }
 }

@@ -23,15 +23,16 @@ namespace SoloTravelAgent.Help
         private JavaScriptControlHelper ch;
         public HelpViewer(string key, MainWindow originator)
         {
-            var currDir = "C:\\Users\\jovanserbedzija\\Desktop\\TravelAgentSolo\\SoloTravelAgent\\SoloTravelAgent";
+            var folder = Directory.GetCurrentDirectory();
+            var currDir = System.IO.Path.Join(folder, "..\\..\\..\\");
 
             InitializeComponent();
-            string path = String.Format("{0}/HelpResource/{1}.htm", currDir, key);
+            string path = String.Format("{0}HelpResource\\{1}.htm", currDir, key);
             if (!File.Exists(path))
             {
                 key = "error";
             }
-            Uri u = new Uri(String.Format("file:///{0}/HelpResource/{1}.htm", currDir, key));
+            Uri u = new Uri(String.Format("file:///{0}HelpResource\\{1}.htm", currDir, key));
             ch = new JavaScriptControlHelper(originator);
             wbHelp.ObjectForScripting = ch;
             wbHelp.Navigate(u);

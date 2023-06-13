@@ -92,12 +92,6 @@
                                     <Button Margin="5 0 5 0" Style="{StaticResource gridRemoveButton}" Click="DeleteButton_Click"  ToolTip="Delete">
                                         <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"  ToolTip="Delete"/>
                                     </Button>
-                                    <Button Style="{StaticResource gridMapButton}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Icon:PackIconMaterial Kind="MapMarker"  Margin="0 1 5 0" Style="{StaticResource gridButtonIcon}"/>
-                                            <TextBlock Text="Show On Map"/>
-                                        </StackPanel>
-                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
