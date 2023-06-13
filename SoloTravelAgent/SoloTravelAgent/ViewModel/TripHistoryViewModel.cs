@@ -143,21 +143,21 @@ namespace SoloTravelAgent.ViewModel
 
         public void LoadDataForAllTime()
         {
-            var pendingBookings = _bookingService.GetUnpaidBookings2();
+            var pendingBookings = _bookingService.GetUnpaidBookings3();
 
             PendingBookings = new ObservableCollection<Booking>(pendingBookings);
         }
 
         public void LoadDataForCurrentWeek()
         {
-            var pendingBookings = _bookingService.GetUnpaidBookingsThisWeek2();
+            var pendingBookings = _bookingService.GetUnpaidBookingsThisWeek3();
             pendingBookings = PendingBookings.Where(b => b.Client.Id == AuthenticationManager.CurrentUser.Id).ToList();
             PendingBookings = new ObservableCollection<Booking>(pendingBookings);
         }
 
         public void LoadDataForCurrentMonth()
         {
-            var pendingBookings = _bookingService.GetUnpaidBookingsThisMonth2();
+            var pendingBookings = _bookingService.GetUnpaidBookingsThisMonth3();
             pendingBookings = PendingBookings.Where(b => b.Client.Id == AuthenticationManager.CurrentUser.Id).ToList();
 
             PendingBookings = new ObservableCollection<Booking>(pendingBookings);
