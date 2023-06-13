@@ -23,7 +23,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Trip Market" Grid.Row="0" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0" Foreground="#121518" HorizontalAlignment="Left"/>
+        <TextBlock Text="Trip Market" Grid.Row="0" FontSize="32" FontWeight="SemiBold" Foreground="#121518" Margin="0 20 0 0"  HorizontalAlignment="Left"/>
         <!--Separator-->
 
         <Separator Height="1" Grid.Row="1" Background="#DAE2EA" Margin="0 5 0 5"/>
@@ -78,16 +78,16 @@
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
                                 <StackPanel Grid.Column="0" Grid.RowSpan="4" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Grid.Row="0" Text="{Binding Name}" FontWeight="Bold" FontSize="18"/>
-                                    <TextBlock Grid.Row="1" Text="{Binding Description}" TextWrapping="Wrap" MaxHeight="60"/>
+                                    <TextBlock Grid.Row="0" Text="{Binding Name}" FontWeight="SemiBold" Foreground="#121518"  FontSize="18"/>
+                                    <TextBlock Grid.Row="1" Text="{Binding Description}" TextWrapping="Wrap"  Foreground="#121518" MaxHeight="60"/>
                                     <StackPanel Grid.Row="2" Orientation="Horizontal">
-                                        <TextBlock Text="{Binding StartDate, StringFormat=\{0:d\}}" FontWeight="Bold" FontSize="14"/>
+                                        <TextBlock Text="{Binding StartDate, StringFormat=\{0:d\}}" FontWeight="SemiBold" Foreground="#121518"  FontSize="14"/>
                                         <TextBlock Text=" - " FontWeight="Bold" FontSize="14"/>
-                                        <TextBlock Text="{Binding EndDate, StringFormat=\{0:d\}}" FontWeight="Bold" FontSize="14"/>
+                                        <TextBlock Text="{Binding EndDate, StringFormat=\{0:d\}}" FontWeight="SemiBold" Foreground="#121518"  FontSize="14"/>
                                     </StackPanel>
-                                    <TextBlock Grid.Row="3" Text="{Binding Price}" FontWeight="Bold" FontSize="14"/>
+                                    <TextBlock Grid.Row="3" Text="{Binding Price}" FontWeight="SemiBold" Foreground="#121518"  FontSize="14"/>
                                 </StackPanel>
-                                <Border Grid.Column="1" Background="Black" Height="120" Width="1" Margin="20 0"/>
+                                <Border Grid.Column="1" Background="#121518"  Height="120" Width="0.5" Margin="20 0"/>
                                 <StackPanel Grid.Column="2" Grid.RowSpan="4" Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Center">
                                     <Button 
                                         Content="View it" 
