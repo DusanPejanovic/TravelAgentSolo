@@ -38,6 +38,9 @@
         <DataTemplate DataType="{x:Type vm:TripHistoryViewModel}">
             <v:TripHistoryView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TripViewModel}">
+            <v:TripMarketView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid Background="#EFF2F7"  >

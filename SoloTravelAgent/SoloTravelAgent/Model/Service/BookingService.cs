@@ -106,14 +106,29 @@ namespace SoloTravelAgent.Model.Service
         {
             return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId && b.Client.Id == AuthenticationManager.CurrentUser.Id);
         }
-
+        public IEnumerable<Booking> GetBookingsByTripId3(int tripId)
+        {
+            return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId && b.Client.Id == AuthenticationManager.CurrentUser.Id && b.IsPaid ==true);
+        }
         public IEnumerable<Booking> GetCurrentMonthBookingsForTrip2(int tripId)
         {
             var now = DateTime.Now;
             return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId && b.BookingDate.Month == now.Month && b.BookingDate.Year == now.Year && b.Client.Id == AuthenticationManager.CurrentUser.Id);
         }
+        public IEnumerable<Booking> GetCurrentMonthBookingsForTrip3(int tripId)
+        {
+            var now = DateTime.Now;
+            return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId && b.BookingDate.Month == now.Month && b.BookingDate.Year == now.Year && b.Client.Id == AuthenticationManager.CurrentUser.Id && b.IsPaid == true);
+        }
 
         public IEnumerable<Booking> GetBookingsForPreviousMonthsAndTrip2(int months, int tripId)
+        {
+            var cutOffDate = DateTime.Now.AddMonths(-months);
+            return _bookingRepository
+                .GetAll()
+                .Where(b => b.Trip.Id == tripId && b.BookingDate >= cutOffDate && b.IsPaid == true && b.Client.Id == AuthenticationManager.CurrentUser.Id);
+        }
+        public IEnumerable<Booking> GetBookingsForPreviousMonthsAndTrip3(int months, int tripId)
         {
             var cutOffDate = DateTime.Now.AddMonths(-months);
             return _bookingRepository
@@ -126,11 +141,20 @@ namespace SoloTravelAgent.Model.Service
             return _bookingRepository.GetAll().Where(b => !b.IsPaid && b.Client.Id == AuthenticationManager.CurrentUser.Id);
         }
 
+        public IEnumerable<Booking> GetUnpaidBookings3()
+        {
+            return _bookingRepository.GetAll().Where(b => b.IsPaid && b.Client.Id == AuthenticationManager.CurrentUser.Id);
+        }
+
         public IEnumerable<Booking> GetUnpaidBookingsOfUser2()
         {
             return _bookingRepository.GetAll().Where(b => !b.IsPaid && b.Client.Id == AuthenticationManager.CurrentUser.Id);
         }
 
+        public IEnumerable<Booking> GetUnpaidBookingsOfUser3()
+        {
+            return _bookingRepository.GetAll().Where(b => b.IsPaid && b.Client.Id == AuthenticationManager.CurrentUser.Id);
+        }
         public IEnumerable<Booking> GetUnpaidBookingsThisWeek2()
         {
             DateTime startOfWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
@@ -138,11 +162,22 @@ namespace SoloTravelAgent.Model.Service
 
             return _bookingRepository.GetAll().Where(b => !b.IsPaid && b.BookingDate >= startOfWeek && b.BookingDate < endOfWeek && b.Client.Id == AuthenticationManager.CurrentUser.Id);
         }
+        public IEnumerable<Booking> GetUnpaidBookingsThisWeek3()
+        {
+            DateTime startOfWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
+            DateTime endOfWeek = startOfWeek.AddDays(7);
 
+            return _bookingRepository.GetAll().Where(b => b.IsPaid && b.BookingDate >= startOfWeek && b.BookingDate < endOfWeek && b.Client.Id == AuthenticationManager.CurrentUser.Id);
+        }
         public IEnumerable<Booking> GetUnpaidBookingsThisMonth2()
         {
             var now = DateTime.Now;
             return _bookingRepository.GetAll().Where(b => !b.IsPaid && b.BookingDate.Month == now.Month && b.BookingDate.Year == now.Year && b.Client.Id == AuthenticationManager.CurrentUser.Id);
+        }
+        public IEnumerable<Booking> GetUnpaidBookingsThisMonth3()
+        {
+            var now = DateTime.Now;
+            return _bookingRepository.GetAll().Where(b =>!b.IsPaid && b.BookingDate.Month == now.Month && b.BookingDate.Year == now.Year && b.Client.Id == AuthenticationManager.CurrentUser.Id);
         }
     }
 }

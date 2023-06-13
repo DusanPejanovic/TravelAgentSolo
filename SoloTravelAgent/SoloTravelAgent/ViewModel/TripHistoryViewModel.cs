@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
@@ -11,152 +13,154 @@ using SoloTravelAgent.Navigation;
 
 namespace SoloTravelAgent.ViewModel
 {
-    public class TripHistoryViewModel
+    public class TripHistoryViewModel : ViewModelBase
     {
 
+        private readonly ClientService _clientService;
 
-        private readonly TripService _tripService;
-        private string _searchText;
-        private bool _isSearchEmpty = true;
-        private ICollectionView _filteredTrips;
-
-        public TripHistoryViewModel()
+        private ObservableCollection<Booking> _pendingBookings;
+        public ObservableCollection<Booking> PendingBookings
         {
-            var dbContext = new TravelSystemDbContext();
-            Trips = new ObservableCollection<Trip>();
-            _tripService = new TripService(dbContext);
-            LoadTrips();
-            AddTripCommand = new RelayCommand<Trip>(trip => AddTrip(trip), _ => CanAddOrUpdateTrip());
-            UpdateTripCommand = new RelayCommand(_ => UpdateTrip(), _ => CanAddOrUpdateTrip());
-            DeleteTripCommand = new RelayCommand(_ => DeleteTrip(), _ => CanDeleteTrip());
-            SearchText = string.Empty;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public ObservableCollection<Trip> Trips { get; set; } = new ObservableCollection<Trip>();
-
-        public Trip SelectedTrip { get; set; }
-
-        public ICommand AddTripCommand { get; set; }
-
-        public ICommand UpdateTripCommand { get; set; }
-
-        public ICommand DeleteTripCommand { get; set; }
-
-        public string SearchText
-        {
-            get { return _searchText; }
+            get { return _pendingBookings; }
             set
             {
-                _searchText = value;
-                OnPropertyChanged(nameof(SearchText));
-                IsSearchEmpty = string.IsNullOrEmpty(value);
-                FilterCollection();
+                _pendingBookings = value;
+                RaisePropertyChanged(nameof(PendingBookingsCount));
+                RaisePropertyChanged();
+            }
+        }
+
+        public int PendingBookingsCount
+        {
+            get { return PendingBookings?.Count ?? 0; }
+        }
+
+        private ObservableCollection<string> filters;
+        public ObservableCollection<string> Filters
+        {
+            get { return filters; }
+            set
+            {
+                filters = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string selectedFilter;
+        public string SelectedFilter
+        {
+            get { return selectedFilter; }
+            set
+            {
+                selectedFilter = value;
+                RaisePropertyChanged();
+                FilterData();
+            }
+        }
+
+        private string searchQuery;
+        public string SearchQuery
+        {
+            get { return searchQuery; }
+            set
+            {
+                searchQuery = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsSearchEmpty));
+                FilterData();
             }
         }
 
         public bool IsSearchEmpty
         {
-            get { return _isSearchEmpty; }
-            set
+            get { return string.IsNullOrEmpty(SearchQuery); }
+        }
+
+        private readonly BookingService _bookingService;
+
+        public TripHistoryViewModel()
+        {
+            var dbContext = new TravelSystemDbContext();
+            _bookingService = new BookingService(dbContext);
+            _clientService = new ClientService(dbContext);
+
+            filters = new ObservableCollection<string>
             {
-                _isSearchEmpty = value;
-                OnPropertyChanged(nameof(IsSearchEmpty));
+                "No Filter",
+                "This Week",
+                "This Month",
+            };
+            SelectedFilter = filters.First();
+        }
+
+        public void ApproveBooking(int id)
+        {
+            _bookingService.ApproveBooking(id);
+            LoadDataForCurrentFilter();
+        }
+
+        public void DeleteBooking(int id)
+        {
+            _bookingService.DeleteBooking(id);
+            LoadDataForCurrentFilter();
+        }
+
+        private void FilterData()
+        {
+            LoadDataForCurrentFilter();
+
+            if (!string.IsNullOrEmpty(SearchQuery))
+            {
+                Client currentClient = _clientService.GetClient(AuthenticationManager.CurrentUser.Id);
+                searchQuery = searchQuery.ToLower();
+                var filteredList = PendingBookings.Where(b => (b.Id.ToString().Contains(SearchQuery)
+                                                     || b.Client.Email.ToLower().StartsWith(SearchQuery)
+                                                     || b.Trip.Name.ToLower().StartsWith(SearchQuery)
+                                                     || b.Trip.Price.ToString().StartsWith(SearchQuery)
+                                                     || b.BookingDate.ToString("dd-MM-yyyy").StartsWith(SearchQuery))
+                                                     && (b.Client.Id == currentClient.Id)).ToList();
+
+
+                PendingBookings = new ObservableCollection<Booking>(filteredList);
             }
         }
 
-        public int TripCount
+        public void LoadDataForCurrentFilter()
         {
-            get
+            switch (selectedFilter)
             {
-                return Trips?.Count ?? 0;
+                case "No Filter":
+                    LoadDataForAllTime();
+                    break;
+                case "This Week":
+                    LoadDataForCurrentWeek();
+                    break;
+                case "This Month":
+                    LoadDataForCurrentMonth();
+                    break;
             }
         }
 
-
-        public void LoadTrips()
+        public void LoadDataForAllTime()
         {
-            var trips = _tripService.GetAllTrips();
-            Trips.Clear();
-            foreach (var trip in trips)
-            {
-                Trips.Add(trip);
-            }
+            var pendingBookings = _bookingService.GetUnpaidBookings3();
 
-            OnPropertyChanged(nameof(TripCount));
-
+            PendingBookings = new ObservableCollection<Booking>(pendingBookings);
         }
 
-        public void AddTrip(Trip trip)
+        public void LoadDataForCurrentWeek()
         {
-            _tripService.AddTrip(trip);
-            LoadTrips();
-            OnPropertyChanged(nameof(TripCount));
+            var pendingBookings = _bookingService.GetUnpaidBookingsThisWeek3();
+            pendingBookings = PendingBookings.Where(b => b.Client.Id == AuthenticationManager.CurrentUser.Id).ToList();
+            PendingBookings = new ObservableCollection<Booking>(pendingBookings);
         }
 
-        public void UpdateTrip()
+        public void LoadDataForCurrentMonth()
         {
-            if (SelectedTrip != null)
-            {
-                _tripService.UpdateTrip(SelectedTrip);
-                LoadTrips();
-            }
-        }
+            var pendingBookings = _bookingService.GetUnpaidBookingsThisMonth3();
+            pendingBookings = PendingBookings.Where(b => b.Client.Id == AuthenticationManager.CurrentUser.Id).ToList();
 
-        private void DeleteTrip()
-        {
-            if (SelectedTrip != null)
-            {
-                _tripService.RemoveTrip(_tripService.GetTrip(SelectedTrip.Id));
-                LoadTrips();
-                OnPropertyChanged(nameof(TripCount));
-            }
-        }
-
-        private bool CanAddOrUpdateTrip()
-        {
-
-            return true;
-        }
-
-        private bool CanDeleteTrip()
-        {
-
-            return SelectedTrip != null;
-        }
-        public ICollectionView FilteredTrips
-        {
-            get
-            {
-                if (_filteredTrips == null)
-                {
-                    _filteredTrips = CollectionViewSource.GetDefaultView(Trips);
-                    _filteredTrips.Filter = FilterTrips;
-                }
-                return _filteredTrips;
-            }
-        }
-        private bool FilterTrips(object obj)
-        {
-            var trip = obj as Trip;
-            if (trip == null) return false;
-
-            User currUser = AuthenticationManager.CurrentUser;
-
-            
-
-            // Return trips where Name starts with SearchText
-            return trip.Name.StartsWith(SearchText, StringComparison.OrdinalIgnoreCase);
-        }
-
-        private void FilterCollection()
-        {
-            FilteredTrips.Refresh();
-        }
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PendingBookings = new ObservableCollection<Booking>(pendingBookings);
         }
     }
 }
