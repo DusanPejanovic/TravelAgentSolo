@@ -43,7 +43,11 @@ namespace SoloTravelAgent.View
         {
             get => _selectedTrip?.Restaurants.Count ?? 0;
         }
-
+        private void DescriptionRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            var vm = new DescriptionViewModel(_selectedTrip);
+            NavigationService.Instance.NavigateTo(vm);
+        }
         private void RestaurantRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             var vm = new RestaurantViewModel(_selectedTrip);
