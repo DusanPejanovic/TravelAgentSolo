@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoloTravelAgent.Model.Data;
 
@@ -10,320 +11,83 @@ using SoloTravelAgent.Model.Data;
 namespace SoloTravelAgent.Migrations
 {
     [DbContext(typeof(TravelSystemDbContext))]
-    partial class TravelSystemDbContextModelSnapshot : ModelSnapshot
+    partial class TravelSystemDbContextModelSnapshot : Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+
+        protected override void Up(MigrationBuilder migrationBuilder)
         {
-#pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true);
+            migrationBuilder.DropForeignKey(
+                name: "FK_TouristAttractions_Trips_TripId",
+                table: "TouristAttractions");
 
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.Accommodation", b =>
+            migrationBuilder.DropIndex(
+                name: "IX_TouristAttractions_TripId",
+                table: "TouristAttractions");
+
+            migrationBuilder.DropColumn(
+                name: "TripId",
+                table: "TouristAttractions");
+
+            migrationBuilder.CreateTable(
+                name: "TripTouristAttractions",
+                columns: table => new
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Stars")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TripId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Website")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TripId");
-
-                    b.ToTable("Accommodations");
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TripId = table.Column<int>(type: "INTEGER", nullable: false),
+                    TouristAttractionId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TripTouristAttractions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TripTouristAttractions_TouristAttractions_TouristAttractionId",
+                        column: x => x.TouristAttractionId,
+                        principalTable: "TouristAttractions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TripTouristAttractions_Trips_TripId",
+                        column: x => x.TripId,
+                        principalTable: "Trips",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.Agent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Agents");
-                });
-
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.Booking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("BookingDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsPaid")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TripId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("TripId");
-
-                    b.ToTable("Bookings");
-                });
-
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.Client", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Clients");
-                });
-
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.Restaurant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Cuisine")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("TripId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Website")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TripId");
-
-                    b.ToTable("Restaurants");
-                });
-
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.TouristAttraction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("EntryFee")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Website")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TouristAttractions");
-                });
-
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.Trip", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<double>("Latitude")
-                        .HasColumnType("REAL");
-
-                    b.Property<double>("Longitude")
-                        .HasColumnType("REAL");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Trips");
-                });
-
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.TripTouristAttraction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TouristAttractionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TripId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TouristAttractionId");
-
-                    b.HasIndex("TripId");
-
-                    b.ToTable("TripTouristAttractions");
-                });
-
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.Accommodation", b =>
-                {
-                    b.HasOne("SoloTravelAgent.Model.Entities.Trip", null)
-                        .WithMany("Accommodations")
-                        .HasForeignKey("TripId");
-                });
-
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.Booking", b =>
-                {
-                    b.HasOne("SoloTravelAgent.Model.Entities.Client", "Client")
-                        .WithMany("Bookings")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SoloTravelAgent.Model.Entities.Trip", "Trip")
-                        .WithMany()
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Trip");
-                });
-
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.Restaurant", b =>
-                {
-                    b.HasOne("SoloTravelAgent.Model.Entities.Trip", null)
-                        .WithMany("Restaurants")
-                        .HasForeignKey("TripId");
-                });
-
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.TripTouristAttraction", b =>
-                {
-                    b.HasOne("SoloTravelAgent.Model.Entities.TouristAttraction", "TouristAttraction")
-                        .WithMany()
-                        .HasForeignKey("TouristAttractionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SoloTravelAgent.Model.Entities.Trip", "Trip")
-                        .WithMany("TripTouristAttractions")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TouristAttraction");
-
-                    b.Navigation("Trip");
-                });
-
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.Client", b =>
-                {
-                    b.Navigation("Bookings");
-                });
-
-            modelBuilder.Entity("SoloTravelAgent.Model.Entities.Trip", b =>
-                {
-                    b.Navigation("Accommodations");
-
-                    b.Navigation("Restaurants");
-
-                    b.Navigation("TripTouristAttractions");
-                });
-#pragma warning restore 612, 618
+            migrationBuilder.CreateIndex(
+                name: "IX_TripTouristAttractions_TouristAttractionId",
+                table: "TripTouristAttractions",
+                column: "TouristAttractionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TripTouristAttractions_TripId",
+                table: "TripTouristAttractions",
+                column: "TripId");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "TripTouristAttractions");
+
+            migrationBuilder.AddColumn<int>(
+                name: "TripId",
+                table: "TouristAttractions",
+                type: "INTEGER",
+                nullable: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TouristAttractions_TripId",
+                table: "TouristAttractions",
+                column: "TripId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_TouristAttractions_Trips_TripId",
+                table: "TouristAttractions",
+                column: "TripId",
+                principalTable: "Trips",
+                principalColumn: "Id");
         }
     }
 }

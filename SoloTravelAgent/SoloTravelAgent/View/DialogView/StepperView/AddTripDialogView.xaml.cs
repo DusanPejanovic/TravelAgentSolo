@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Microsoft.EntityFrameworkCore;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
+using SoloTravelAgent.Model.Service;
 using SoloTravelAgent.ViewModel;
 using SoloTravelAgent.ViewModel.StepperViewModel;
 
@@ -33,7 +34,7 @@ namespace SoloTravelAgent.View.DialogView.StepperView
             _viewModel = new StepViewModel();
             _dbContext = dbContext;
             InitializeComponent();
-
+            var attractionService = new TouristAttractionService(_dbContext);
             Debug.WriteLine("DOLE JE");
             Debug.WriteLine(_dbContext);
 
@@ -54,16 +55,19 @@ namespace SoloTravelAgent.View.DialogView.StepperView
                     Accommodations = _viewModel.Accommodations.ToList(),
                 };
 
+             
+
+                rvm.AddTrip(newTrip);
+
                 foreach (var attraction in existingAttractions)
                 {
                     newTrip.TripTouristAttractions.Add(new TripTouristAttraction
                     {
                         Trip = newTrip,
-                        TouristAttraction = attraction
+                        TouristAttraction = attractionService.GetAttraction(attraction.Id)
                     });
                 }
-
-                rvm.AddTrip(newTrip);
+                rvm.UpdateT(newTrip);
                 _dbContext.SaveChanges();
             };
 
