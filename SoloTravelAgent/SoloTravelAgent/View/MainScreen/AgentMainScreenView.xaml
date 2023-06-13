@@ -40,6 +40,9 @@
         <DataTemplate DataType="{x:Type bookingVm:AgentBookingManagementViewModel}">
             <bookingV:AgentBookingManagementView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DescriptionViewModel}">
+            <v:DescriptionView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid Background="#EFF2F7">

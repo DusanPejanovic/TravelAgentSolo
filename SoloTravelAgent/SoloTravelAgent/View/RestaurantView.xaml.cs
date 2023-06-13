@@ -31,6 +31,12 @@ namespace SoloTravelAgent.View
             _selectedTrip = _viewModel.SelectedTrip;
         }
 
+
+        private void DescriptionRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            var vm = new DescriptionViewModel(_selectedTrip);
+            NavigationService.Instance.NavigateTo(vm);
+        }
         private void AccommodationsRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             var vm = new AccommodationsViewModel(_selectedTrip);
