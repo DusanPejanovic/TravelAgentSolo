@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Data;
+using System;
 
 namespace SoloTravelAgent.ViewModel
 {
@@ -20,7 +22,10 @@ namespace SoloTravelAgent.ViewModel
         private readonly TripService _tripService;  
         private Trip _selectedTrip;
         private int _numberOfRestaurants;
-  
+        public ICollectionView FilteredRestaurants { get; private set; }
+
+    
+
         public RestaurantViewModel(Trip selectedTrip)
         {
             var dbContext = new TravelSystemDbContext();
@@ -31,6 +36,32 @@ namespace SoloTravelAgent.ViewModel
             AddRestaurantCommand = new RelayCommand<Restaurant>(restaurant => AddRestaurant(restaurant), _ => CanAddOrUpdateRestaurant());
             UpdateRestaurantCommand = new RelayCommand(_ => UpdateRestaurant(), _ => CanAddOrUpdateRestaurant());
             DeleteRestaurantCommand = new RelayCommand(_ => DeleteRestaurant(), _ => CanDeleteRestaurant());
+
+            FilteredRestaurants = CollectionViewSource.GetDefaultView(Restaurants);
+            FilteredRestaurants.Filter = RestaurantFilter;
+        }
+        private bool RestaurantFilter(object item)
+        {
+            var restaurant = item as Restaurant;
+            if (restaurant == null) return false;
+
+            if (string.IsNullOrEmpty(SearchText)) return true;
+
+            return restaurant.Name.StartsWith(SearchText, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+
+                // Refresh the filter whenever SearchText changes.
+                FilteredRestaurants.Refresh();
+            }
         }
 
         public ObservableCollection<Restaurant> Restaurants { get; set; } = new ObservableCollection<Restaurant>();
@@ -55,6 +86,8 @@ namespace SoloTravelAgent.ViewModel
                     Restaurants.Add(restaurant);
                 }
             }
+            FilteredRestaurants = CollectionViewSource.GetDefaultView(Restaurants);
+            FilteredRestaurants.Filter = RestaurantFilter;
         }
 
         public Trip SelectedTrip

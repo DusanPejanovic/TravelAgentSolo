@@ -84,7 +84,7 @@
 
 
         <!--Restaurant Datagrid-->
-        <DataGrid Margin="-20 30 0 0" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" SelectedItem="{Binding SelectedRestaurant}" CellStyle="{DynamicResource DataGridCellStyle1}" ItemsSource="{Binding Restaurants}" Style="{DynamicResource DataGridStyle1}">
+        <DataGrid Margin="-20 30 0 0" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" SelectedItem="{Binding SelectedRestaurant}" CellStyle="{DynamicResource DataGridCellStyle1}" ItemsSource="{Binding FilteredRestaurants}" Style="{DynamicResource DataGridStyle1}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" Width="60"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="*"/>
