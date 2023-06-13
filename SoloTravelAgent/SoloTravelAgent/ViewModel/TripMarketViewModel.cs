@@ -9,6 +9,8 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using SoloTravelAgent.ViewModel.BookingManagement;
+using System.Windows;
 
 namespace SoloTravelAgent.ViewModel
 {
@@ -95,6 +97,13 @@ namespace SoloTravelAgent.ViewModel
             if (selectedTrip == null)
                 return;
             // TODO
+
+
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to book it?", "Confirmation", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
             Booking b  = new Booking();
 
 
