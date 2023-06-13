@@ -32,6 +32,12 @@
         <DataTemplate DataType="{x:Type vm:DescriptionViewModel}">
             <v:DescriptionView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TripBookedViewModel}">
+            <v:TripBookedView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TripHistoryViewModel}">
+            <v:TripHistoryView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid Background="#EFF2F7"  >

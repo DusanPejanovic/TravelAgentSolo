@@ -94,7 +94,8 @@
                                         Style="{StaticResource addButton}" 
                                         Command="{Binding DataContext.ViewTripCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
                                         CommandParameter="{Binding}" />
-                                    <Button Content="Book it" Style="{StaticResource addButton}" />
+                                    <Button Content="Book it" Style="{StaticResource addButton}" Command="{Binding DataContext.BookTripCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                        CommandParameter="{Binding}" />
                                 </StackPanel>
                             </Grid>
                         </Border>

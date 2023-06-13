@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using SoloTravelAgent.Help;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
+using SoloTravelAgent.Navigation;
 
 namespace SoloTravelAgent.ViewModel
 {
-    public class TripViewModel : INotifyPropertyChanged
+    public class TripHistoryViewModel
     {
+
+
         private readonly TripService _tripService;
         private string _searchText;
         private bool _isSearchEmpty = true;
         private ICollectionView _filteredTrips;
 
-        public RelayCommand<string> ShowHelpCommand { get; private set; }
-
-        public TripViewModel()
+        public TripHistoryViewModel()
         {
             var dbContext = new TravelSystemDbContext();
             Trips = new ObservableCollection<Trip>();
@@ -31,14 +30,6 @@ namespace SoloTravelAgent.ViewModel
             UpdateTripCommand = new RelayCommand(_ => UpdateTrip(), _ => CanAddOrUpdateTrip());
             DeleteTripCommand = new RelayCommand(_ => DeleteTrip(), _ => CanDeleteTrip());
             SearchText = string.Empty;
-
-            ShowHelpCommand = new RelayCommand<string>(ShowHelpExecute);
-        }
-
-        private void ShowHelpExecute(string helpKey)
-        {
-            var mainWindow = Application.Current.MainWindow as MainWindow;
-            HelpProvider.ShowHelp(helpKey, mainWindow);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -79,7 +70,7 @@ namespace SoloTravelAgent.ViewModel
             get
             {
                 return Trips?.Count ?? 0;
-            }       
+            }
         }
 
 
@@ -91,9 +82,9 @@ namespace SoloTravelAgent.ViewModel
             {
                 Trips.Add(trip);
             }
-           
+
             OnPropertyChanged(nameof(TripCount));
-        
+
         }
 
         public void AddTrip(Trip trip)
@@ -111,15 +102,6 @@ namespace SoloTravelAgent.ViewModel
                 LoadTrips();
             }
         }
-        public void UpdateT(Trip t)
-        {
-            if (SelectedTrip != null)
-            {
-                _tripService.UpdateTrip(t);
-                LoadTrips();
-            }
-        }
-
 
         private void DeleteTrip()
         {
@@ -133,13 +115,13 @@ namespace SoloTravelAgent.ViewModel
 
         private bool CanAddOrUpdateTrip()
         {
-          
+
             return true;
         }
 
         private bool CanDeleteTrip()
         {
-           
+
             return SelectedTrip != null;
         }
         public ICollectionView FilteredTrips
@@ -158,6 +140,10 @@ namespace SoloTravelAgent.ViewModel
         {
             var trip = obj as Trip;
             if (trip == null) return false;
+
+            User currUser = AuthenticationManager.CurrentUser;
+
+            
 
             // Return trips where Name starts with SearchText
             return trip.Name.StartsWith(SearchText, StringComparison.OrdinalIgnoreCase);
