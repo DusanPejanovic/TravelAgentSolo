@@ -11,6 +11,8 @@ using Microsoft.VisualBasic;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
+using System.Windows.Data;
+
 
 namespace SoloTravelAgent.ViewModel
 {
@@ -26,11 +28,36 @@ namespace SoloTravelAgent.ViewModel
             _accommodationService = new AccommodationService(dbContext);
             _tripService = new TripService(dbContext);
             _selectedTrip = selectedTrip;
+            AccommodationCollectionView = CollectionViewSource.GetDefaultView(Accommodations);
+            AccommodationCollectionView.Filter = AccommodationFilter;
             LoadAccommodations();
             AddAccommodationCommand = new RelayCommand<Accommodation>(accommodation => AddAccommodation(accommodation), _ => CanAddOrUpdateAccommodation());
             UpdateAccommodationCommand = new RelayCommand(_ => UpdateAccommodation(), _ => CanAddOrUpdateAccommodation());
             DeleteAccommodationCommand = new RelayCommand(_ => DeleteAccommodation(), _ => CanDeleteAccommodation());
         }
+
+        private bool AccommodationFilter(object item)
+        {
+            if (item is Accommodation touristAttraction)
+            {
+                return string.IsNullOrEmpty(SearchText) || touristAttraction.Name.StartsWith(SearchText, StringComparison.OrdinalIgnoreCase);
+            }
+            return false;
+        }
+
+        public ICollectionView AccommodationCollectionView { get; set; }
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                AccommodationCollectionView.Refresh();
+            }
+        }
+
 
         public ObservableCollection<Accommodation> Accommodations { get; set; } = new ObservableCollection<Accommodation>();
 
@@ -53,6 +80,8 @@ namespace SoloTravelAgent.ViewModel
                     Accommodations.Add(accommodation);
                 }
             }
+
+            AccommodationCollectionView.Refresh();
         }
 
         public Trip SelectedTrip
