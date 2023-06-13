@@ -23,7 +23,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Travel Market" Grid.Row="0" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0" Foreground="#121518" HorizontalAlignment="Left"/>
+        <TextBlock Text="Trip Market" Grid.Row="0" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0" Foreground="#121518" HorizontalAlignment="Left"/>
         <!--Separator-->
 
         <Separator Height="1" Grid.Row="1" Background="#DAE2EA" Margin="0 5 0 5"/>

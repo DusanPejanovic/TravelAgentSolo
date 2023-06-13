@@ -66,7 +66,7 @@
                                 IsChecked="{Binding SelectedOption, Converter={StaticResource OptionToIsCheckedConverter}, ConverterParameter=1, Mode=TwoWay}">
                         <StackPanel Orientation="Horizontal">
                             <Icon:PackIconMaterial Kind="WalletTravel" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Travel Market"/>
+                            <TextBlock Text="Trip Market"/>
                         </StackPanel>
 
                         <i:Interaction.Triggers>
@@ -81,7 +81,7 @@
                                  IsChecked="{Binding SelectedOption, Converter={StaticResource OptionToIsCheckedConverter}, ConverterParameter=2, Mode=TwoWay}">
                         <StackPanel Orientation="Horizontal">
                             <Icon:PackIconMaterial Kind="Timetable" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Booked Travel"/>
+                            <TextBlock Text="Booked Trips"/>
                         </StackPanel>
 
                         <i:Interaction.Triggers>
@@ -96,7 +96,7 @@
                                  IsChecked="{Binding SelectedOption, Converter={StaticResource OptionToIsCheckedConverter}, ConverterParameter=3, Mode=TwoWay}">
                         <StackPanel Orientation="Horizontal">
                             <Icon:PackIconMaterial Kind="FileDocument" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Travel History"/>
+                            <TextBlock Text="Bought Trips"/>
                         </StackPanel>
 
                         <i:Interaction.Triggers>

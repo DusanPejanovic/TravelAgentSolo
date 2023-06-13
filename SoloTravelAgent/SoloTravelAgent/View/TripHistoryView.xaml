@@ -31,7 +31,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Trip History" 
+            <TextBlock Text="Bought Trips" 
                        Grid.Row="1"
                        FontSize="32" 
                        FontWeight="SemiBold" 
