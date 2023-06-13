@@ -54,6 +54,7 @@ namespace SoloTravelAgent.ViewModel
             {
                 _searchText = value;
                 OnPropertyChanged(nameof(SearchText));
+                OnPropertyChanged(nameof(IsSearchEmpty));
                 AccommodationCollectionView.Refresh();
             }
         }
@@ -105,7 +106,10 @@ namespace SoloTravelAgent.ViewModel
             }
         }
 
-
+        public bool IsSearchEmpty
+        {
+            get { return string.IsNullOrEmpty(SearchText); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

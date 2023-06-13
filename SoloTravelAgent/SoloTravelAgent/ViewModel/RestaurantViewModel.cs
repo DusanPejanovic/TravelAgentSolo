@@ -58,10 +58,14 @@ namespace SoloTravelAgent.ViewModel
             {
                 _searchText = value;
                 OnPropertyChanged(nameof(SearchText));
-
-                // Refresh the filter whenever SearchText changes.
+                OnPropertyChanged(nameof(IsSearchEmpty));
                 FilteredRestaurants.Refresh();
             }
+        }
+
+        public bool IsSearchEmpty
+        {
+            get { return string.IsNullOrEmpty(SearchText); }
         }
 
         public ObservableCollection<Restaurant> Restaurants { get; set; } = new ObservableCollection<Restaurant>();

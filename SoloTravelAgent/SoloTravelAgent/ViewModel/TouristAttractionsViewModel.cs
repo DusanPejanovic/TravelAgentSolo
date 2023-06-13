@@ -41,8 +41,14 @@ namespace SoloTravelAgent.ViewModel
             {
                 _searchText = value;
                 OnPropertyChanged(nameof(SearchText));
+                OnPropertyChanged(nameof(IsSearchEmpty));
                 TouristAttractionsView.Refresh(); // Refresh the view to apply filters.
             }
+        }
+
+        public bool IsSearchEmpty
+        {
+            get { return string.IsNullOrEmpty(SearchText); }
         }
 
         public TouristAttractionsViewModel(Trip selectedTrip)
