@@ -106,7 +106,10 @@ namespace SoloTravelAgent.Model.Service
         {
             return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId && b.Client.Id == AuthenticationManager.CurrentUser.Id);
         }
-
+        public IEnumerable<Booking> GetBookingsByTripId3(int tripId)
+        {
+            return _bookingRepository.GetAll().Where(b => b.Trip.Id == tripId && b.Client.Id == AuthenticationManager.CurrentUser.Id && b.IsPaid ==true);
+        }
         public IEnumerable<Booking> GetCurrentMonthBookingsForTrip2(int tripId)
         {
             var now = DateTime.Now;

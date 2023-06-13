@@ -40,6 +40,9 @@
         <DataTemplate DataType="{x:Type vm:TripHistoryViewModel}">
             <v:TripHistoryView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TripViewModel}">
+            <v:TripMarketView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Border CornerRadius="30" Background="#EFF2F7" Margin="10">
