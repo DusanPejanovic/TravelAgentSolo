@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.Command;
 using SoloTravelAgent.Model.Data;
 using SoloTravelAgent.Model.Entities;
 using SoloTravelAgent.Model.Service;
+using SoloTravelAgent.Navigation;
 
 namespace SoloTravelAgent.ViewModel
 {
@@ -139,6 +140,10 @@ namespace SoloTravelAgent.ViewModel
         {
             var trip = obj as Trip;
             if (trip == null) return false;
+
+            User currUser = AuthenticationManager.CurrentUser;
+
+            
 
             // Return trips where Name starts with SearchText
             return trip.Name.StartsWith(SearchText, StringComparison.OrdinalIgnoreCase);

@@ -15,6 +15,8 @@ namespace SoloTravelAgent.ViewModel
     public class TripMarketViewModel: ViewModelBase
     {
         private readonly TripService _tripService;
+        private readonly ClientService _clientService;
+        private readonly BookingService _bookingService;
         private string _searchText;
         private bool _isSearchEmpty = true;
         private ICollectionView _filteredTrips;
@@ -24,8 +26,11 @@ namespace SoloTravelAgent.ViewModel
             var dbContext = new TravelSystemDbContext();
             Trips = new ObservableCollection<Trip>();
             _tripService = new TripService(dbContext);
+            _clientService = new ClientService(dbContext);
+            _bookingService = new BookingService(dbContext);
             LoadTrips();
             ViewTripCommand = new RelayCommand(ViewTrip);
+            BookTripCommand = new RelayCommand(BookTrip);
             AddTripCommand = new RelayCommand<Trip>(trip => AddTrip(trip), _ => CanAddOrUpdateTrip());
             UpdateTripCommand = new RelayCommand(_ => UpdateTrip(), _ => CanAddOrUpdateTrip());
             DeleteTripCommand = new RelayCommand(_ => DeleteTrip(), _ => CanDeleteTrip());
@@ -37,6 +42,7 @@ namespace SoloTravelAgent.ViewModel
 
         public Trip SelectedTrip { get; set; }
         public ICommand ViewTripCommand { get; private set; }
+        public ICommand BookTripCommand { get; private set; }
 
         public ICommand AddTripCommand { get; set; }
 
@@ -78,8 +84,30 @@ namespace SoloTravelAgent.ViewModel
         {
             var selectedTrip = trip as Trip;
             // TODO
-            var restaurantViewModel = new AccommodationsViewModel(selectedTrip);
+            var restaurantViewModel = new DescriptionViewModel(selectedTrip);
             NavigationService.Instance.NavigateTo(restaurantViewModel);
+        }
+
+        private void BookTrip(object trip)
+        {
+            var selectedTrip = trip as Trip;
+
+            if (selectedTrip == null)
+                return;
+            // TODO
+            Booking b  = new Booking();
+
+
+            b.Trip = selectedTrip;
+            
+            b.Client = _clientService.GetClient(AuthenticationManager.CurrentUser.Id);
+            b.BookingDate = DateTime.Now;
+            b.IsPaid = false;
+
+
+            _bookingService.AddBooking(b);
+
+
         }
 
         public void LoadTrips()
