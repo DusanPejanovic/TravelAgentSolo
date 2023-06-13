@@ -17,7 +17,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <Border Grid.Row="1" x:Name="MenuContent" Background="#185FAD" CornerRadius="0 50 0 0"
+        <Border Grid.Row="1" x:Name="MenuContent" Background="#185FAD" CornerRadius="0 50 0 30"
                 Visibility="{Binding IsMenuVisible, ElementName=MenuControl, Converter={StaticResource BoolToVis}}">
             <Border.RenderTransform>
                 <TranslateTransform X="0" />

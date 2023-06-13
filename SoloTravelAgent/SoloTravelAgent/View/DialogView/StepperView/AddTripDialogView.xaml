@@ -11,7 +11,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
-        Height="570"
+        Height="550"
         Width="600">
     <Window.DataContext>
         <local1:StepViewModel />

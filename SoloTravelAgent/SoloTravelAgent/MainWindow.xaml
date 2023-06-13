@@ -8,8 +8,7 @@
         xmlns:v="clr-namespace:SoloTravelAgent.View.Authentication"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" AllowsTransparency="True" ResizeMode="CanResizeWithGrip"
-        Height="720" Width="900" WindowStyle="None"
-     
+        Title="MainWindow" Height="720" Width="900" WindowStyle="None"
         Background="Transparent"
         >
 

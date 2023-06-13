@@ -28,7 +28,7 @@
             <Icon:PackIconMaterial Kind="ChevronLeft"/>
         </Button>
 
-        <TextBlock Text="{Binding SelectedTrip.Name, TargetNullValue='No Trip Selected'}" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="40 20 0 0" Foreground="#121518" HorizontalAlignment="Left" ToolTip="Go Back"/>
+        <TextBlock Text="{Binding SelectedTrip.Name, TargetNullValue='No Trip Selected'}" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="40 20 0 0" Foreground="#121518" HorizontalAlignment="Left"/>
 
 
 
@@ -95,10 +95,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}" Click="EditButton_Click"  ToolTip="Edit">
+                                <Button Style="{StaticResource gridEditButton}" Click="EditButton_Click">
                                     <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
                                 </Button>
-                                <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}"  ToolTip="Delete" Click="DeleteButton_Click">
+                                <Button Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}" Click="DeleteButton_Click">
                                     <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
                                 </Button>
                             </StackPanel>
