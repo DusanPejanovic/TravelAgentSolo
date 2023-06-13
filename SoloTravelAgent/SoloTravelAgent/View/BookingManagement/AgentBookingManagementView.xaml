@@ -19,6 +19,10 @@
         <converters:EmailToColorConverter x:Key="EmailToColorConverter"/>
     </UserControl.Resources>
 
+    <UserControl.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding ShowHelpCommand}" CommandParameter="AgentBookingManagement"/>
+    </UserControl.InputBindings>
+
     <Border CornerRadius="30" Background="#EFF2F7">
         <Grid Grid.Column="1" Margin="30 -20 20 20">
             <Grid.RowDefinitions>
@@ -115,7 +119,7 @@
                       Style="{DynamicResource DataGridStyle1}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="#ID" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding Id}"/>
-                    <DataGridTemplateColumn Header="Client" IsReadOnly="True" Width="*">
+                    <DataGridTemplateColumn Header="Client" IsReadOnly="True" Width="1.5*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
